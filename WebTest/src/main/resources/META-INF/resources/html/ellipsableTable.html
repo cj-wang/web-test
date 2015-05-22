@@ -12,6 +12,7 @@
 	<script src="../public/jquery-1.11.2/jquery-1.11.2.min.js"></script>
 	<script src="../public/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 	<script src="../public/angular-1.3.14/angular.min.js"></script>
+	<script src="../commons/angular-commons.js"></script>
 	<script src="../js/ellipsableTable.js"></script>
 </head>
 
@@ -32,12 +33,12 @@
 		<tbody>
 			<tr ng-repeat="ticket in sla_missed_tickets">
 				<td>{{$index + 1}}</td>
-				<td class="ng-cust-ellipsable">{{ticket.task}}</td>
-				<td class="ng-cust-ellipsable">{{ticket.incident.company}}</td>
-				<td class="ng-cust-ellipsable">{{ticket.incident.short_description}}</td>
-				<td class="ng-cust-ellipsable col_alert">{{ticket.incident.assigned_to}}</td>
-				<td class="ng-cust-ellipsable">{{ticket.sla}}</td>
-				<td class="ng-cust-ellipsable">{{ticket.sys_updated_on}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.task}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.incident.company}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.incident.short_description}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.incident.assigned_to}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.sla}}</td>
+				<td class="ng-commons-ellipsable">{{ticket.sys_updated_on}}</td>
 			</tr>
 		</tbody>
 	</table>
