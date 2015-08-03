@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<bean id="fieldDefinition" abstract="true"
+			class="cn.walle.framework.common.support.FieldDefinition">
+	</bean>
+
+	<bean id="fieldListDefinition" abstract="true"
+			class="cn.walle.framework.common.support.FieldListDefinition">
+	</bean>
+
+	<bean id="selectCodeDefinition" abstract="true"
+			class="cn.walle.framework.common.support.SelectCodeDefinition">
+	</bean>
+
+	<bean id="queryField" abstract="true"
+			class="cn.walle.framework.common.support.QueryField">
+	</bean>
+
+
+	<bean id="staticSelectCodeDefinition" abstract="true"
+			class="cn.walle.framework.common.support.SelectCodeDefinition">
+		<property name="keyFieldName" value="key" />
+		<property name="labelFieldName" value="label" />
+	</bean>
+	
+	<bean id="staticSelectCodeDataSource" abstract="true"
+			class="cn.walle.framework.common.support.StaticSelectCodeDataSource">
+	</bean>
+	
+	<bean id="staticSelectCodeDataSourceItem" abstract="true"
+			class="cn.walle.framework.common.support.StaticSelectCodeDataSourceItem">
+	</bean>
+
+
+	<bean id="selectCode.SystemCodeTemplate" parent="selectCodeDefinition" scope="prototype">
+		<property name="queryType" value="SysCodeQuery" />
+		<property name="queryFields">
+			<list>
+				<bean parent="queryField">
+					<property name="fieldName" value="codeType" />
+					<property name="operator" value="=" />
+					<property name="fieldValue" value="$codeType" />
+				</bean>
+			</list>
+		</property>
+		<property name="orderBy" value="sort" />
+		<property name="keyFieldName" value="codeValue" />
+		<property name="labelFieldName" value="codeName" />
+		<property name="localedLabelFieldNames">
+			<map>
+				<entry key="en" value="displayValueEn" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="systemCodeTypesSelectSql" class="java.lang.String">
+		<constructor-arg>
+			<value>select t.type_code as code_type from WL_SYS_CODE_TYPE t order by t.type_code</value>
+		</constructor-arg>
+	</bean>
+
+</beans>

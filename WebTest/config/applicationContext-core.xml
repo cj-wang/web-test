@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd
+						http://www.springframework.org/schema/jee
+						http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+
+
+	<context:property-placeholder location="file:config/jdbc.properties, classpath:basenames.properties"/>
+
+	<!-- JNDI DataSource for J2EE environments -->
+	<!--
+	<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/walle" />
+	-->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxActive" value="100" />
+		<property name="maxWait" value="1000" />
+		<property name="poolPreparedStatements" value="false" />
+		<property name="defaultAutoCommit" value="true" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="testOnBorrow" value="true" />
+	</bean>
+
+	<!-- 
+	<bean id="multiDataSource" class="cn.walle.framework.core.support.spring.MultiDataSource">
+		<property name="targetDataSources">
+			<map>
+				<entry key="dataSource1" value-ref="dataSource1" />
+				<entry key="dataSource2" value-ref="dataSource2" />
+			</map>
+		</property>
+		<property name="lenientFallback" value="false" />
+		<property name="defaultTargetDataSource" ref="dataSource" />
+	</bean>
+	 -->
+
+	<bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedPackages">
+			<list>
+				<value>cn.walle.framework.core.model</value>
+			</list>
+		</property>
+		<property name="annotatedClasses">
+			<bean class="cn.walle.framework.core.support.hibernate.HibernateEntityClassesFactoryBean" />
+		</property>
+		<property name="mappingLocations">
+			<bean class="cn.walle.framework.core.support.hibernate.HibernateMappingLocationsFactoryBean" />
+		</property>
+		<property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+            </props>
+		</property>
+	</bean>
+
+	<!-- Transaction manager for a single Hibernate SessionFactory -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date" value="cn.walle.framework.core.support.spring.CustomDateEditor" />
+				<entry key="java.lang.String[]" value="cn.walle.framework.core.support.spring.CustomStringArrayEditor" />
+			</map>
+		</property>
+	</bean>
+
+	<bean class="cn.walle.framework.core.support.spring.ApplicationContextRegister" />
+
+	<bean id="cookieLocaleResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="WALLE_CUSTOM_LOCALE_COOKIE" />
+	</bean>
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames" value="${basenames}" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+	</bean>
+
+	<!-- 
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<value>
+				mail.smtp.auth=true
+			</value>
+		</property>
+	</bean>
+	 -->
+
+	<!-- 
+	<bean id="multicastService" class="cn.walle.framework.core.support.ClusterServiceInvoker">
+		<property name="groupAddress" value="225.0.0.1" />
+		<property name="port" value="6789" />
+		<property name="messageBufferSize" value="1024" />
+	</bean>
+	 -->
+
+	<!-- Activates scanning of @Autowired -->
+	<context:annotation-config />
+
+	<!-- Activates scanning of @Service -->
+	<context:component-scan base-package="cn.walle,org.walle"
+							name-generator="cn.walle.framework.core.support.spring.CustomBeanNameGenerator">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.boot.autoconfigure.SpringBootApplication" />
+	</context:component-scan>
+
+</beans>

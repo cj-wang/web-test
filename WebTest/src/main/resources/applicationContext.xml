@@ -8,6 +8,6 @@
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util.xsd">
 	
-	<import resource="file:config/applicationContext*.xml" />
+	<import resource="file:config/config.xml" />
 	
 </beans>

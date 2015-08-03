@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- DEMO -->
+	<!-- 
+	<bean id="selectCode.ALL_USERS" parent="selectCodeDefinition">
+		<property name="queryType" value="SysUserModel" />
+		<property name="queryFields">
+			<list>
+				<bean parent="queryField">
+					<property name="fieldName" value="nvl(usrIsDeleted, '0')" />
+					<property name="operator" value="&lt;&gt;" />
+					<property name="fieldValue" value="1" />
+				</bean>
+				<bean parent="queryField">
+					<property name="fieldName" value="orgId" />
+					<property name="operator" value="=" />
+					<property name="fieldStringValue" value="orgModel.orgId" />
+					<property name="fieldType" value="session" />
+				</bean>
+			</list>
+		</property>
+		<property name="orderBy" value="usrRealName" />
+		<property name="keyFieldName" value="usrUserName" />
+		<property name="labelFieldName" value="usrRealName" />
+		<property name="parentFieldName" value="priorUserId" />
+		<property name="localedLabelFieldNames">
+			<map>
+				<entry key="zh_CN" value="usrChineseName" />
+			</map>
+		</property>
+		<property name="columns">
+			<list>
+				<map>
+					<entry key="field" value="usrUserName" />
+				</map>
+				<map>
+					<entry key="field" value="usrRealName" />
+				</map>
+				<map>
+					<entry key="field" value="orgId" />
+					<entry key="codeType" value="ALL_ORGS_UUID" />
+				</map>
+			</list>
+		</property>
+		<property name="i18nRoot" value="SysUserModel" />
+	</bean>
+	
+	<bean id="selectCode.YESNO" parent="staticSelectCodeDefinition">
+		<property name="queryType" value="selectCode.YESNO.DataSource" />
+	</bean>
+	<bean id="selectCode.YESNO.DataSource" parent="staticSelectCodeDataSource">
+		<property name="data">
+			<list>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="1"/>
+					<property name="label" value="是"/>
+				</bean>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="0"/>
+					<property name="label" value="否"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	 -->
+
+</beans>
