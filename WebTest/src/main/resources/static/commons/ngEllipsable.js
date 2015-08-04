@@ -1,7 +1,7 @@
-angular.module('commons', [])
+angular.module('ngEllipsable', [])
 //truncate table cells with ellipsis
 //ref: http://stackoverflow.com/questions/5239758/css-truncate-table-cells-but-fit-as-much-as-possible
-.directive('ngCommonsEllipsable', function() {
+.directive('ngEllipsable', function() {
 	return {
 		restrict : 'C',
 		transclude: true,

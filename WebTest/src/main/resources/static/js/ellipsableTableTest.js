@@ -1,4 +1,4 @@
-angular.module('wbApp', ['commons'])
+angular.module('wbApp', ['ngEllipsable'])
 .controller('myController', ['$scope', '$interval', '$timeout', '$http', function($scope, $interval, $timeout, $http) {
 	
 	$http.get('/querySlaMissedTickets')

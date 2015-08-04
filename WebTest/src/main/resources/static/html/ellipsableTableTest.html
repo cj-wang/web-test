@@ -12,8 +12,8 @@
 	<script src="../webjars/jquery/1.11.1/jquery.min.js"></script>
 	<script src="../webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="../webjars/angularjs/1.4.3/angular.min.js"></script>
-	<script src="../commons/angular-commons.js"></script>
-	<script src="../js/ellipsableTable.js"></script>
+	<script src="../commons/ngEllipsable.js"></script>
+	<script src="../js/ellipsableTableTest.js"></script>
 </head>
 
 <body ng-app="wbApp" ng-controller="myController">
@@ -33,12 +33,12 @@
 		<tbody>
 			<tr ng-repeat="ticket in sla_missed_tickets">
 				<td>{{$index + 1}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.task}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.incident.company}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.incident.short_description}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.incident.assigned_to}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.sla}}</td>
-				<td class="ng-commons-ellipsable">{{ticket.sys_updated_on}}</td>
+				<td class="ng-ellipsable">{{ticket.task}}</td>
+				<td class="ng-ellipsable">{{ticket.incident.company}}</td>
+				<td class="ng-ellipsable">{{ticket.incident.short_description}}</td>
+				<td class="ng-ellipsable">{{ticket.incident.assigned_to}}</td>
+				<td class="ng-ellipsable">{{ticket.sla}}</td>
+				<td class="ng-ellipsable">{{ticket.sys_updated_on}}</td>
 			</tr>
 		</tbody>
 	</table>
