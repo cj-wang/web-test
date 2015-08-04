@@ -125,6 +125,24 @@
 			<version>1.1</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>bootstrap</artifactId>
+		    <version>3.3.5</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>angularjs</artifactId>
+		    <version>1.4.3</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.webjars.bower</groupId>
+		    <artifactId>angular-utils-pagination</artifactId>
+		    <version>0.7.0</version>
+		</dependency>
+		
     </dependencies>
 
     <build>
