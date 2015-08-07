@@ -1,28 +1,48 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Walle Web Test</title>
+	<meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 	
 	<link href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="css/index.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="app.css"/>
 	
 	<script src="webjars/jquery/2.1.4/jquery.min.js"></script>
 	<script src="webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="webjars/angularjs/1.4.3/angular.min.js"></script>
-	<script src="js/index.js"></script>
+	<script src="webjars/angular-route/1.4.3/angular-route.min.js"></script>
+	<script src="webjars/angular-resource/1.4.3/angular-resource.min.js"></script>
+	<script src="commons/angular-commons-ellipsable.js"></script>
+	<script src="app.js"></script>
+	<script src="components/version/version.js"></script>
+	<script src="components/version/version-directive.js"></script>
+	<script src="components/version/interpolate-filter.js"></script>
+	<script src="views/view1/view1.js"></script>
+	<script src="views/view2/view2.js"></script>
+	<script src="views/demo/demo.js"></script>
 </head>
 
 <body>
-	<noscript>This site requires JavaScript to be enabled</noscript>
-	
-	<h1>Hello! Welcome to Walle Web Test!</h1>
-	
-	<ul>
-		<li><a href="html/ellipsableTableTest.html">Ellipsable Table</a></li>
+	<ul class="menu">
+		<li><a href="#/view1">view1</a></li>
+		<li><a href="#/view2">view2</a></li>
+		<li><a href="#/ellipsable-table-demo">Ellipsable Table Demo</a></li>
 	</ul>
+	
+	<noscript>This site requires JavaScript to be enabled</noscript>
+	<!--[if lt IE 7]>
+		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+	
+	<div ng-view=""></div>
+	
+	<div>Angular seed app: v<span app-version=""></span></div>
 	
 </body>
 </html>
