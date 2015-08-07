@@ -13,12 +13,12 @@
 	<tbody>
 		<tr ng-repeat="ticket in sla_missed_tickets">
 			<td>{{$index + 1}}</td>
-			<td class="ng-ellipsable">{{ticket.task}}</td>
-			<td class="ng-ellipsable">{{ticket.incident.company}}</td>
-			<td class="ng-ellipsable">{{ticket.incident.short_description}}</td>
-			<td class="ng-ellipsable">{{ticket.incident.assigned_to}}</td>
-			<td class="ng-ellipsable">{{ticket.sla}}</td>
-			<td class="ng-ellipsable">{{ticket.sys_updated_on}}</td>
+			<td class="commons-elipsable">{{ticket.task}}</td>
+			<td class="commons-ellipsable">{{ticket.incident.company}}</td>
+			<td class="commons-ellipsable">{{ticket.incident.short_description}}</td>
+			<td class="commons-ellipsable">{{ticket.incident.assigned_to}}</td>
+			<td class="commons-ellipsable">{{ticket.sla}}</td>
+			<td class="commons-ellipsable">{{ticket.sys_updated_on}}</td>
 		</tr>
 	</tbody>
 </table>
