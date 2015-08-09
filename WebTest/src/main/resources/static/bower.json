@@ -6,11 +6,11 @@
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
-	    "jquery": "~2.1.x",
-	    "bootstrap": "~3.3.x",
+		"jquery": "~2.1.x",
+		"bootstrap": "~3.3.x",
 		"angular": "~1.4.x",
 		"angular-route": "~1.4.x",
-	    "angular-resource": "1.4.x",
-	    "angular-utils-pagination": "0.8.3"
+		"angular-resource": "1.4.x",
+		"angular-utils-pagination": "0.8.3"
 	}
 }
