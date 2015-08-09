@@ -125,52 +125,29 @@
 			<version>1.1</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>jquery</artifactId>
-		    <version>2.1.4</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>bootstrap</artifactId>
-		    <version>3.3.5</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars</groupId>
-		    <artifactId>angularjs</artifactId>
-		    <version>1.4.3</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars.bower</groupId>
-		    <artifactId>angular-animate</artifactId>
-		    <version>1.4.3</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars.bower</groupId>
-		    <artifactId>angular-route</artifactId>
-		    <version>1.4.3</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars.bower</groupId>
-		    <artifactId>angular-resource</artifactId>
-		    <version>1.4.3</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.webjars.bower</groupId>
-		    <artifactId>angular-utils-pagination</artifactId>
-		    <version>0.7.0</version>
-		</dependency>
-		
     </dependencies>
 
     <build>
         <plugins>
+	        <plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>bower</executable>
+					<arguments>
+						<argument>install</argument>
+					</arguments>
+					<workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
+				</configuration>
+			</plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
