@@ -460,13 +460,14 @@
 		filter: none !important;
 	}
 
-	.header .navbar-nav > li.dropdown:hover > .dropdown-menu {
-		display: block;
-	}	
+	/* CJ: This prevents the menu collapsing after clicking */
+/* 	.header .navbar-nav > li.dropdown:hover > .dropdown-menu { */
+/* 		display: block; */
+/* 	}	 */
 
-	.header .open > .dropdown-menu {
-		display: none;
-	}
+/* 	.header .open > .dropdown-menu { */
+/* 		display: none; */
+/* 	} */
 
 	/*Search*/
 	.header .navbar-nav .search-open {
