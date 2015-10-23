@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>SelectCode Demo - Walle Web Test</title>
+	<!-- Include all the headers from index.html -->
+	<head th:replace="index :: head"></head>
+	<!-- Add more css and js here -->
+	
+</head>
+<body ng-app="walleApp" ng-controller="walleCtrl">
+
+	<!-- Header -->
+	<div th:replace="index :: .header"></div>
+	
+	<!-- Page content -->
+    <div class="container content-sm">
+
+		<div class="row">
+			<div class="col-md-4">
+				<form>
+					<div class="form-group">
+						<label for="yesno">Yes/No</label>
+						<select id="yesno" class="form-control" walle-selectcode="YESNO"></select>
+					</div>
+					<div class="form-group">
+						<label for="yesno2">Yes/No with default value</label>
+						<select id="yesno2" class="form-control" walle-selectcode="YESNO" value="0"></select>
+					</div>
+					<div class="form-group">
+						<label for="yesno">AM/PM</label>
+						<select id="yesno" class="form-control" walle-selectcode="AMPM"></select>
+					</div>
+					<div class="form-group">
+						<label for="yesno">AM/PM</label>
+						<select id="yesno" class="form-control" walle-selectcode="AMPM"></select>
+					</div>
+					<div class="form-group">
+						<label for="yesno">AM/PM</label>
+						<select id="yesno" class="form-control" walle-selectcode="AMPM"></select>
+					</div>
+					<div class="form-group">
+						<label for="yesno">AM/PM</label>
+						<select id="yesno" class="form-control" walle-selectcode="AMPM"></select>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+    </div><!--/container-->
+	
+	
+	<!-- Footer -->
+	<div th:replace="index :: .footer-v1"></div>
+	
+</body>
+</html>

@@ -67,5 +67,42 @@
 		</property>
 	</bean>
 	 -->
+	
+	<bean id="selectCode.YESNO" parent="staticSelectCodeDefinition">
+		<property name="queryType" value="selectCode.YESNO.DataSource" />
+	</bean>
+	<bean id="selectCode.YESNO.DataSource" parent="staticSelectCodeDataSource">
+		<property name="data">
+			<list>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="1"/>
+					<property name="label" value="是"/>
+				</bean>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="0"/>
+					<property name="label" value="否"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="selectCode.AMPM" parent="staticSelectCodeDefinition">
+		<property name="queryType" value="selectCode.AMPM.DataSource" />
+	</bean>
+	<bean id="selectCode.AMPM.DataSource" parent="staticSelectCodeDataSource">
+		<property name="data">
+			<list>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="AM"/>
+					<property name="label" value="AM"/>
+				</bean>
+				<bean parent="staticSelectCodeDataSourceItem">
+					<property name="key" value="PM"/>
+					<property name="label" value="PM"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
 
 </beans>
