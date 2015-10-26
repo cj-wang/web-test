@@ -2,7 +2,7 @@
 
 angular.module('walleApp', [])
 .controller('walleCtrl', ['$scope', '$interval', '$timeout', '$http', function($scope, $interval, $timeout, $http) {
-	$scope.selectCodes = {};
+	
 }])
 .directive('walleSelectCode', ['$http', function($http) {
 	return {
@@ -10,6 +10,7 @@ angular.module('walleApp', [])
 		scope : {},
 		link : function(scope, element, attrs) {
 			scope.attrs = attrs;
+			scope.$parent.selectCodes = scope.$parent.selectCodes || {};
 			if (scope.$parent.selectCodes[attrs.walleSelectCode]) {
 				scope.selectCode = scope.$parent.selectCodes[attrs.walleSelectCode];
 			} else {
