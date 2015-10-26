@@ -10,11 +10,11 @@ angular.module('walleApp', [])
 		scope : {},
 		link : function(scope, element, attrs) {
 			scope.attrs = attrs;
-			scope.$parent.selectCodes = scope.$parent.selectCodes || {};
-			if (scope.$parent.selectCodes[attrs.walleSelectCode]) {
-				scope.selectCode = scope.$parent.selectCodes[attrs.walleSelectCode];
+			scope.$root.selectCodes = scope.$root.selectCodes || {};
+			if (scope.$root.selectCodes[attrs.walleSelectCode]) {
+				scope.selectCode = scope.$root.selectCodes[attrs.walleSelectCode];
 			} else {
-				scope.selectCode = scope.$parent.selectCodes[attrs.walleSelectCode] = {};
+				scope.selectCode = scope.$root.selectCodes[attrs.walleSelectCode] = {};
 				scope.selectCode.loading = true;
 				$http.get('/selectCode/' + attrs.walleSelectCode)
 				.success(function(data, status, headers, config) {
