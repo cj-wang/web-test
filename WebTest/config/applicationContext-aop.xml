@@ -36,7 +36,7 @@
 	</bean>
 	 -->
 
-	<!--关闭sql日志
+	<!-- 
 	<bean class="cn.walle.framework.core.aop.SqlLogDaoAspect">
 		<property name="order" value="100" />
 	</bean>
