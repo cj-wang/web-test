@@ -1,6 +1,6 @@
 // -- Walle Framework --
 
-angular.module('walleApp', [])
+angular.module('walleApp', ['ui.bootstrap'])
 .controller('walleCtrl', ['$scope', '$interval', '$timeout', '$http', function($scope, $interval, $timeout, $http) {
 	
 }])
