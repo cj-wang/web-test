@@ -28,9 +28,9 @@ angular.module('walleApp', [])
 			}
 		},
 		template :
-			'<option ng-if="selectCode.loading">Loading...</option>' +
-			'<option ng-if="selectCode.error">Error loading data</option>' +
 			'<option ng-if="! attrs.required" value="">---Please select---</option>' +
+			'<option ng-if="selectCode.loading" value="">Loading...</option>' +
+			'<option ng-if="selectCode.error" value="">Error loading data</option>' +
 			'<option ng-repeat="dataItem in selectCode.data.dataList"' +
 			'		value="{{dataItem[selectCode.data.keyFieldName]}}"' +
 			'		ng-selected="dataItem[selectCode.data.keyFieldName] == attrs.value">' +
