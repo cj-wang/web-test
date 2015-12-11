@@ -1,9 +1,11 @@
 // -- Walle Framework --
 
 angular.module('walleApp', ['ui.bootstrap'])
+
 .controller('walleCtrl', ['$scope', '$interval', '$timeout', '$http', function($scope, $interval, $timeout, $http) {
 	
 }])
+
 .directive('walleSelectCode', ['$http', function($http) {
 	return {
 		restrict : 'A',
@@ -36,5 +38,36 @@ angular.module('walleApp', ['ui.bootstrap'])
 			'		ng-selected="dataItem[selectCode.data.keyFieldName] == attrs.value">' +
 			'	{{dataItem[selectCode.data.labelFieldName]}}' +
 			'</option>'
+	};
+}])
+
+.directive('walleTypeaheadCode', ['$compile', '$http', function($compile, $http) {
+	return {
+		restrict : 'A',
+		scope : {},
+	    terminal: true,
+		link : function(scope, element, attrs) {
+			scope.attrs = attrs;
+			scope.query = function(val) {
+				return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+					params: {
+						address: val,
+						sensor: false
+					}
+				}).then(function(response){
+					return response.data.results.map(function(item){
+						return item.formatted_address;
+					});
+				});
+			};
+			element.attr('uib-typeahead', 'address for address in query($viewValue)');
+			element.attr('typeahead-loading', attrs.typeaheadLoading || 'loading');
+			element.attr('typeahead-no-results', attrs.typeaheadNoResults || 'noResults');
+			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
+			element.removeAttr('walle-typeahead-code');
+			$compile(element)(scope);
+			$compile('<i ng-show="loading" class="glyphicon glyphicon-refresh pull-left"></i>')(scope).insertAfter(element);
+			$compile('<div ng-show="noResults"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+		}
 	};
 }]);

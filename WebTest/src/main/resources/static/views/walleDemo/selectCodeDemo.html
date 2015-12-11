@@ -5,9 +5,9 @@
 	<!-- Include all the headers from index.html -->
 	<head th:replace="index :: head"></head>
 	<!-- Add more css and js here -->
-	
+	<script src="views/walleDemo/selectCodeDemo.js"></script>
 </head>
-<body ng-app="walleApp" ng-controller="walleCtrl">
+<body ng-app="selectCodeDemoApp" ng-controller="selectCodeDemoCtrl">
 
 	<!-- Header -->
 	<div th:replace="index :: .header"></div>
@@ -33,6 +33,19 @@
 					<div class="form-group">
 						<label for="yesno">AM/PM required</label>
 						<select id="yesno" class="form-control" walle-select-code="AMPM" required="true"></select>
+					</div>
+				</form>
+			</div>
+			
+			<div class="col-md-4">
+				<form>
+					<div class="form-group">
+						<label for="yesno">Yes/No Typeahead</label>
+						<input class="form-control" walle-typeahead-code="YESNO" ng-model="yesno1" placeholder="Typeahead"/>
+					</div>
+					<div class="form-group">
+						<label for="yesno">Yes/No Typeahead</label>
+						<input class="form-control" walle-typeahead-code="YESNO" ng-model="yesno2" placeholder="Typeahead"/>
 					</div>
 				</form>
 			</div>
