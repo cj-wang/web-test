@@ -68,6 +68,23 @@
 	</bean>
 	 -->
 	
+	<bean id="selectCode.ALL_USERS" parent="selectCodeDefinition">
+		<property name="queryType" value="WlUserModel" />
+		<property name="orderBy" value="name" />
+		<property name="keyFieldName" value="loginName" />
+		<property name="labelFieldName" value="name" />
+		<property name="columns">
+			<list>
+				<map>
+					<entry key="field" value="loginName" />
+				</map>
+				<map>
+					<entry key="field" value="name" />
+				</map>
+			</list>
+		</property>
+	</bean>
+	
 	<bean id="selectCode.YESNO" parent="staticSelectCodeDefinition">
 		<property name="queryType" value="selectCode.YESNO.DataSource" />
 	</bean>
