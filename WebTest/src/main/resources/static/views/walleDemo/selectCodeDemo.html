@@ -19,20 +19,20 @@
 			<div class="col-md-4">
 				<form>
 					<div class="form-group">
-						<label for="yesno">Yes/No</label>
-						<select id="yesno" class="form-control" walle-select-code="YESNO"></select>
+						<label for="yesno1">Yes/No</label>
+						<select id="yesno1" class="form-control" walle-select-code="YESNO"></select>
 					</div>
 					<div class="form-group">
 						<label for="yesno2">Yes/No with default value</label>
 						<select id="yesno2" class="form-control" walle-select-code="YESNO" value="0"></select>
 					</div>
 					<div class="form-group">
-						<label for="yesno">AM/PM</label>
-						<select id="yesno" class="form-control" walle-select-code="AMPM"></select>
+						<label for="yesno3">AM/PM</label>
+						<select id="yesno3" class="form-control" walle-select-code="AMPM"></select>
 					</div>
 					<div class="form-group">
-						<label for="yesno">AM/PM required</label>
-						<select id="yesno" class="form-control" walle-select-code="AMPM" required="true"></select>
+						<label for="yesno4">AM/PM required</label>
+						<select id="yesno4" class="form-control" walle-select-code="AMPM" required="true"></select>
 					</div>
 				</form>
 			</div>
@@ -40,12 +40,16 @@
 			<div class="col-md-4">
 				<form>
 					<div class="form-group">
-						<label for="yesno">Yes/No Typeahead</label>
-						<input class="form-control" walle-typeahead-code="YESNO" ng-model="yesno1" placeholder="Typeahead"/>
+						<label for="user1">User: {{user1}}</label>
+						<input id="user1" ng-model="user1" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user"/>
 					</div>
 					<div class="form-group">
-						<label for="yesno">Yes/No Typeahead</label>
-						<input class="form-control" walle-typeahead-code="YESNO" ng-model="yesno2" placeholder="Typeahead"/>
+						<label for="user2">User: {{user2}}</label>
+						<input id="user2" ng-model="user2" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user"/>
+					</div>
+					<div class="form-group">
+						<label for="yesno11">User: {{yesno11}}</label>
+						<input id="yesno11" ng-model="yesno11" class="form-control" walle-typeahead-code="YESNO" placeholder="Yes/No"/>
 					</div>
 				</form>
 			</div>
