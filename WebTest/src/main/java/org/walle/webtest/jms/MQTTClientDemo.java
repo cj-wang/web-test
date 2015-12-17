@@ -15,6 +15,11 @@ public class MQTTClientDemo {
 		MQTT mqtt = new MQTT();
 		mqtt.setHost("tcp://localhost:1883");
 		
+		//To be able to receive off line messages
+		//use fixed client id and set cleanSession to false
+		mqtt.setClientId("client_2323");
+		mqtt.setCleanSession(false);
+		
 		final CallbackConnection connection = mqtt.callbackConnection();
 		
 		connection.listener(new Listener() {
