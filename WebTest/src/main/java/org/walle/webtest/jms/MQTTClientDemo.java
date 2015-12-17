@@ -44,7 +44,7 @@ public class MQTTClientDemo {
 		    // Once we connect..
 		    public void onSuccess(Void v) {
 		        // Subscribe to a topic
-		        Topic[] topics = {new Topic("foo.bar", QoS.EXACTLY_ONCE)};
+		        Topic[] topics = {new Topic("TestTopic", QoS.EXACTLY_ONCE)};
 		        connection.subscribe(topics, new Callback<byte[]>() {
 		            public void onSuccess(byte[] qoses) {
 		                // The result of the subcribe request.
