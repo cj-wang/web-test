@@ -63,11 +63,11 @@ angular.module('walleApp', ['ui.bootstrap'])
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
 			if (! attrs.typeaheadLoading) {
 				element.attr('typeahead-loading', 'walleTypeaheadLoading' + seq);
-				$compile('<i ng-show="walleTypeaheadLoading' + seq + '" class="glyphicon glyphicon-refresh pull-left"></i>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadLoading' + seq + '" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			}
 			if (! attrs.typeaheadNoResults) {
 				element.attr('typeahead-no-results', 'walleTypeaheadNoResults' + seq);
-				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
 			}
 			$compile(element)(scope);
 		}
