@@ -26,10 +26,15 @@ angular.module('walleApp', ['ui.bootstrap'])
 					$scope.selectCodes[$attrs.walleSelectCode].error = true;
 				});
 			}
+			if ($attrs.value) {
+				$scope[$attrs.ngModel] = {
+						key : $attrs.value
+				};
+			}
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-select-code');
-			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data');
+			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data track by item.key');
 			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
 			$compile(element)(scope);

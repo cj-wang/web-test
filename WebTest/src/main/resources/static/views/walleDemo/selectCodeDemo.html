@@ -20,11 +20,13 @@
 				<form>
 					<div class="form-group">
 						<label for="yesno1">Yes/No: {{yesno1}}</label>
+						<!-- default value set in controller -->
 						<select id="yesno1" ng-model="yesno1" class="form-control" walle-select-code="YESNO"></select>
 					</div>
 					<div class="form-group">
-						<label for="yesno2">Yes/No with default value: {{yesno2}}</label>
-						<select id="yesno2" ng-model="yesno2" class="form-control" walle-select-code="YESNO" value="0"></select>
+						<label for="yesno2">Yes/No: {{yesno2}}</label>
+						<!-- default value set as value attr -->
+						<select id="yesno2" ng-model="yesno2" class="form-control" walle-select-code="YESNO" value="1"></select>
 					</div>
 					<div class="form-group">
 						<label for="ampm1">AM/PM: {{ampm1}}</label>
