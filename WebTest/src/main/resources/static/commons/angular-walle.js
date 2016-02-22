@@ -2,38 +2,38 @@
 
 angular.module('walleApp', ['ui.bootstrap'])
 
-.directive('walleSelectCode', ['$http', function($http) {
+.directive('walleSelectCode', ['$compile', '$http', function($compile, $http) {
 	return {
 		restrict : 'A',
-		scope : {},
-		link : function(scope, element, attrs) {
-			scope.attrs = attrs;
-			scope.$root.selectCodes = scope.$root.selectCodes || {};
-			if (scope.$root.selectCodes[attrs.walleSelectCode]) {
-				scope.selectCode = scope.$root.selectCodes[attrs.walleSelectCode];
-			} else {
-				scope.selectCode = scope.$root.selectCodes[attrs.walleSelectCode] = {};
-				scope.selectCode.loading = true;
-				$http.get('/selectCode/' + attrs.walleSelectCode)
-				.success(function(data, status, headers, config) {
-					scope.selectCode.loading = false;
-					scope.selectCode.data = data;
-				})
-				.error(function(data, status, headers, config) {
-					scope.selectCode.loading = false;
-					scope.selectCode.error = true;
+		terminal : true,
+		priority : 1000,
+		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+			$scope.selectCodes = $scope.selectCodes || {};
+			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
+				$scope.selectCodes[$attrs.walleSelectCode] = {};
+				$scope.selectCodes[$attrs.walleSelectCode].loading = true;
+				$http.get('/selectCode/' + $attrs.walleSelectCode)
+				.then(function(response) {
+					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
+					$scope.selectCodes[$attrs.walleSelectCode].data = response.data.dataList.map(function(item) {
+						return {
+							key : item[response.data.keyFieldName],
+							label : item[response.data.labelFieldName]
+						}
+					});
+				}, function(response) {
+					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
+					$scope.selectCodes[$attrs.walleSelectCode].error = true;
 				});
 			}
-		},
-		template :
-			'<option ng-if="! attrs.required" value="">---Please select---</option>' +
-			'<option ng-if="selectCode.loading" value="">Loading...</option>' +
-			'<option ng-if="selectCode.error" value="">Error loading data</option>' +
-			'<option ng-repeat="dataItem in selectCode.data.dataList"' +
-			'		value="{{dataItem[selectCode.data.keyFieldName]}}"' +
-			'		ng-selected="dataItem[selectCode.data.keyFieldName] == attrs.value">' +
-			'	{{dataItem[selectCode.data.labelFieldName]}}' +
-			'</option>'
+		}],
+		link : function(scope, element, attrs) {
+			element.removeAttr('walle-select-code');
+			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data');
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+			$compile(element)(scope);
+		}
 	};
 }])
 
