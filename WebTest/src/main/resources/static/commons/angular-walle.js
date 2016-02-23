@@ -26,7 +26,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 					$scope.selectCodes[$attrs.walleSelectCode].error = true;
 				});
 			}
-			if ($attrs.value) {
+			if ($attrs.value && ! $scope[$attrs.ngModel]) {
 				$scope[$attrs.ngModel] = {
 						key : $attrs.value
 				};
