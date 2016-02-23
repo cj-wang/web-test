@@ -19,7 +19,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 						return {
 							key : item[response.data.keyFieldName],
 							label : item[response.data.labelFieldName]
-						}
+						};
 					});
 				}, function(response) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
@@ -31,13 +31,18 @@ angular.module('walleApp', ['ui.bootstrap'])
 						key : $attrs.value
 				};
 			}
+			if ($attrs.required && ! $scope[$attrs.ngModel]) {
+				$scope.$watch('selectCodes.' + $attrs.walleSelectCode + '.data', function(newValue, oldValue) {
+					if ($scope.selectCodes[$attrs.walleSelectCode].data) {
+						$scope[$attrs.ngModel] = $scope.selectCodes[$attrs.walleSelectCode].data[0];
+					}
+				});
+			}
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-select-code');
 			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data track by item.key');
-			if (attrs.required) {
-				element.append('<option value="" ng-if="false"></option>');
-			} else {
+			if (! attrs.required) {
 				element.append('<option value=""> - - - </option>');
 			}
 			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
@@ -61,7 +66,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 						return {
 							key : item[response.data.keyFieldName],
 							label : item[response.data.labelFieldName]
-						}
+						};
 					});
 				});
 			};
