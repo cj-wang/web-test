@@ -35,6 +35,11 @@ angular.module('walleApp', ['ui.bootstrap'])
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-select-code');
 			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data track by item.key');
+			if (attrs.required) {
+				element.append('<option value="" ng-if="false"></option>');
+			} else {
+				element.append('<option value=""> - - - </option>');
+			}
 			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
 			$compile(element)(scope);
