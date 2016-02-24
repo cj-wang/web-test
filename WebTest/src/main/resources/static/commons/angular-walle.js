@@ -3,7 +3,7 @@
 angular.module('walleApp', ['ui.bootstrap'])
 
 //walle-select-code
-.directive('walleSelectCode', ['$compile', '$http', function($compile, $http) {
+.directive('walleSelectCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -29,16 +29,17 @@ angular.module('walleApp', ['ui.bootstrap'])
 				});
 			}
 			//set default value by value attr
-			if ($attrs.value && ! $scope[$attrs.ngModel]) {
-				$scope[$attrs.ngModel] = {
-						key : $attrs.value
-				};
+			var model = $parse($attrs.ngModel);
+			if ($attrs.value && ! model($scope)) {
+				model.assign($scope, {
+					key : $attrs.value
+				});
 			}
 			//if required, select the 1st option by default
-			if ($attrs.required && ! $scope[$attrs.ngModel]) {
+			if ($attrs.required && ! model($scope)) {
 				$scope.$watch('selectCodes.' + $attrs.walleSelectCode + '.data', function(newValue, oldValue) {
-					if ($scope.selectCodes[$attrs.walleSelectCode].data) {
-						$scope[$attrs.ngModel] = $scope.selectCodes[$attrs.walleSelectCode].data[0];
+					if ($scope.selectCodes[$attrs.walleSelectCode].data && $scope.selectCodes[$attrs.walleSelectCode].data.length) {
+						model.assign($scope, $scope.selectCodes[$attrs.walleSelectCode].data[0]);
 					}
 				});
 			}
@@ -61,7 +62,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 }])
 
 //walle-typeahead-code
-.directive('walleTypeaheadCode', ['$compile', '$http', function($compile, $http) {
+.directive('walleTypeaheadCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
 	var seq = 0;
 	return {
 		restrict : 'A',
@@ -82,37 +83,38 @@ angular.module('walleApp', ['ui.bootstrap'])
 				});
 			};
 			//set default value by value attr
-			if ($attrs.value && ! $scope[$attrs.ngModel]) {
-				$scope[$attrs.ngModel] = {
-						key : $attrs.value
-				};
+			var model = $parse($attrs.ngModel);
+			if ($attrs.value && ! model($scope)) {
+				model.assign($scope, {
+					key : $attrs.value
+				});
 			}
 			//load display text for the default value
-			if ($scope[$attrs.ngModel]) {
-				$scope[$attrs.ngModel].label = "...";
+			if (model($scope)) {
+				model($scope).label = "...";
 				$scope['walleTypeaheadLoading' + currentSeq] = true;
-				$http.get('/selectCode/' + $attrs.walleTypeaheadCode + '?q=' + $scope[$attrs.ngModel].key)
+				$http.get('/selectCode/' + $attrs.walleTypeaheadCode + '?q=' + model($scope).key)
 				.then(function(response) {
 					$scope['walleTypeaheadLoading' + currentSeq] = false;
 					if (response.data.dataList && response.data.dataList.length) {
-						$scope[$attrs.ngModel] = {
-								key : $scope[$attrs.ngModel].key,
-								label : response.data.dataList[0][response.data.labelFieldName]
-						};
+						model.assign($scope, {
+							key : model($scope).key,
+							label : response.data.dataList[0][response.data.labelFieldName]
+						});
 					} else {
 						$scope['walleTypeaheadNoResults' + currentSeq] = true;
-						$scope[$attrs.ngModel] = {
-								key : $scope[$attrs.ngModel].key,
-								label : $scope[$attrs.ngModel].key
-						};
+						model.assign($scope, {
+							key : model($scope).key,
+							label : model($scope).key
+						});
 					}
 				}, function(response) {
 					$scope['walleTypeaheadLoading' + currentSeq] = false;
 					$scope['walleTypeaheadNoResults' + currentSeq] = true;
-					$scope[$attrs.ngModel] = {
-							key : $scope[$attrs.ngModel].key,
-							label : $scope[$attrs.ngModel].key
-					};
+					model.assign($scope, {
+						key : model($scope).key,
+						label : model($scope).key
+					});
 				});
 			}
 		}],
