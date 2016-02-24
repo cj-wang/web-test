@@ -31,6 +31,9 @@
 					<div class="form-group">
 						<label for="ampm1">AM/PM: {{ampm1}}</label>
 						<select id="ampm1" ng-model="ampm1" class="form-control" walle-select-code="AMPM"></select>
+						<button ng-click="ampm1=null">Set to NULL</button>
+						<button ng-click="ampm1={key:'AM'}">Set to AM</button>
+						<button ng-click="ampm1={key:'PM'}">Set to PM</button>
 					</div>
 					<div class="form-group">
 						<label for="ampm2">AM/PM required: {{ampm2}}</label>
@@ -50,6 +53,9 @@
 						<label for="user2">User: {{user2}}</label>
 						<!-- default value set as value attr -->
 						<input id="user2" ng-model="user2" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" value="18601062323"/>
+						<button ng-click="user2=null">Set to NULL</button>
+						<button ng-click="user2={key:'Admin'}">Set to Admin</button>
+						<button ng-click="user2={key:'18601062323'}">Set to cj</button>
 					</div>
 					<div class="form-group">
 						<label for="yesno11">User: {{yesno11}}</label>
