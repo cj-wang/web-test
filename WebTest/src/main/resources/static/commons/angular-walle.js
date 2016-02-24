@@ -68,6 +68,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 		terminal : true,
 		priority : 1000,
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+			var currentSeq = ++seq;
 			//query selectCodes data
 			$scope.walleSelectCodeQuery = function(codeType, q) {
 				return $http.get('/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
@@ -80,9 +81,42 @@ angular.module('walleApp', ['ui.bootstrap'])
 					});
 				});
 			};
+			//set default value by value attr
+			if ($attrs.value && ! $scope[$attrs.ngModel]) {
+				$scope[$attrs.ngModel] = {
+						key : $attrs.value
+				};
+			}
+			//load display text for the default value
+			if ($scope[$attrs.ngModel]) {
+				$scope[$attrs.ngModel].label = "...";
+				$scope['walleTypeaheadLoading' + currentSeq] = true;
+				$http.get('/selectCode/' + $attrs.walleTypeaheadCode + '?q=' + $scope[$attrs.ngModel].key)
+				.then(function(response) {
+					$scope['walleTypeaheadLoading' + currentSeq] = false;
+					if (response.data.dataList && response.data.dataList.length) {
+						$scope[$attrs.ngModel] = {
+								key : $scope[$attrs.ngModel].key,
+								label : response.data.dataList[0][response.data.labelFieldName]
+						};
+					} else {
+						$scope['walleTypeaheadNoResults' + currentSeq] = true;
+						$scope[$attrs.ngModel] = {
+								key : $scope[$attrs.ngModel].key,
+								label : $scope[$attrs.ngModel].key
+						};
+					}
+				}, function(response) {
+					$scope['walleTypeaheadLoading' + currentSeq] = false;
+					$scope['walleTypeaheadNoResults' + currentSeq] = true;
+					$scope[$attrs.ngModel] = {
+							key : $scope[$attrs.ngModel].key,
+							label : $scope[$attrs.ngModel].key
+					};
+				});
+			}
 		}],
 		link : function(scope, element, attrs) {
-			seq++;
 			element.removeAttr('walle-typeahead-code');
 			element.attr('uib-typeahead', 'item as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
