@@ -20,20 +20,23 @@
 				<form>
 					<div class="form-group">
 						<label for="yesno1">Yes/No: {{yesno1}}</label>
-						<!-- default value set in controller -->
-						<select id="yesno1" ng-model="yesno1" class="form-control" walle-select-code="YESNO"></select>
+						<!-- default value set by ng-init -->
+						<select id="yesno1" ng-model="yesno1" class="form-control" walle-select-code="YESNO" ng-init="yesno1='0'"></select>
 					</div>
 					<div class="form-group">
 						<label for="yesno2">Yes/No: {{yesno2}}</label>
-						<!-- default value set as value attr -->
+						<!-- default value set by value attr -->
 						<select id="yesno2" ng-model="yesno2" class="form-control" walle-select-code="YESNO" value="1"></select>
+						<button ng-click="yesno2=null">Set to NULL</button>
+						<button ng-click="yesno2='1'">Set to YES</button>
+						<button ng-click="yesno2='0'">Set to NO</button>
 					</div>
 					<div class="form-group">
 						<label for="ampm1">AM/PM: {{ampm1}}</label>
 						<select id="ampm1" ng-model="ampm1" class="form-control" walle-select-code="AMPM"></select>
 						<button ng-click="ampm1=null">Set to NULL</button>
-						<button ng-click="ampm1={key:'AM'}">Set to AM</button>
-						<button ng-click="ampm1={key:'PM'}">Set to PM</button>
+						<button ng-click="ampm1='AM'">Set to AM</button>
+						<button ng-click="ampm1='PM'">Set to PM</button>
 					</div>
 					<div class="form-group">
 						<label for="ampm2">AM/PM required: {{ampm2}}</label>
@@ -46,12 +49,12 @@
 				<form>
 					<div class="form-group">
 						<label for="user1">User: {{user1}}</label>
-						<!-- default value set in controller -->
-						<input id="user1" ng-model="user1" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user"/>
+						<!-- default value set by ng-init -->
+						<input id="user1" ng-model="user1" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" ng-init="user1='Admin'"/>
 					</div>
 					<div class="form-group">
 						<label for="user2">User: {{user2}}</label>
-						<!-- default value set as value attr -->
+						<!-- default value set by value attr -->
 						<input id="user2" ng-model="user2" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" value="18601062323"/>
 						<button ng-click="user2=null">Set to NULL</button>
 						<button ng-click="user2={key:'Admin'}">Set to Admin</button>
