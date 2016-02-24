@@ -31,22 +31,20 @@ angular.module('walleApp', ['ui.bootstrap'])
 			//set default value by value attr
 			var model = $parse($attrs.ngModel);
 			if ($attrs.value && ! model($scope)) {
-				model.assign($scope, {
-					key : $attrs.value
-				});
+				model.assign($scope, $attrs.value);
 			}
 			//if required, select the 1st option by default
 			if ($attrs.required && ! model($scope)) {
 				$scope.$watch('selectCodes.' + $attrs.walleSelectCode + '.data', function(newValue, oldValue) {
 					if ($scope.selectCodes[$attrs.walleSelectCode].data && $scope.selectCodes[$attrs.walleSelectCode].data.length) {
-						model.assign($scope, $scope.selectCodes[$attrs.walleSelectCode].data[0]);
+						model.assign($scope, $scope.selectCodes[$attrs.walleSelectCode].data[0].key);
 					}
 				});
 			}
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-select-code');
-			element.attr('ng-options', 'item as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data track by item.key');
+			element.attr('ng-options', 'item.key as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data');
 			//if not required, add an empty option
 			if (! attrs.required) {
 				element.append('<option value=""> - - - </option>');
@@ -68,6 +66,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
+//		require : 'ngModel',
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
 			var currentSeq = ++seq;
 			//query selectCodes data
@@ -118,7 +117,16 @@ angular.module('walleApp', ['ui.bootstrap'])
 				});
 			}
 		}],
-		link : function(scope, element, attrs) {
+		link : function(scope, element, attrs, ngModel) {
+			//
+//			if (ngModel) {
+//				ngModel.$formatters.push(function(modelValue) {
+//					return modelValue ? {key : modelValue} : null;
+//				});
+//				ngModel.$parsers.push(function(viewValue) {
+//					return viewValue && viewValue.key ? viewValue.key : null;
+//				});
+//			}
 			element.removeAttr('walle-typeahead-code');
 			element.attr('uib-typeahead', 'item as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
