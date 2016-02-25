@@ -57,8 +57,9 @@
 						<!-- default value set by value attr -->
 						<input id="user2" ng-model="user2" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" value="18601062323"/>
 						<button ng-click="user2=null">Set to NULL</button>
-						<button ng-click="user2={key:'Admin'}">Set to Admin</button>
-						<button ng-click="user2={key:'18601062323'}">Set to cj</button>
+						<button ng-click="user2='Admin'">Set to Admin</button>
+						<button ng-click="user2='18601062323'">Set to cj</button>
+						<button ng-click="user2='22'">Set to 22</button>
 					</div>
 					<div class="form-group">
 						<label for="yesno11">User: {{yesno11}}</label>
