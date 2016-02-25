@@ -66,7 +66,6 @@ angular.module('walleApp', ['ui.bootstrap'])
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-//		require : 'ngModel',
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
 			var currentSeq = ++seq;
 			//query selectCodes data
@@ -117,16 +116,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 				});
 			}
 		}],
-		link : function(scope, element, attrs, ngModel) {
-			//
-//			if (ngModel) {
-//				ngModel.$formatters.push(function(modelValue) {
-//					return modelValue ? {key : modelValue} : null;
-//				});
-//				ngModel.$parsers.push(function(viewValue) {
-//					return viewValue && viewValue.key ? viewValue.key : null;
-//				});
-//			}
+		link : function(scope, element, attrs) {
 			element.removeAttr('walle-typeahead-code');
 			element.attr('uib-typeahead', 'item as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
