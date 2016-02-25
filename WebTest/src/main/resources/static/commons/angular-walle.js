@@ -67,12 +67,15 @@ angular.module('walleApp', ['ui.bootstrap'])
 		terminal : true,
 		priority : 1000,
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-			var currentSeq = ++seq;
+			$scope.selectCodes = $scope.selectCodes || {};
+			$scope.selectCodes[$attrs.walleTypeaheadCode] = $scope.selectCodes[$attrs.walleTypeaheadCode] || {};
+			$scope.selectCodes[$attrs.walleTypeaheadCode].mapping = $scope.selectCodes[$attrs.walleTypeaheadCode].mapping || {};
 			//query selectCodes data
 			$scope.walleSelectCodeQuery = function(codeType, q) {
 				return $http.get('/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
 				.then(function(response) {
 					return response.data.dataList.map(function(item) {
+						$scope.selectCodes[$attrs.walleTypeaheadCode].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
 						return {
 							key : item[response.data.keyFieldName],
 							label : item[response.data.labelFieldName]
@@ -80,46 +83,54 @@ angular.module('walleApp', ['ui.bootstrap'])
 					});
 				});
 			};
+			//custom formatter to display label instead of key
+			$scope.formatLabel = function(codetype, key, ngModel, seq) {
+				$scope['walleTypeaheadNoResults' + seq] = false;
+				if (! key) {
+					return null;
+				}
+				if ($scope.selectCodes[codetype].mapping[key + '']) {
+					return $scope.selectCodes[codetype].mapping[key + ''];
+				} else {
+					$scope['walleTypeaheadLoading' + seq] = true; 
+					$http.get('/selectCode/' + codetype + '?q=' + key)
+					.then(function(response) {
+						$scope['walleTypeaheadLoading' + seq] = false;
+						if (response.data.dataList && response.data.dataList.length) {
+							response.data.dataList.map(function(item) {
+								$scope.selectCodes[codetype].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
+							});
+							//force re-rendering
+							setTimeout(function() {
+								var model = $parse(ngModel);
+								model.assign($scope, null);
+								$scope.$apply();
+								model.assign($scope, key);
+								$scope.$apply();
+							});
+						} else {
+							$scope['walleTypeaheadNoResults' + seq] = true;
+						}
+					}, function() {
+						$scope['walleTypeaheadLoading' + seq] = false;
+						$scope['walleTypeaheadNoResults' + seq] = true;
+					});
+					return '...';
+				}
+			}
 			//set default value by value attr
 			var model = $parse($attrs.ngModel);
 			if ($attrs.value && ! model($scope)) {
-				model.assign($scope, {
-					key : $attrs.value
-				});
-			}
-			//load display text for the default value
-			if (model($scope)) {
-				model($scope).label = "...";
-				$scope['walleTypeaheadLoading' + currentSeq] = true;
-				$http.get('/selectCode/' + $attrs.walleTypeaheadCode + '?q=' + model($scope).key)
-				.then(function(response) {
-					$scope['walleTypeaheadLoading' + currentSeq] = false;
-					if (response.data.dataList && response.data.dataList.length) {
-						model.assign($scope, {
-							key : model($scope).key,
-							label : response.data.dataList[0][response.data.labelFieldName]
-						});
-					} else {
-						$scope['walleTypeaheadNoResults' + currentSeq] = true;
-						model.assign($scope, {
-							key : model($scope).key,
-							label : model($scope).key
-						});
-					}
-				}, function(response) {
-					$scope['walleTypeaheadLoading' + currentSeq] = false;
-					$scope['walleTypeaheadNoResults' + currentSeq] = true;
-					model.assign($scope, {
-						key : model($scope).key,
-						label : model($scope).key
-					});
-				});
+				model.assign($scope, $attrs.value);
 			}
 		}],
 		link : function(scope, element, attrs) {
+			seq++;
 			element.removeAttr('walle-typeahead-code');
-			element.attr('uib-typeahead', 'item as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
+			element.attr('uib-typeahead', 'item.key as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
+			//display label instead of key
+			element.attr('typeahead-input-formatter', 'formatLabel("' + attrs.walleTypeaheadCode + '", $model, "' + attrs.ngModel + '", ' + seq + ')');
 			//append loading prompt
 			if (! attrs.typeaheadLoading) {
 				element.attr('typeahead-loading', 'walleTypeaheadLoading' + seq);
