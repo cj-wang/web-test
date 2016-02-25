@@ -75,7 +75,7 @@ angular.module('walleApp', ['ui.bootstrap'])
 				return $http.get('/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
 				.then(function(response) {
 					return response.data.dataList.map(function(item) {
-						$scope.selectCodes[$attrs.walleTypeaheadCode].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
+						$scope.selectCodes[codeType].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
 						return {
 							key : item[response.data.keyFieldName],
 							label : item[response.data.labelFieldName]
