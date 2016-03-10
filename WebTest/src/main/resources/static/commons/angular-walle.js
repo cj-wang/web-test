@@ -1,6 +1,6 @@
 // -- Walle Framework --
 
-angular.module('walleApp', ['ui.bootstrap'])
+angular.module('ui.walle', ['ui.bootstrap'])
 
 //walle-select-code
 .directive('walleSelectCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {

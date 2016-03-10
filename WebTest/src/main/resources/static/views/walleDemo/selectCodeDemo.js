@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('selectCodeDemoApp', ['walleApp'])
-.controller('selectCodeDemoCtrl', function($scope, $http) {
+angular.module('ngApp', ['ui.walle'])
+.controller('ngCtrl', function($scope, $http) {
 	
 });
