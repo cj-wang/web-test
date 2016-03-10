@@ -129,6 +129,8 @@ angular.module('walleApp', ['ui.bootstrap'])
 			element.removeAttr('walle-typeahead-code');
 			element.attr('uib-typeahead', 'item.key as item.label for item in walleSelectCodeQuery("' + attrs.walleTypeaheadCode + '", $viewValue)');
 			element.attr('typeahead-wait-ms', attrs.typeaheadWaitMs || '500');
+			element.attr('typeahead-editable', attrs.typeaheadEditable || 'false');
+			element.attr('typeahead-select-on-blur', attrs.typeaheadSelectOnBlur || 'true');
 			//display label instead of key
 			element.attr('typeahead-input-formatter', 'formatLabel("' + attrs.walleTypeaheadCode + '", $model, "' + attrs.ngModel + '", ' + seq + ')');
 			//append loading prompt
