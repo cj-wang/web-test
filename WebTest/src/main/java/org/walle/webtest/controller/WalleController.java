@@ -8,11 +8,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.walle.framework.common.service.CommonQueryManager;
 import cn.walle.framework.common.service.SelectCodeManager;
+import cn.walle.framework.common.support.QueryData;
 import cn.walle.framework.common.support.QueryField;
 import cn.walle.framework.common.support.QueryInfo;
 import cn.walle.framework.common.support.SelectCodeData;
@@ -29,7 +32,16 @@ import cn.walle.framework.core.support.PagingInfo;
 public class WalleController {
 	
 	@Autowired
+	private CommonQueryManager commonQueryManager;
+	
+	@Autowired
 	private SelectCodeManager selectCodeManager;
+	
+	
+	@RequestMapping("/commonQuery")
+	public QueryData commonQuery(@RequestBody QueryInfo queryInfo) {
+		return commonQueryManager.query(queryInfo);
+	}
 	
 	@RequestMapping("/selectCode/{codeType}")
 	public SelectCodeData selectCode(@PathVariable String codeType) {

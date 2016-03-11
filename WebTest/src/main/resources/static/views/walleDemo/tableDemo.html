@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Table Demo - Walle Web Test</title>
+	<!-- Include all the headers from index.html -->
+	<head th:replace="index :: head"></head>
+	<!-- Add more css and js here -->
+	<script src="views/walleDemo/tableDemo.js"></script>
+</head>
+<body ng-app="ngApp" ng-controller="ngCtrl">
+
+	<!-- Header -->
+	<div th:replace="index :: .header"></div>
+	
+	<!-- Page content -->
+    <div class="container content-sm">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Login</th>
+					<th>Name</th>
+					<th>Organization</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users">
+					<td>{{$index + 1}}</td>
+					<td>{{user.loginName}}</td>
+					<td>{{user.name}}</td>
+					<td>{{user.organizeId}}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<uib-pagination class="pagination-sm" ng-model="pagingInfo.currentPage"
+				items-per-page="pagingInfo.pageSize" total-items="pagingInfo.totalRows"
+				max-size="5" boundary-link-numbers="true"
+				ng-change="query()">
+		</uib-pagination>
+    </div><!--/container-->
+	
+	
+	<!-- Footer -->
+	<div th:replace="index :: .footer-v1"></div>
+	
+</body>
+</html>

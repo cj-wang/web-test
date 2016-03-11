@@ -22,4 +22,10 @@ public class WalleDemoController {
 		return "views/walleDemo/selectCodeDemo";
 	}
 	
+	@RequestMapping("/tableDemo")
+	public String tableDemo(Model model) {
+		//return view name
+		return "views/walleDemo/tableDemo";
+	}
+	
 }
