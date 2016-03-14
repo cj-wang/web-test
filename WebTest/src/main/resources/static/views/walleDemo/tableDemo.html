@@ -13,9 +13,9 @@
 	<div th:replace="index :: .header"></div>
 	
 	<!-- Page content -->
-    <div class="container content-sm">
+    <div class="container content-xs">
 
-		<table class="table">
+		<table class="table" caption="Users" ng-model="users" walle-query-type="WlUserModel">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -34,11 +34,6 @@
 			</tbody>
 		</table>
 		
-		<uib-pagination class="pagination-sm" ng-model="pagingInfo.currentPage"
-				items-per-page="pagingInfo.pageSize" total-items="pagingInfo.totalRows"
-				max-size="5" boundary-link-numbers="true"
-				ng-change="query()">
-		</uib-pagination>
     </div><!--/container-->
 	
 	

@@ -2,6 +2,58 @@
 
 angular.module('ui.walle', ['ui.bootstrap'])
 
+//walle-query-type
+.directive('walleQueryType', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
+	return {
+		restrict : 'A',
+		terminal : true,
+		priority : 1000,
+		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+			var model = $attrs.ngModel;
+			if (model.indexOf('.') >= 0) {
+				alert('Nested model (' + model + ') not supported by walle-query-type');
+			}
+			$scope[model + 'PagingInfo'] = {
+					pageSize : $attrs.pageSize || 10
+			};
+			$scope[model + 'Query'] = function() {
+				$scope[model + 'Loading'] = true;
+				$scope[model + 'Errormsg'] = null;
+				$scope[model] = [];
+				$http.post('/commonQuery', {
+					queryType : $attrs.walleQueryType,
+					pagingInfo : $scope[model + 'PagingInfo']
+				}).then(function(response) {
+					$scope[model] = response.data.dataList;
+					$scope[model + 'Loading'] = false;
+					$scope[model + 'PagingInfo'] = response.data.pagingInfo;
+				}, function(response) {
+					$scope[model + 'Loading'] = false;
+					$scope[model + 'Errormsg'] = 'Error loading data';
+				});
+			};
+			$scope[model + 'Query']();
+		}],
+		link : function(scope, element, attrs) {
+			element.removeAttr('walle-query-type');
+			//caption & paging
+			element.prepend(
+					'<caption>' + (attrs.caption || '') +
+					'	<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + 'PagingInfo.currentPage"' +
+					'			items-per-page="' + attrs.ngModel + 'PagingInfo.pageSize" total-items="' + attrs.ngModel + 'PagingInfo.totalRows"' +
+					'			max-size="5" boundary-link-numbers="true"' +
+					'			ng-change="' + attrs.ngModel + 'Query()"' +
+					'			style="margin:0">' +
+					'	</uib-pagination>' +
+					'</caption>');
+			//append loading prompt
+			$compile('<div>&nbsp;<span ng-show="' + attrs.ngModel + 'Loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + attrs.ngModel + 'Errormsg}}</span>')(scope).insertAfter(element);
+			//compile
+			$compile(element)(scope);
+		}
+	};
+}])
+
 //walle-select-code
 .directive('walleSelectCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
 	return {
