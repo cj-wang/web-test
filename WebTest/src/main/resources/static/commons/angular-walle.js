@@ -13,9 +13,13 @@ angular.module('ui.walle', ['ui.bootstrap'])
 			if (model.indexOf('.') >= 0) {
 				alert('Nested model (' + model + ') not supported by walle-query-type');
 			}
-			$scope[model + 'PagingInfo'] = {
-					pageSize : $attrs.pageSize || 10
-			};
+			if ($attrs.pageSize) {
+				$scope[model + 'PagingInfo'] = {
+						pageSize : $attrs.pageSize
+				};
+			} else {
+				$scope[model + 'PagingInfo'] = null;
+			}
 			$scope[model + 'Query'] = function() {
 				$scope[model + 'Loading'] = true;
 				$scope[model + 'Errormsg'] = null;
@@ -36,16 +40,19 @@ angular.module('ui.walle', ['ui.bootstrap'])
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-query-type');
-			//caption & paging
-			element.prepend(
-					'<caption>' + (attrs.caption || '') +
-					'	<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + 'PagingInfo.currentPage"' +
-					'			items-per-page="' + attrs.ngModel + 'PagingInfo.pageSize" total-items="' + attrs.ngModel + 'PagingInfo.totalRows"' +
-					'			max-size="5" boundary-link-numbers="true"' +
-					'			ng-change="' + attrs.ngModel + 'Query()"' +
-					'			style="margin:0">' +
-					'	</uib-pagination>' +
-					'</caption>');
+			//paging
+			if (attrs.pageSize) {
+				if (! element.find('> caption').length) {
+					element.prepend('<caption></caption>');
+				}
+				element.find('> caption').append(
+						'<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + 'PagingInfo.currentPage"' +
+						'		items-per-page="' + attrs.ngModel + 'PagingInfo.pageSize" total-items="' + attrs.ngModel + 'PagingInfo.totalRows"' +
+						'		max-size="5" boundary-link-numbers="true"' +
+						'		ng-change="' + attrs.ngModel + 'Query()"' +
+						'		style="margin:0">' +
+						'</uib-pagination>');
+			}
 			//append loading prompt
 			$compile('<div>&nbsp;<span ng-show="' + attrs.ngModel + 'Loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + attrs.ngModel + 'Errormsg}}</span>')(scope).insertAfter(element);
 			//compile
