@@ -17,8 +17,6 @@ angular.module('ui.walle', ['ui.bootstrap'])
 				$scope[model + 'PagingInfo'] = {
 						pageSize : $attrs.pageSize
 				};
-			} else {
-				$scope[model + 'PagingInfo'] = null;
 			}
 			$scope[model + 'Query'] = function() {
 				$scope[model + 'Loading'] = true;
