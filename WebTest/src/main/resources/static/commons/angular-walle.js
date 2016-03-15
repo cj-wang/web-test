@@ -14,27 +14,35 @@ angular.module('ui.walle', ['ui.bootstrap'])
 				alert('Nested model (' + model + ') not supported by walle-query-type');
 			}
 			if ($attrs.pageSize) {
-				$scope[model + 'PagingInfo'] = {
+				$scope[model + '$pagingInfo'] = {
 						pageSize : $attrs.pageSize
 				};
 			}
-			$scope[model + 'Query'] = function() {
-				$scope[model + 'Loading'] = true;
-				$scope[model + 'Errormsg'] = null;
+			var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
+			$scope[model + '$query'] = function() {
+				$scope[model + '$loading'] = true;
+				$scope[model + '$errormsg'] = null;
 				$scope[model] = [];
 				$http.post('/commonQuery', {
 					queryType : $attrs.walleQueryType,
-					pagingInfo : $scope[model + 'PagingInfo']
+					orderBy : $attrs.orderBy,
+					pagingInfo : $scope[model + '$pagingInfo'],
+					fieldCodeTypes : codeTypes
 				}).then(function(response) {
 					$scope[model] = response.data.dataList;
-					$scope[model + 'Loading'] = false;
-					$scope[model + 'PagingInfo'] = response.data.pagingInfo;
+					$scope[model + '$loading'] = false;
+					$scope[model + '$pagingInfo'] = response.data.pagingInfo;
+					angular.forEach($scope[model], function(item) {
+						angular.forEach(codeTypes, function(codeType, field) {
+							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
+						});
+					});
 				}, function(response) {
-					$scope[model + 'Loading'] = false;
-					$scope[model + 'Errormsg'] = 'Error loading data';
+					$scope[model + '$loading'] = false;
+					$scope[model + '$errormsg'] = 'Error loading data';
 				});
 			};
-			$scope[model + 'Query']();
+			$scope[model + '$query']();
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-query-type');
@@ -44,15 +52,15 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					element.prepend('<caption></caption>');
 				}
 				element.find('> caption').append(
-						'<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + 'PagingInfo.currentPage"' +
-						'		items-per-page="' + attrs.ngModel + 'PagingInfo.pageSize" total-items="' + attrs.ngModel + 'PagingInfo.totalRows"' +
+						'<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + '$pagingInfo.currentPage"' +
+						'		items-per-page="' + attrs.ngModel + '$pagingInfo.pageSize" total-items="' + attrs.ngModel + '$pagingInfo.totalRows"' +
 						'		max-size="5" boundary-link-numbers="true"' +
-						'		ng-change="' + attrs.ngModel + 'Query()"' +
+						'		ng-change="' + attrs.ngModel + '$query()"' +
 						'		style="margin:0">' +
 						'</uib-pagination>');
 			}
 			//append loading prompt
-			$compile('<div>&nbsp;<span ng-show="' + attrs.ngModel + 'Loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + attrs.ngModel + 'Errormsg}}</span>')(scope).insertAfter(element);
+			$compile('<div>&nbsp;<span ng-show="' + attrs.ngModel + '$loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + attrs.ngModel + '$errormsg}}</span>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}

@@ -15,7 +15,8 @@
 	<!-- Page content -->
     <div class="container content-xs">
 
-		<table class="table" ng-model="users" walle-query-type="WlUserModel" page-size="10">
+		<table class="table" ng-model="users" walle-query-type="WlUserModel" order-by="loginName" page-size="10"
+				code-types="{'organizeId':'ALL_ORGS'}">
 			<caption>Users</caption>
 			<thead>
 				<tr>
@@ -30,7 +31,7 @@
 					<td>{{$index + 1}}</td>
 					<td>{{user.loginName}}</td>
 					<td>{{user.name}}</td>
-					<td>{{user.organizeId}}</td>
+					<td>{{user.organizeId$label}}</td>
 				</tr>
 			</tbody>
 		</table>
