@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>cn.walle</groupId>
 			<artifactId>walle-core</artifactId>
-			<version>5.0-20151023</version>
+			<version>5.0-20160317</version>
 		</dependency>
 		<dependency>
 			<groupId>cn.walle</groupId>
