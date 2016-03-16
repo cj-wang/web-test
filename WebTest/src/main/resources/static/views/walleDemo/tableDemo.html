@@ -28,7 +28,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="user in users">
-					<td>{{$index + 1}}</td>
+					<td>{{user.$index}}</td>
 					<td>{{user.loginName}}</td>
 					<td>{{user.name}}</td>
 					<td>{{user.organizeId$label}}</td>

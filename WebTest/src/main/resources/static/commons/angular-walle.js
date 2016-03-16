@@ -15,7 +15,7 @@ angular.module('ui.walle', ['ui.bootstrap'])
 			}
 			if ($attrs.pageSize) {
 				$scope[model + '$pagingInfo'] = {
-						pageSize : $attrs.pageSize
+						pageSize : Number($attrs.pageSize)
 				};
 			}
 			var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
@@ -32,7 +32,8 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					$scope[model] = response.data.dataList;
 					$scope[model + '$loading'] = false;
 					$scope[model + '$pagingInfo'] = response.data.pagingInfo;
-					angular.forEach($scope[model], function(item) {
+					angular.forEach($scope[model], function(item, index) {
+						item.$index = index + 1 + (response.data.pagingInfo ? response.data.pagingInfo.currentRow : 0);
 						angular.forEach(codeTypes, function(codeType, field) {
 							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
 						});
@@ -46,21 +47,30 @@ angular.module('ui.walle', ['ui.bootstrap'])
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-query-type');
+			var model = attrs.ngModel;
 			//paging
 			if (attrs.pageSize) {
 				if (! element.find('> caption').length) {
 					element.prepend('<caption></caption>');
 				}
+				scope.Math || (scope.Math = Math);
 				element.find('> caption').append(
-						'<uib-pagination class="pagination-sm pull-right" ng-model="' + attrs.ngModel + '$pagingInfo.currentPage"' +
-						'		items-per-page="' + attrs.ngModel + '$pagingInfo.pageSize" total-items="' + attrs.ngModel + '$pagingInfo.totalRows"' +
+						'<uib-pagination class="pagination-sm pull-right" ng-model="' + model + '$pagingInfo.currentPage"' +
+						'		items-per-page="' + model + '$pagingInfo.pageSize" total-items="' + model + '$pagingInfo.totalRows"' +
 						'		max-size="5" boundary-link-numbers="true"' +
-						'		ng-change="' + attrs.ngModel + '$query()"' +
+						'		ng-change="' + model + '$query()"' +
 						'		style="margin:0">' +
-						'</uib-pagination>');
+						'</uib-pagination>' +
+						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
+						'	{{Math.min(' + model + '$pagingInfo.pageSize * ((' + model + '$pagingInfo.currentPage || 1) - 1) + 1, ' + model + '$pagingInfo.totalRows || 0)}}' +
+						'	 - ' +
+						'	{{Math.min(' + model + '$pagingInfo.pageSize * ((' + model + '$pagingInfo.currentPage || 1) - 1) + (' + model + '$loading ? ' + model + '$pagingInfo.pageSize : ' + model + '.length), ' + model + '$pagingInfo.totalRows || 0)}}' +
+						'	 / ' +
+						'	{{' + model + '$pagingInfo.totalRows || 0}}' +
+						'</div>');
 			}
 			//append loading prompt
-			$compile('<div>&nbsp;<span ng-show="' + attrs.ngModel + '$loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + attrs.ngModel + '$errormsg}}</span>')(scope).insertAfter(element);
+			$compile('<div>&nbsp;<span ng-show="' + model + '$loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + model + '$errormsg}}</span>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}
