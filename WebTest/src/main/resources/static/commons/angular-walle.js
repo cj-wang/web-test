@@ -9,45 +9,42 @@ angular.module('ui.walle', ['ui.bootstrap'])
 		terminal : true,
 		priority : 1000,
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
-			var model = $attrs.ngModel;
-			if (model.indexOf('.') >= 0) {
-				alert('Nested model (' + model + ') not supported by walle-query-type');
-			}
-			if ($attrs.pageSize) {
-				$scope[model + '$pagingInfo'] = {
-						pageSize : Number($attrs.pageSize)
-				};
-			}
-			var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
-			$scope[model + '$query'] = function() {
-				$scope[model + '$loading'] = true;
-				$scope[model + '$errormsg'] = null;
-				$scope[model] = [];
+			var model = $parse($attrs.ngModel);
+			var query = function() {
+				query.loading = true;
+				query.errormsg = null;
+				model.assign($scope, []);
 				$http.post('/commonQuery', {
 					queryType : $attrs.walleQueryType,
 					orderBy : $attrs.orderBy,
-					pagingInfo : $scope[model + '$pagingInfo'],
-					fieldCodeTypes : codeTypes
+					pagingInfo : query.pagingInfo,
+					fieldCodeTypes : query.codeTypes
 				}).then(function(response) {
-					$scope[model] = response.data.dataList;
-					$scope[model + '$loading'] = false;
-					$scope[model + '$pagingInfo'] = response.data.pagingInfo;
-					angular.forEach($scope[model], function(item, index) {
+					model.assign($scope, response.data.dataList);
+					query.loading = false;
+					query.pagingInfo = response.data.pagingInfo;
+					angular.forEach(response.data.dataList, function(item, index) {
 						item.$index = index + 1 + (response.data.pagingInfo ? response.data.pagingInfo.currentRow : 0);
-						angular.forEach(codeTypes, function(codeType, field) {
+						angular.forEach(query.codeTypes, function(codeType, field) {
 							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
 						});
 					});
 				}, function(response) {
-					$scope[model + '$loading'] = false;
-					$scope[model + '$errormsg'] = 'Error loading data';
+					query.loading = false;
+					query.errormsg = 'Error loading data';
 				});
 			};
-			$scope[model + '$query']();
+			query.codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
+			if ($attrs.pageSize) {
+				query.pagingInfo = {
+						pageSize : Number($attrs.pageSize)
+				};
+			}
+			$parse($attrs.ngModel + '$query').assign($scope, query);
+			query();
 		}],
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-query-type');
-			var model = attrs.ngModel;
 			//paging
 			if (attrs.pageSize) {
 				if (! element.find('> caption').length) {
@@ -55,22 +52,22 @@ angular.module('ui.walle', ['ui.bootstrap'])
 				}
 				scope.Math || (scope.Math = Math);
 				element.find('> caption').append(
-						'<uib-pagination class="pagination-sm pull-right" ng-model="' + model + '$pagingInfo.currentPage"' +
-						'		items-per-page="' + model + '$pagingInfo.pageSize" total-items="' + model + '$pagingInfo.totalRows"' +
+						'<uib-pagination class="pagination-sm pull-right" ng-model="'+ attrs.ngModel +'$query.pagingInfo.currentPage"' +
+						'		items-per-page="'+ attrs.ngModel +'$query.pagingInfo.pageSize" total-items="'+ attrs.ngModel +'$query.pagingInfo.totalRows"' +
 						'		max-size="5" boundary-link-numbers="true"' +
-						'		ng-change="' + model + '$query()"' +
+						'		ng-change="'+ attrs.ngModel +'$query()"' +
 						'		style="margin:0">' +
 						'</uib-pagination>' +
 						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
-						'	{{Math.min(' + model + '$pagingInfo.pageSize * ((' + model + '$pagingInfo.currentPage || 1) - 1) + 1, ' + model + '$pagingInfo.totalRows || 0)}}' +
+						'	{{Math.min('+ attrs.ngModel +'$query.pagingInfo.pageSize * (('+ attrs.ngModel +'$query.pagingInfo.currentPage || 1) - 1) + 1, '+ attrs.ngModel +'$query.pagingInfo.totalRows || 0)}}' +
 						'	 - ' +
-						'	{{Math.min(' + model + '$pagingInfo.pageSize * ((' + model + '$pagingInfo.currentPage || 1) - 1) + (' + model + '$loading ? ' + model + '$pagingInfo.pageSize : ' + model + '.length), ' + model + '$pagingInfo.totalRows || 0)}}' +
+						'	{{Math.min('+ attrs.ngModel +'$query.pagingInfo.pageSize * (('+ attrs.ngModel +'$query.pagingInfo.currentPage || 1) - 1) + ('+ attrs.ngModel +'$query.loading ? '+ attrs.ngModel +'$query.pagingInfo.pageSize : '+ attrs.ngModel +'.length), '+ attrs.ngModel +'$query.pagingInfo.totalRows || 0)}}' +
 						'	 / ' +
-						'	{{' + model + '$pagingInfo.totalRows || 0}}' +
+						'	{{'+ attrs.ngModel +'$query.pagingInfo.totalRows || 0}}' +
 						'</div>');
 			}
 			//append loading prompt
-			$compile('<div>&nbsp;<span ng-show="' + model + '$loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{' + model + '$errormsg}}</span>')(scope).insertAfter(element);
+			$compile('<div>&nbsp;<span ng-show="'+ attrs.ngModel +'$query.loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{'+ attrs.ngModel +'$query.errormsg}}</span>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}
