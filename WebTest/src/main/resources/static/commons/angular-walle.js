@@ -142,9 +142,9 @@ angular.module('ui.walle', ['ui.bootstrap'])
 				element.append('<option value=""> - - - </option>');
 			}
 			//append loading prompt
-			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			//append error prompt
-			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}
@@ -228,12 +228,12 @@ angular.module('ui.walle', ['ui.bootstrap'])
 			//append loading prompt
 			if (! attrs.typeaheadLoading) {
 				element.attr('typeahead-loading', 'walleTypeaheadLoading' + seq);
-				$compile('<div ng-show="walleTypeaheadLoading' + seq + '" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadLoading' + seq + '" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			}
 			//append error prompt
 			if (! attrs.typeaheadNoResults) {
 				element.attr('typeahead-no-results', 'walleTypeaheadNoResults' + seq);
-				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '" style="position:fixed;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
 			}
 			//compile
 			$compile(element)(scope);
