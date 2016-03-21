@@ -13,11 +13,39 @@
 	<div th:replace="index :: .header"></div>
 	
 	<!-- Page content -->
-    <div class="container content-xs">
+		<div class="container content-xs">
+
 
 		<table class="table" ng-model="users" walle-query-type="WlUserModel" order-by="loginName" page-size="10"
 				code-types="{'organizeId':'ALL_ORGS'}">
-			<caption>Users</caption>
+			<caption>
+				Users
+				&nbsp;&nbsp;
+				<button type="button" class="btn btn-sm btn-primary" ng-model="showQueryForm" uib-btn-checkbox="">
+					Search
+				</button>
+				<div uib-collapse="! showQueryForm" class="well">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="queryLogin" class="col-sm-2 control-label">Login</label>
+							<div class="col-sm-3">
+								<input class="form-control" id="queryLogin" placeholder="Login" ng-model="users$query.queryFields.loginName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="queryName" class="col-sm-2 control-label">Name</label>
+							<div class="col-sm-3">
+								<input class="form-control" id="queryName" placeholder="Name" ng-model="users$query.queryFields.name.ilikeAnywhere"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-3">
+								<button type="submit" class="btn btn-primary" ng-click="showQueryForm=false; users$query();">Search</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</caption>
 			<thead>
 				<tr>
 					<th>#</th>
@@ -36,7 +64,7 @@
 			</tbody>
 		</table>
 		
-    </div><!--/container-->
+		</div><!--/container-->
 	
 	
 	<!-- Footer -->

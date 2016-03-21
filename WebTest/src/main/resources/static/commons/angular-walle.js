@@ -10,22 +10,48 @@ angular.module('ui.walle', ['ui.bootstrap'])
 		priority : 1000,
 		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
 			var model = $parse($attrs.ngModel);
-			var query = function() {
+			var query = function(pageNavigation) {
 				query.loading = true;
 				query.errormsg = null;
 				model.assign($scope, []);
+				if (! pageNavigation && $attrs.pageSize) {
+					query.pagingInfo = {
+							pageSize : Number($attrs.pageSize)
+					};
+				}
+				var queryFields = [];
+				if (query.queryFields) {
+					angular.forEach(query.queryFields, function(value, field) {
+						if (typeof value == 'string' || typeof value == 'number' || value.getMonth) {
+							queryFields.push({
+								fieldName : field,
+								fieldStringValue : value
+							});
+						} else {
+							angular.forEach(value, function(subvalue, operator) {
+								queryFields.push({
+									fieldName : field,
+									fieldStringValue : subvalue,
+									operator : operator
+								});
+							});
+						}
+					});
+				}
+				var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
 				$http.post('/commonQuery', {
 					queryType : $attrs.walleQueryType,
 					orderBy : $attrs.orderBy,
 					pagingInfo : query.pagingInfo,
-					fieldCodeTypes : query.codeTypes
+					fieldCodeTypes : codeTypes,
+					queryFields : queryFields
 				}).then(function(response) {
 					model.assign($scope, response.data.dataList);
 					query.loading = false;
 					query.pagingInfo = response.data.pagingInfo;
 					angular.forEach(response.data.dataList, function(item, index) {
 						item.$index = index + 1 + (response.data.pagingInfo ? response.data.pagingInfo.currentRow : 0);
-						angular.forEach(query.codeTypes, function(codeType, field) {
+						angular.forEach(codeTypes, function(codeType, field) {
 							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
 						});
 					});
@@ -34,12 +60,6 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					query.errormsg = 'Error loading data';
 				});
 			};
-			query.codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
-			if ($attrs.pageSize) {
-				query.pagingInfo = {
-						pageSize : Number($attrs.pageSize)
-				};
-			}
 			$parse($attrs.ngModel + '$query').assign($scope, query);
 			query();
 		}],
@@ -51,11 +71,11 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					element.prepend('<caption></caption>');
 				}
 				scope.Math || (scope.Math = Math);
-				element.find('> caption').append(
+				element.find('> caption').prepend(
 						'<uib-pagination class="pagination-sm pull-right" ng-model="'+ attrs.ngModel +'$query.pagingInfo.currentPage"' +
 						'		items-per-page="'+ attrs.ngModel +'$query.pagingInfo.pageSize" total-items="'+ attrs.ngModel +'$query.pagingInfo.totalRows"' +
 						'		max-size="5" boundary-link-numbers="true"' +
-						'		ng-change="'+ attrs.ngModel +'$query()"' +
+						'		ng-change="'+ attrs.ngModel +'$query(true)"' +
 						'		style="margin:0">' +
 						'</uib-pagination>' +
 						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
