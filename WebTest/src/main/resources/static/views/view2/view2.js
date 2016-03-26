@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.view2', ['ngRoute', 'walleApp'])
+angular.module('myApp.view2', ['ngRoute', 'ui.walle'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view2', {
