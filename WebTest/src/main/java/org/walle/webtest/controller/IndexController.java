@@ -2,6 +2,7 @@ package org.walle.webtest.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,6 +21,16 @@ public class IndexController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		return "index";
+	}
+	
+	/**
+	 * Generic view mapping
+	 * @param viewname
+	 * @return
+	 */
+	@RequestMapping("/{viewname:views(?:-\\w+)+}")
+	public String views(@PathVariable String viewname) {
+		return viewname.replace('-', '/');
 	}
 
 }
