@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Tab Frame Demo - Walle Web Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+	
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+	
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="commons/angular-walle.js"></script>
+	<script src="views/tabframe/tabframe.js"></script>
+</head>
+<body ng-app="ngApp" ng-controller="ngCtrl">
+
+	<div class="container">
+		<p>
+			Menu: 
+			<button ng-click="addTab('Query', '/views-tabframe-tabs-tableDemo')">Walle Query</button>
+			<button ng-click="addTab('SelectCode', '/views-tabframe-tabs-selectCodeDemo')">Walle SelectCode</button>
+		</p>
+	
+		<uib-tabset>
+			<uib-tab index="0" heading="Main">
+				<div>Main page</div>
+			</uib-tab>
+			<uib-tab ng-repeat="(index, tab) in tabs" index="tab.index" active="tab.active">
+				<uib-tab-heading>
+					{{tab.heading}}
+					<button class="btn btn-link btn-xs" ng-click="closeTab(tab.index)">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+				</uib-tab-heading>
+				<div ng-include="tab.url"></div>
+			</uib-tab>
+		</uib-tabset>
+	
+	</div><!--/container-->
+	
+</body>
+</html>

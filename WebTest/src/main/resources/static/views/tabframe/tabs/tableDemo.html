@@ -1,0 +1,49 @@
+<script src="views/tabframe/tabs/tableDemo.js"></script>
+
+<table class="table" ng-model="users" walle-query-type="WlUserModel" order-by="loginName" page-size="10"
+		code-types="{'organizeId':'ALL_ORGS'}">
+	<caption>
+		Users
+		&nbsp;&nbsp;
+		<button type="button" class="btn btn-sm btn-primary" ng-model="showQueryForm" uib-btn-checkbox="">
+			Search
+		</button>
+		<div uib-collapse="! showQueryForm" class="well" style="margin:10px 0">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="queryLogin" class="col-sm-2 control-label">Login</label>
+					<div class="col-sm-3">
+						<input class="form-control" id="queryLogin" placeholder="Login" ng-model="users$query.queryFields.loginName"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="queryName" class="col-sm-2 control-label">Name</label>
+					<div class="col-sm-3">
+						<input class="form-control" id="queryName" placeholder="Name" ng-model="users$query.queryFields.name.ilikeAnywhere"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-3">
+						<button type="submit" class="btn btn-primary" ng-click="showQueryForm=false; users$query();">Search</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</caption>
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Login</th>
+			<th>Name</th>
+			<th>Organization</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users">
+			<td>{{user.$index}}</td>
+			<td>{{user.loginName}}</td>
+			<td>{{user.name}}</td>
+			<td>{{user.organizeId$label}}</td>
+		</tr>
+	</tbody>
+</table>
