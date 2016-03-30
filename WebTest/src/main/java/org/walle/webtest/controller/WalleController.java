@@ -38,19 +38,19 @@ public class WalleController {
 	private SelectCodeManager selectCodeManager;
 	
 	
-	@RequestMapping("/commonQuery")
+	@RequestMapping("/api/walle/commonQuery")
 	public QueryData commonQuery(@RequestBody QueryInfo queryInfo) {
 		return commonQueryManager.query(queryInfo);
 	}
 	
-	@RequestMapping("/selectCode/{codeType}")
+	@RequestMapping("/api/walle/selectCode/{codeType}")
 	public SelectCodeData selectCode(@PathVariable String codeType) {
 		QueryInfo queryInfo = new QueryInfo();
 		queryInfo.setQueryType(codeType);
 		return selectCodeManager.getSelectCodeData(queryInfo);
 	}
 	
-	@RequestMapping(value="/selectCode/{codeType}", params="q")
+	@RequestMapping(value="/api/walle/selectCode/{codeType}", params="q")
 	public SelectCodeData selectCode(@PathVariable String codeType, @RequestParam String q, @RequestParam(required=false) Integer limit) {
 		SelectCodeDefinition selectCodeDefinition = selectCodeManager.getSelectCodeDefinition(codeType);
 		Set<String> fieldNames = new HashSet<String>();

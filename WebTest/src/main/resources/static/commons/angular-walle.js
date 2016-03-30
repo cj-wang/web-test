@@ -39,7 +39,7 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					});
 				}
 				var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
-				$http.post('/commonQuery', {
+				$http.post('/api/walle/commonQuery', {
 					queryType : $attrs.walleQueryType,
 					orderBy : $attrs.orderBy,
 					pagingInfo : query.pagingInfo,
@@ -106,7 +106,7 @@ angular.module('ui.walle', ['ui.bootstrap'])
 			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
 				$scope.selectCodes[$attrs.walleSelectCode] = {};
 				$scope.selectCodes[$attrs.walleSelectCode].loading = true;
-				$http.get('/selectCode/' + $attrs.walleSelectCode)
+				$http.get('/api/walle/selectCode/' + $attrs.walleSelectCode)
 				.then(function(response) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
 					$scope.selectCodes[$attrs.walleSelectCode].data = response.data.dataList.map(function(item) {
@@ -164,7 +164,7 @@ angular.module('ui.walle', ['ui.bootstrap'])
 			$scope.selectCodes[$attrs.walleTypeaheadCode].mapping = $scope.selectCodes[$attrs.walleTypeaheadCode].mapping || {};
 			//query selectCodes data
 			$scope.walleSelectCodeQuery = function(codeType, q) {
-				return $http.get('/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
+				return $http.get('/api/walle/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
 				.then(function(response) {
 					return response.data.dataList.map(function(item) {
 						$scope.selectCodes[codeType].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
@@ -185,7 +185,7 @@ angular.module('ui.walle', ['ui.bootstrap'])
 					return $scope.selectCodes[codetype].mapping[key + ''];
 				} else {
 					$scope['walleTypeaheadLoading' + seq] = true; 
-					$http.get('/selectCode/' + codetype + '?q=' + key)
+					$http.get('/api/walle/selectCode/' + codetype + '?q=' + key)
 					.then(function(response) {
 						$scope['walleTypeaheadLoading' + seq] = false;
 						if (response.data.dataList && response.data.dataList.length) {
