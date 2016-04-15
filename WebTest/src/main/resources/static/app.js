@@ -8,6 +8,8 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.demo'
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider.otherwise({redirectTo: 'view1'});
+	// use the HTML5 History API
+    $locationProvider.html5Mode(true);
 }]);
