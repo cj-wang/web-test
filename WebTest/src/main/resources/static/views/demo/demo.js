@@ -1,6 +1,6 @@
 'use strict';
 
-ngApp.config(['$routeProvider', function($routeProvider) {
+angular.module('ngApp').config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/ellipsable-table-demo', {
 		templateUrl: 'views/demo/ellipsable-table-demo.html',
 		controller: 'ellipsableTableDemoCtrl'

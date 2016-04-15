@@ -1,6 +1,6 @@
 'use strict';
 
-ngApp.config(['$routeProvider', function($routeProvider) {
+angular.module('ngApp').config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view2', {
     templateUrl: 'views/view2/view2.html',
     controller: 'View2Ctrl'

@@ -1,6 +1,6 @@
 'use strict';
 
-var ngApp = angular.module('ngApp', ['ngRoute', 'ui.walle']).
+angular.module('ngApp', ['ngRoute', 'ui.walle']).
 config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider.otherwise({redirectTo: 'view1'});
 	// use the HTML5 History API
