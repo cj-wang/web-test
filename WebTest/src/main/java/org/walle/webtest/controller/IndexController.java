@@ -17,7 +17,7 @@ public class IndexController {
 	 * @param viewname
 	 * @return
 	 */
-	@RequestMapping("/{viewname:^[^.]*$}")
+	@RequestMapping("/**/{viewname:^[^.]*$}")
 	public String views(@PathVariable String viewname) {
 		return "index";
 	}
