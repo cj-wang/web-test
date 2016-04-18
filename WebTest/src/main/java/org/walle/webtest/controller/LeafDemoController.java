@@ -22,7 +22,7 @@ public class LeafDemoController {
 	 * leaf demo
 	 * @return
 	 */
-	@RequestMapping("/leafdemo")
+	@RequestMapping("/leafdemo.html")
 	public String leafdemo(Model model) {
 		//get data
 		ServiceNowTaskSLAs taskSLAs = new ServiceNowTaskSLAs();
