@@ -19,5 +19,5 @@ gulp.task('build', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('src/main/resources/static/views/**/*.js', ['build'])
+	gulp.watch('src/main/resources/static/views/**/*.js', ['build'])
 });
