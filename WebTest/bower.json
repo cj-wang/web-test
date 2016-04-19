@@ -1,9 +1,6 @@
 {
-	"name": "walle-webtest",
-	"description": "A starter project for AngularJS & walle",
+	"name": "walle-web-test",
 	"version": "0.0.1",
-	"homepage": "https://github.com/angular/angular-seed",
-	"license": "MIT",
 	"private": true,
 	"dependencies": {
 		"jquery": "~2.1.x",
