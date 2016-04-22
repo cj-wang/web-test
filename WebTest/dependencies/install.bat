@@ -1,4 +1,4 @@
-call mvn install:install-file -Dfile=walle-core-5.0-20160317.jar -DgroupId=cn.walle -DartifactId=walle-core -Dversion=5.0-20160317 -Dpackaging=jar
+call mvn install:install-file -Dfile=walle-core-5.0-20160422.jar -DgroupId=cn.walle -DartifactId=walle-core -Dversion=5.0-20160422 -Dpackaging=jar
 
 call mvn install:install-file -Dfile=walle-json-1.0.jar -DgroupId=cn.walle -DartifactId=walle-json -Dversion=1.0 -Dpackaging=jar
 

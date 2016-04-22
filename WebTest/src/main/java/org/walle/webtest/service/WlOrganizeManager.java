@@ -1,13 +1,9 @@
 package org.walle.webtest.service;
 
-import java.util.Collection;
-import java.util.List;
-
-import cn.walle.framework.core.service.BaseManager;
 import org.walle.webtest.model.WlOrganizeModel;
 
-public interface WlOrganizeManager extends BaseManager {
+import cn.walle.framework.common.service.CommonSaveManager;
 
-	List<WlOrganizeModel> saveAll(Collection<WlOrganizeModel> models);
+public interface WlOrganizeManager extends CommonSaveManager<WlOrganizeModel> {
 
 }
