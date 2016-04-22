@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>cn.walle</groupId>
 			<artifactId>walle-core</artifactId>
-			<version>5.0-20160422</version>
+			<version>5.0-20160422a</version>
 		</dependency>
 		<dependency>
 			<groupId>cn.walle</groupId>
