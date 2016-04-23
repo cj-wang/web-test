@@ -30,11 +30,11 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 
 	public static final class FieldNames {
 		/**
-		 * organizeId
+		 * 组织Id
 		 */
 		public static final String organizeId = "organizeId";
 		/**
-		 * name
+		 * 组织名称
 		 */
 		public static final String name = "name";
 		/**
@@ -42,7 +42,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String districtId = "districtId";
 		/**
-		 * organizeTypeId
+		 * 组织类型
 		 */
 		public static final String organizeTypeId = "organizeTypeId";
 		/**
@@ -50,15 +50,15 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String parentOrganizeId = "parentOrganizeId";
 		/**
-		 * manage
+		 * 负责人
 		 */
 		public static final String manage = "manage";
 		/**
-		 * contact
+		 * 联系人名称
 		 */
 		public static final String contact = "contact";
 		/**
-		 * contactTel
+		 * 联系人电话
 		 */
 		public static final String contactTel = "contactTel";
 		/**
@@ -126,30 +126,42 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String recVer = "recVer";
 		/**
+		 * tenantId
+		 */
+		public static final String tenantId = "tenantId";
+		/**
 		 * tsId
 		 */
 		public static final String tsId = "tsId";
 		/**
-		 * tenantId
+		 * 组织code
 		 */
-		public static final String tenantId = "tenantId";
+		public static final String orgCode = "orgCode";
+		/**
+		 * parentCode
+		 */
+		public static final String parentCode = "parentCode";
+		/**
+		 * 区域系数
+		 */
+		public static final String areaModulus = "areaModulus";
 	}
 
-	//organizeId
+	//组织Id
 	private String organizeId;
-	//name
+	//组织名称
 	private String name;
 	//districtId
 	private String districtId;
-	//organizeTypeId
+	//组织类型
 	private String organizeTypeId;
 	//parentOrganizeId
 	private String parentOrganizeId;
-	//manage
+	//负责人
 	private String manage;
-	//contact
+	//联系人名称
 	private String contact;
-	//contactTel
+	//联系人电话
 	private String contactTel;
 	//fax
 	private String fax;
@@ -183,13 +195,19 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	private Date modifyTime;
 	//recVer
 	private Long recVer;
-	//tsId
-	private String tsId;
 	//tenantId
 	private String tenantId;
+	//tsId
+	private String tsId;
+	//组织code
+	private String orgCode;
+	//parentCode
+	private String parentCode;
+	//区域系数
+	private String areaModulus;
 
 	/**
-	 * Get organizeId
+	 * Get 组织Id
 	 */
 	@Column(name = "ORGANIZE_ID")
 	@Id @GeneratedValue(generator = "UUIDGenerator")
@@ -198,7 +216,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set organizeId
+	 * Set 组织Id
 	 */
 	public void setOrganizeId(String organizeId) {
 		this.organizeId = organizeId;
@@ -206,7 +224,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get name
+	 * Get 组织名称
 	 */
 	@Column(name = "NAME")
 	public String getName() {
@@ -214,7 +232,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set name
+	 * Set 组织名称
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -238,7 +256,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get organizeTypeId
+	 * Get 组织类型
 	 */
 	@Column(name = "ORGANIZE_TYPE_ID")
 	public String getOrganizeTypeId() {
@@ -246,7 +264,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set organizeTypeId
+	 * Set 组织类型
 	 */
 	public void setOrganizeTypeId(String organizeTypeId) {
 		this.organizeTypeId = organizeTypeId;
@@ -270,7 +288,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get manage
+	 * Get 负责人
 	 */
 	@Column(name = "MANAGE")
 	public String getManage() {
@@ -278,7 +296,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set manage
+	 * Set 负责人
 	 */
 	public void setManage(String manage) {
 		this.manage = manage;
@@ -286,7 +304,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get contact
+	 * Get 联系人名称
 	 */
 	@Column(name = "CONTACT")
 	public String getContact() {
@@ -294,7 +312,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set contact
+	 * Set 联系人名称
 	 */
 	public void setContact(String contact) {
 		this.contact = contact;
@@ -302,7 +320,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get contactTel
+	 * Get 联系人电话
 	 */
 	@Column(name = "CONTACT_TEL")
 	public String getContactTel() {
@@ -310,7 +328,7 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set contactTel
+	 * Set 联系人电话
 	 */
 	public void setContactTel(String contactTel) {
 		this.contactTel = contactTel;
@@ -575,6 +593,22 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
+	 * Get tenantId
+	 */
+	@Column(name = "TENANT_ID")
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	/**
+	 * Set tenantId
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+		addValidField(FieldNames.tenantId);
+	}
+
+	/**
 	 * Get tsId
 	 */
 	@Column(name = "TS_ID")
@@ -591,19 +625,53 @@ public class WlOrganizeModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get tenantId
+	 * Get 组织code
+	 * 用于业务处理
 	 */
-	@Column(name = "TENANT_ID")
-	public String getTenantId() {
-		return tenantId;
+	@Column(name = "org_code")
+	public String getOrgCode() {
+		return orgCode;
 	}
 
 	/**
-	 * Set tenantId
+	 * Set 组织code
+	 * 用于业务处理
 	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-		addValidField(FieldNames.tenantId);
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+		addValidField(FieldNames.orgCode);
+	}
+
+	/**
+	 * Get parentCode
+	 */
+	@Column(name = "parent_code")
+	public String getParentCode() {
+		return parentCode;
+	}
+
+	/**
+	 * Set parentCode
+	 */
+	public void setParentCode(String parentCode) {
+		this.parentCode = parentCode;
+		addValidField(FieldNames.parentCode);
+	}
+
+	/**
+	 * Get 区域系数
+	 */
+	@Column(name = "area_modulus")
+	public String getAreaModulus() {
+		return areaModulus;
+	}
+
+	/**
+	 * Set 区域系数
+	 */
+	public void setAreaModulus(String areaModulus) {
+		this.areaModulus = areaModulus;
+		addValidField(FieldNames.areaModulus);
 	}
 
 }

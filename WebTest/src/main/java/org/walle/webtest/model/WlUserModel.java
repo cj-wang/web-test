@@ -30,55 +30,55 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 
 	public static final class FieldNames {
 		/**
-		 * userId
+		 * 员工内部编码
 		 */
 		public static final String userId = "userId";
 		/**
-		 * code
+		 * 员工工号
 		 */
 		public static final String code = "code";
 		/**
-		 * loginName
+		 * 登录名
 		 */
 		public static final String loginName = "loginName";
 		/**
-		 * name
+		 * 员工姓名
 		 */
 		public static final String name = "name";
 		/**
-		 * organizeId
+		 * 所属组
 		 */
 		public static final String organizeId = "organizeId";
 		/**
-		 * reportToUserId
+		 * 直接领导
 		 */
 		public static final String reportToUserId = "reportToUserId";
 		/**
-		 * certifiTypeId
+		 * 证件类型
 		 */
 		public static final String certifiTypeId = "certifiTypeId";
 		/**
-		 * certifiCode
+		 * 证件号码
 		 */
 		public static final String certifiCode = "certifiCode";
 		/**
-		 * password
+		 * 登录密码
 		 */
 		public static final String password = "password";
 		/**
-		 * allowChangePassword
+		 * 是否允许修改密码
 		 */
 		public static final String allowChangePassword = "allowChangePassword";
 		/**
-		 * workTypeId
+		 * 职务
 		 */
 		public static final String workTypeId = "workTypeId";
 		/**
-		 * userTypeId
+		 * 员工类型0在编1非在编
 		 */
 		public static final String userTypeId = "userTypeId";
 		/**
-		 * checkFlag
+		 * 是否为任务调度负责人(0是
 		 */
 		public static final String checkFlag = "checkFlag";
 		/**
@@ -86,19 +86,19 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String educationTypeId = "educationTypeId";
 		/**
-		 * homeTel
+		 * 家庭电话
 		 */
 		public static final String homeTel = "homeTel";
 		/**
-		 * officeTel
+		 * 办公电话
 		 */
 		public static final String officeTel = "officeTel";
 		/**
-		 * mobileTele
+		 * 移动电话
 		 */
 		public static final String mobileTele = "mobileTele";
 		/**
-		 * addrId
+		 * 员工住址
 		 */
 		public static final String addrId = "addrId";
 		/**
@@ -178,7 +178,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String iconSmall = "iconSmall";
 		/**
-		 * msn
+		 * 打印软件授权
 		 */
 		public static final String msn = "msn";
 		/**
@@ -186,62 +186,70 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 		 */
 		public static final String onlineStatus = "onlineStatus";
 		/**
-		 * unitsId
+		 * tenantId
 		 */
-		public static final String unitsId = "unitsId";
+		public static final String tenantId = "tenantId";
+		/**
+		 * 区县code
+		 */
+		public static final String districtId = "districtId";
 		/**
 		 * issendmsg
 		 */
 		public static final String issendmsg = "issendmsg";
 		/**
-		 * tenantId
+		 * 明文密码
 		 */
-		public static final String tenantId = "tenantId";
+		public static final String mwpassword = "mwpassword";
 		/**
-		 * userType
+		 * 时间long类型版本
 		 */
-		public static final String userType = "userType";
+		public static final String version = "version";
 		/**
-		 * branchId
+		 * 手机通讯卡
 		 */
-		public static final String branchId = "branchId";
+		public static final String sim = "sim";
+		/**
+		 * 手机终端标识码
+		 */
+		public static final String imei = "imei";
 	}
 
-	//userId
+	//员工内部编码
 	private String userId;
-	//code
+	//员工工号
 	private String code;
-	//loginName
+	//登录名
 	private String loginName;
-	//name
+	//员工姓名
 	private String name;
-	//organizeId
+	//所属组
 	private String organizeId;
-	//reportToUserId
-	private Double reportToUserId;
-	//certifiTypeId
-	private Double certifiTypeId;
-	//certifiCode
+	//直接领导
+	private String reportToUserId;
+	//证件类型
+	private Integer certifiTypeId;
+	//证件号码
 	private String certifiCode;
-	//password
+	//登录密码
 	private String password;
-	//allowChangePassword
+	//是否允许修改密码
 	private String allowChangePassword;
-	//workTypeId
-	private Double workTypeId;
-	//userTypeId
-	private Double userTypeId;
-	//checkFlag
+	//职务
+	private String workTypeId;
+	//员工类型0在编1非在编
+	private String userTypeId;
+	//是否为任务调度负责人(0是
 	private String checkFlag;
 	//educationTypeId
-	private Double educationTypeId;
-	//homeTel
+	private Integer educationTypeId;
+	//家庭电话
 	private String homeTel;
-	//officeTel
+	//办公电话
 	private String officeTel;
-	//mobileTele
+	//移动电话
 	private String mobileTele;
-	//addrId
+	//员工住址
 	private String addrId;
 	//email
 	private String email;
@@ -252,11 +260,11 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	//expireDate
 	private Date expireDate;
 	//multiLoginFlag
-	private Double multiLoginFlag;
+	private Integer multiLoginFlag;
 	//lastLoginLogId
-	private Double lastLoginLogId;
+	private Long lastLoginLogId;
 	//tryTimes
-	private Double tryTimes;
+	private Integer tryTimes;
 	//lockFlag
 	private String lockFlag;
 	//isLogin
@@ -281,23 +289,27 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	private String icon;
 	//iconSmall
 	private String iconSmall;
-	//msn
+	//打印软件授权
 	private String msn;
 	//onlineStatus
 	private String onlineStatus;
-	//unitsId
-	private String unitsId;
-	//issendmsg
-	private String issendmsg;
 	//tenantId
 	private String tenantId;
-	//userType
-	private String userType;
-	//branchId
-	private Integer branchId;
+	//区县code
+	private String districtId;
+	//issendmsg
+	private String issendmsg;
+	//明文密码
+	private String mwpassword;
+	//时间long类型版本
+	private Integer version;
+	//手机通讯卡
+	private String sim;
+	//手机终端标识码
+	private String imei;
 
 	/**
-	 * Get userId
+	 * Get 员工内部编码
 	 */
 	@Column(name = "USER_ID")
 	@Id @GeneratedValue(generator = "UUIDGenerator")
@@ -306,7 +318,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set userId
+	 * Set 员工内部编码
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
@@ -314,7 +326,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get code
+	 * Get 员工工号
 	 */
 	@Column(name = "CODE")
 	public String getCode() {
@@ -322,7 +334,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set code
+	 * Set 员工工号
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -330,7 +342,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get loginName
+	 * Get 登录名
 	 */
 	@Column(name = "LOGIN_NAME")
 	public String getLoginName() {
@@ -338,7 +350,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set loginName
+	 * Set 登录名
 	 */
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
@@ -346,7 +358,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get name
+	 * Get 员工姓名
 	 */
 	@Column(name = "NAME")
 	public String getName() {
@@ -354,7 +366,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set name
+	 * Set 员工姓名
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -362,7 +374,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get organizeId
+	 * Get 所属组
 	 */
 	@Column(name = "ORGANIZE_ID")
 	public String getOrganizeId() {
@@ -370,7 +382,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set organizeId
+	 * Set 所属组
 	 */
 	public void setOrganizeId(String organizeId) {
 		this.organizeId = organizeId;
@@ -378,39 +390,39 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get reportToUserId
+	 * Get 直接领导
 	 */
 	@Column(name = "REPORT_TO_USER_ID")
-	public Double getReportToUserId() {
+	public String getReportToUserId() {
 		return reportToUserId;
 	}
 
 	/**
-	 * Set reportToUserId
+	 * Set 直接领导
 	 */
-	public void setReportToUserId(Double reportToUserId) {
+	public void setReportToUserId(String reportToUserId) {
 		this.reportToUserId = reportToUserId;
 		addValidField(FieldNames.reportToUserId);
 	}
 
 	/**
-	 * Get certifiTypeId
+	 * Get 证件类型
 	 */
 	@Column(name = "CERTIFI_TYPE_ID")
-	public Double getCertifiTypeId() {
+	public Integer getCertifiTypeId() {
 		return certifiTypeId;
 	}
 
 	/**
-	 * Set certifiTypeId
+	 * Set 证件类型
 	 */
-	public void setCertifiTypeId(Double certifiTypeId) {
+	public void setCertifiTypeId(Integer certifiTypeId) {
 		this.certifiTypeId = certifiTypeId;
 		addValidField(FieldNames.certifiTypeId);
 	}
 
 	/**
-	 * Get certifiCode
+	 * Get 证件号码
 	 */
 	@Column(name = "CERTIFI_CODE")
 	public String getCertifiCode() {
@@ -418,7 +430,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set certifiCode
+	 * Set 证件号码
 	 */
 	public void setCertifiCode(String certifiCode) {
 		this.certifiCode = certifiCode;
@@ -426,7 +438,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get password
+	 * Get 登录密码
 	 */
 	@Column(name = "PASSWORD")
 	public String getPassword() {
@@ -434,7 +446,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set password
+	 * Set 登录密码
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -442,7 +454,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get allowChangePassword
+	 * Get 是否允许修改密码
 	 */
 	@Column(name = "ALLOW_CHANGE_PASSWORD")
 	public String getAllowChangePassword() {
@@ -450,7 +462,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set allowChangePassword
+	 * Set 是否允许修改密码
 	 */
 	public void setAllowChangePassword(String allowChangePassword) {
 		this.allowChangePassword = allowChangePassword;
@@ -458,39 +470,40 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get workTypeId
+	 * Get 职务
 	 */
 	@Column(name = "WORK_TYPE_ID")
-	public Double getWorkTypeId() {
+	public String getWorkTypeId() {
 		return workTypeId;
 	}
 
 	/**
-	 * Set workTypeId
+	 * Set 职务
 	 */
-	public void setWorkTypeId(Double workTypeId) {
+	public void setWorkTypeId(String workTypeId) {
 		this.workTypeId = workTypeId;
 		addValidField(FieldNames.workTypeId);
 	}
 
 	/**
-	 * Get userTypeId
+	 * Get 员工类型0在编1非在编
 	 */
 	@Column(name = "USER_TYPE_ID")
-	public Double getUserTypeId() {
+	public String getUserTypeId() {
 		return userTypeId;
 	}
 
 	/**
-	 * Set userTypeId
+	 * Set 员工类型0在编1非在编
 	 */
-	public void setUserTypeId(Double userTypeId) {
+	public void setUserTypeId(String userTypeId) {
 		this.userTypeId = userTypeId;
 		addValidField(FieldNames.userTypeId);
 	}
 
 	/**
-	 * Get checkFlag
+	 * Get 是否为任务调度负责人(0是
+	 * ，1否）
 	 */
 	@Column(name = "CHECK_FLAG")
 	public String getCheckFlag() {
@@ -498,7 +511,8 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set checkFlag
+	 * Set 是否为任务调度负责人(0是
+	 * ，1否）
 	 */
 	public void setCheckFlag(String checkFlag) {
 		this.checkFlag = checkFlag;
@@ -509,20 +523,20 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	 * Get educationTypeId
 	 */
 	@Column(name = "EDUCATION_TYPE_ID")
-	public Double getEducationTypeId() {
+	public Integer getEducationTypeId() {
 		return educationTypeId;
 	}
 
 	/**
 	 * Set educationTypeId
 	 */
-	public void setEducationTypeId(Double educationTypeId) {
+	public void setEducationTypeId(Integer educationTypeId) {
 		this.educationTypeId = educationTypeId;
 		addValidField(FieldNames.educationTypeId);
 	}
 
 	/**
-	 * Get homeTel
+	 * Get 家庭电话
 	 */
 	@Column(name = "HOME_TEL")
 	public String getHomeTel() {
@@ -530,7 +544,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set homeTel
+	 * Set 家庭电话
 	 */
 	public void setHomeTel(String homeTel) {
 		this.homeTel = homeTel;
@@ -538,7 +552,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get officeTel
+	 * Get 办公电话
 	 */
 	@Column(name = "OFFICE_TEL")
 	public String getOfficeTel() {
@@ -546,7 +560,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set officeTel
+	 * Set 办公电话
 	 */
 	public void setOfficeTel(String officeTel) {
 		this.officeTel = officeTel;
@@ -554,7 +568,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get mobileTele
+	 * Get 移动电话
 	 */
 	@Column(name = "MOBILE_TELE")
 	public String getMobileTele() {
@@ -562,7 +576,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set mobileTele
+	 * Set 移动电话
 	 */
 	public void setMobileTele(String mobileTele) {
 		this.mobileTele = mobileTele;
@@ -570,7 +584,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get addrId
+	 * Get 员工住址
 	 */
 	@Column(name = "ADDR_ID")
 	public String getAddrId() {
@@ -578,7 +592,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set addrId
+	 * Set 员工住址
 	 */
 	public void setAddrId(String addrId) {
 		this.addrId = addrId;
@@ -653,14 +667,14 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	 * Get multiLoginFlag
 	 */
 	@Column(name = "MULTI_LOGIN_FLAG")
-	public Double getMultiLoginFlag() {
+	public Integer getMultiLoginFlag() {
 		return multiLoginFlag;
 	}
 
 	/**
 	 * Set multiLoginFlag
 	 */
-	public void setMultiLoginFlag(Double multiLoginFlag) {
+	public void setMultiLoginFlag(Integer multiLoginFlag) {
 		this.multiLoginFlag = multiLoginFlag;
 		addValidField(FieldNames.multiLoginFlag);
 	}
@@ -669,14 +683,14 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	 * Get lastLoginLogId
 	 */
 	@Column(name = "LAST_LOGIN_LOG_ID")
-	public Double getLastLoginLogId() {
+	public Long getLastLoginLogId() {
 		return lastLoginLogId;
 	}
 
 	/**
 	 * Set lastLoginLogId
 	 */
-	public void setLastLoginLogId(Double lastLoginLogId) {
+	public void setLastLoginLogId(Long lastLoginLogId) {
 		this.lastLoginLogId = lastLoginLogId;
 		addValidField(FieldNames.lastLoginLogId);
 	}
@@ -685,14 +699,14 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	 * Get tryTimes
 	 */
 	@Column(name = "TRY_TIMES")
-	public Double getTryTimes() {
+	public Integer getTryTimes() {
 		return tryTimes;
 	}
 
 	/**
 	 * Set tryTimes
 	 */
-	public void setTryTimes(Double tryTimes) {
+	public void setTryTimes(Integer tryTimes) {
 		this.tryTimes = tryTimes;
 		addValidField(FieldNames.tryTimes);
 	}
@@ -891,7 +905,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get msn
+	 * Get 打印软件授权
 	 */
 	@Column(name = "MSN")
 	public String getMsn() {
@@ -899,7 +913,7 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Set msn
+	 * Set 打印软件授权
 	 */
 	public void setMsn(String msn) {
 		this.msn = msn;
@@ -923,19 +937,35 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get unitsId
+	 * Get tenantId
 	 */
-	@Column(name = "UNITS_ID")
-	public String getUnitsId() {
-		return unitsId;
+	@Column(name = "TENANT_ID")
+	public String getTenantId() {
+		return tenantId;
 	}
 
 	/**
-	 * Set unitsId
+	 * Set tenantId
 	 */
-	public void setUnitsId(String unitsId) {
-		this.unitsId = unitsId;
-		addValidField(FieldNames.unitsId);
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+		addValidField(FieldNames.tenantId);
+	}
+
+	/**
+	 * Get 区县code
+	 */
+	@Column(name = "DISTRICT_ID")
+	public String getDistrictId() {
+		return districtId;
+	}
+
+	/**
+	 * Set 区县code
+	 */
+	public void setDistrictId(String districtId) {
+		this.districtId = districtId;
+		addValidField(FieldNames.districtId);
 	}
 
 	/**
@@ -955,51 +985,67 @@ public class WlUserModel extends BaseModelClass implements OperationLog {
 	}
 
 	/**
-	 * Get tenantId
+	 * Get 明文密码
 	 */
-	@Column(name = "TENANT_ID")
-	public String getTenantId() {
-		return tenantId;
+	@Column(name = "MWPASSWORD")
+	public String getMwpassword() {
+		return mwpassword;
 	}
 
 	/**
-	 * Set tenantId
+	 * Set 明文密码
 	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-		addValidField(FieldNames.tenantId);
+	public void setMwpassword(String mwpassword) {
+		this.mwpassword = mwpassword;
+		addValidField(FieldNames.mwpassword);
 	}
 
 	/**
-	 * Get userType
+	 * Get 时间long类型版本
 	 */
-	@Column(name = "USER_TYPE")
-	public String getUserType() {
-		return userType;
+	@Column(name = "VERSION")
+	public Integer getVersion() {
+		return version;
 	}
 
 	/**
-	 * Set userType
+	 * Set 时间long类型版本
 	 */
-	public void setUserType(String userType) {
-		this.userType = userType;
-		addValidField(FieldNames.userType);
+	public void setVersion(Integer version) {
+		this.version = version;
+		addValidField(FieldNames.version);
 	}
 
 	/**
-	 * Get branchId
+	 * Get 手机通讯卡
 	 */
-	@Column(name = "BRANCH_ID")
-	public Integer getBranchId() {
-		return branchId;
+	@Column(name = "SIM")
+	public String getSim() {
+		return sim;
 	}
 
 	/**
-	 * Set branchId
+	 * Set 手机通讯卡
 	 */
-	public void setBranchId(Integer branchId) {
-		this.branchId = branchId;
-		addValidField(FieldNames.branchId);
+	public void setSim(String sim) {
+		this.sim = sim;
+		addValidField(FieldNames.sim);
+	}
+
+	/**
+	 * Get 手机终端标识码
+	 */
+	@Column(name = "IMEI")
+	public String getImei() {
+		return imei;
+	}
+
+	/**
+	 * Set 手机终端标识码
+	 */
+	public void setImei(String imei) {
+		this.imei = imei;
+		addValidField(FieldNames.imei);
 	}
 
 }

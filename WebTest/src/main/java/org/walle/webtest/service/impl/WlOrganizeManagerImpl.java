@@ -4,10 +4,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.walle.webtest.model.WlOrganizeModel;
-import org.walle.webtest.service.WlOrganizeManager;
 
 import cn.walle.framework.core.service.impl.BaseManagerImpl;
+
+import org.walle.webtest.model.WlOrganizeModel;
+import org.walle.webtest.service.WlOrganizeManager;
 
 @Service
 public class WlOrganizeManagerImpl extends BaseManagerImpl implements WlOrganizeManager {
