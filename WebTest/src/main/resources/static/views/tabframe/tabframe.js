@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('ngApp', ['ui.walle'])
 .controller('ngCtrl', function($scope, $http) {
 	
 	var seq = 0;
