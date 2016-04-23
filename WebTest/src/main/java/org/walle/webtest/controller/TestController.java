@@ -5,9 +5,9 @@ import java.util.Date;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.walle.webtest.model.ServiceNowTaskSLAs;
-import org.walle.webtest.model.ServiceNowTaskSLAs.Incident;
-import org.walle.webtest.model.ServiceNowTaskSLAs.TaskSLA;
+import org.walle.webtest.entity.ServiceNowTaskSLAs;
+import org.walle.webtest.entity.ServiceNowTaskSLAs.Incident;
+import org.walle.webtest.entity.ServiceNowTaskSLAs.TaskSLA;
 
 /**
  * Controller for test

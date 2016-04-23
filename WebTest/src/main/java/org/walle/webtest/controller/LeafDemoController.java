@@ -6,9 +6,9 @@ import java.util.Date;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.walle.webtest.model.ServiceNowTaskSLAs;
-import org.walle.webtest.model.ServiceNowTaskSLAs.Incident;
-import org.walle.webtest.model.ServiceNowTaskSLAs.TaskSLA;
+import org.walle.webtest.entity.ServiceNowTaskSLAs;
+import org.walle.webtest.entity.ServiceNowTaskSLAs.Incident;
+import org.walle.webtest.entity.ServiceNowTaskSLAs.TaskSLA;
 
 /**
  * Controller for Thymeleaf demos

@@ -1,4 +1,4 @@
-package org.walle.webtest.model;
+package org.walle.webtest.entity;
 
 import java.io.Serializable;
 import java.util.Date;
