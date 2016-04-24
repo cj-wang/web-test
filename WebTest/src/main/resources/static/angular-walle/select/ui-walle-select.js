@@ -22,7 +22,8 @@ angular.module('ui.walle.select', ['ui.bootstrap'])
 							label : item[response.data.labelFieldName]
 						};
 					});
-				}, function(response) {
+				})
+				.catch(function(error) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
 					$scope.selectCodes[$attrs.walleSelectCode].error = true;
 				});

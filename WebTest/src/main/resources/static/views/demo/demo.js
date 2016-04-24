@@ -10,12 +10,12 @@ angular.module('ngApp')
 
 .controller('ellipsableTableDemoCtrl', function($scope, $http) {
 	$http.get('/querySlaMissedTickets')
-	.success(function(data, status, headers, config) {
-		$scope.sla_missed_tickets = data.records;
+	.then(function(response) {
+		$scope.sla_missed_tickets = response.data.records;
 	})
-	.error(function(data, status, headers, config) {
+	.catch(function(error) {
 		$scope.sla_missed_tickets = [{
-			task : data && data.error ? data.error : "Error"
+			task : error || "Error"
 		}];
 	});
 });

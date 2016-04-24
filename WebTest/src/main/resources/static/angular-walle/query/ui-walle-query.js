@@ -44,7 +44,8 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 					pagingInfo : query.pagingInfo,
 					fieldCodeTypes : codeTypes,
 					queryFields : queryFields
-				}).then(function(response) {
+				})
+				.then(function(response) {
 					model.assign($scope, response.data.dataList);
 					query.loading = false;
 					query.pagingInfo = response.data.pagingInfo;
@@ -54,7 +55,8 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
 						});
 					});
-				}, function(response) {
+				})
+				.catch(function(error) {
 					query.loading = false;
 					query.errormsg = 'Error loading data';
 				});

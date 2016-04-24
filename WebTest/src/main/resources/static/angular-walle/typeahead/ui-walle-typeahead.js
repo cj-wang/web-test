@@ -53,7 +53,8 @@ angular.module('ui.walle.typeahead', ['ui.bootstrap'])
 						} else {
 							$scope['walleTypeaheadNoResults' + seq] = true;
 						}
-					}, function() {
+					})
+					.catch(function(error) {
 						$scope['walleTypeaheadLoading' + seq] = false;
 						$scope['walleTypeaheadNoResults' + seq] = true;
 					});
