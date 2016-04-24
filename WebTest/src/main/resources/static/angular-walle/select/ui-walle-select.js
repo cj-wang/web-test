@@ -50,9 +50,9 @@ angular.module('ui.walle.select', ['ui.bootstrap'])
 				element.append('<option value=""> - - - </option>');
 			}
 			//append loading prompt
-			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.loading" style="float:right; position:relative; top:-25px; right:-20px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			//append error prompt
-			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+			$compile('<div ng-show="selectCodes.' + attrs.walleSelectCode + '.error" style="float:right; position:relative; top:-25px; right:-20px"> <i class="glyphicon glyphicon-remove"></i> </div>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}

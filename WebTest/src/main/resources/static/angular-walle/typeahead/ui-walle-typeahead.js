@@ -79,12 +79,12 @@ angular.module('ui.walle.typeahead', ['ui.bootstrap'])
 			//append loading prompt
 			if (! attrs.typeaheadLoading) {
 				element.attr('typeahead-loading', 'walleTypeaheadLoading' + seq);
-				$compile('<div ng-show="walleTypeaheadLoading' + seq + '" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadLoading' + seq + '" style="float:right; position:relative; top:-25px; right:-20px"> <i class="glyphicon glyphicon-refresh"></i> </div>')(scope).insertAfter(element);
 			}
 			//append error prompt
 			if (! attrs.typeaheadNoResults) {
 				element.attr('typeahead-no-results', 'walleTypeaheadNoResults' + seq);
-				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '" style="position:absolute;padding-left:10px"> <i class="glyphicon glyphicon-remove"></i> No Results Found </div>')(scope).insertAfter(element);
+				$compile('<div ng-show="walleTypeaheadNoResults' + seq + '" style="float:right; position:relative; top:-25px; right:-20px"> <i class="glyphicon glyphicon-remove"></i> </div>')(scope).insertAfter(element);
 			}
 			//compile
 			$compile(element)(scope);
