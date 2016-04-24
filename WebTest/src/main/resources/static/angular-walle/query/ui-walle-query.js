@@ -12,7 +12,7 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 			var query = function(pageNavigation) {
 				query.loading = true;
 				query.errormsg = null;
-				model.assign($scope, []);
+				//model.assign($scope, []);
 				if (! pageNavigation && $attrs.pageSize) {
 					query.pagingInfo = {
 							pageSize : Number($attrs.pageSize)
@@ -85,10 +85,12 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 						'	{{Math.min('+ attrs.ngModel +'$query.pagingInfo.pageSize * (('+ attrs.ngModel +'$query.pagingInfo.currentPage || 1) - 1) + ('+ attrs.ngModel +'$query.loading ? '+ attrs.ngModel +'$query.pagingInfo.pageSize : '+ attrs.ngModel +'.length), '+ attrs.ngModel +'$query.pagingInfo.totalRows || 0)}}' +
 						'	 / ' +
 						'	{{'+ attrs.ngModel +'$query.pagingInfo.totalRows || 0}}' +
+						'</div>' +
+						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
+						'	<span ng-show="'+ attrs.ngModel +'$query.loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span>' +
+						'	<span class="text-danger">{{'+ attrs.ngModel +'$query.errormsg}}</span>' +
 						'</div>');
 			}
-			//append loading prompt
-			$compile('<div>&nbsp;<span ng-show="'+ attrs.ngModel +'$query.loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span><span class="text-danger">{{'+ attrs.ngModel +'$query.errormsg}}</span>')(scope).insertAfter(element);
 			//compile
 			$compile(element)(scope);
 		}
