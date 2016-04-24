@@ -26,6 +26,6 @@ gulp.task('build', function () {
 	.pipe(gulp.dest('target/classes/static'));
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
 	gulp.watch('src/main/resources/static/**/*.js', ['build']);
 });
