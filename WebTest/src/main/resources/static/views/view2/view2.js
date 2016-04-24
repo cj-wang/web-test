@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('ngApp')
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/view2', {
 		templateUrl: 'views/view2/view2.html',
-		controller: 'View2Ctrl'
+		controller: 'view2Ctrl'
 	});
-}])
+})
 
-.controller('View2Ctrl', [function() {
+.controller('view2Ctrl', function() {
 
-}]);
+});

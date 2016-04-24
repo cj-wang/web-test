@@ -2,13 +2,13 @@
 
 //walle-typeahead-code
 angular.module('ui.walle.typeahead', ['ui.bootstrap'])
-.directive('walleTypeaheadCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
+.directive('walleTypeaheadCode', function($compile, $parse, $http) {
 	var seq = 0;
 	return {
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+		controller : function($scope, $element, $attrs) {
 			$scope.selectCodes = $scope.selectCodes || {};
 			$scope.selectCodes[$attrs.walleTypeaheadCode] = $scope.selectCodes[$attrs.walleTypeaheadCode] || {};
 			$scope.selectCodes[$attrs.walleTypeaheadCode].mapping = $scope.selectCodes[$attrs.walleTypeaheadCode].mapping || {};
@@ -65,7 +65,7 @@ angular.module('ui.walle.typeahead', ['ui.bootstrap'])
 			if ($attrs.value && ! model($scope)) {
 				model.assign($scope, $attrs.value);
 			}
-		}],
+		},
 		link : function(scope, element, attrs) {
 			seq++;
 			element.removeAttr('walle-typeahead-code');
@@ -89,4 +89,4 @@ angular.module('ui.walle.typeahead', ['ui.bootstrap'])
 			$compile(element)(scope);
 		}
 	};
-}]);
+});

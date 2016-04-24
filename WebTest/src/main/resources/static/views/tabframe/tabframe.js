@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('ngApp')
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/tabframe', {
 		templateUrl: 'views/tabframe/tabframe.html',
 		controller: 'tabframeCtrl'
 	});
-}])
+})
 
-.directive('ngDynamicController', ['$compile', '$parse', function($compile, $parse) {
+.directive('ngDynamicController', function($compile, $parse) {
 	return {
 		restrict: 'A',
 		terminal: true,
@@ -19,7 +19,7 @@ angular.module('ngApp')
 			$compile(element)(scope);
 		}
 	};
-}])
+})
 
 .controller('tabframeCtrl', function($scope, $timeout) {
 	

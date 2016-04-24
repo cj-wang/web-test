@@ -2,12 +2,12 @@
 
 //walle-select-code
 angular.module('ui.walle.select', ['ui.bootstrap'])
-.directive('walleSelectCode', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
+.directive('walleSelectCode', function($compile, $parse, $http) {
 	return {
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+		controller : function($scope, $element, $attrs) {
 			$scope.selectCodes = $scope.selectCodes || {};
 			//query selectCodes data
 			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
@@ -40,7 +40,7 @@ angular.module('ui.walle.select', ['ui.bootstrap'])
 					}
 				});
 			}
-		}],
+		},
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-select-code');
 			element.attr('ng-options', 'item.key as item.label for item in selectCodes.' + attrs.walleSelectCode + '.data');
@@ -56,4 +56,4 @@ angular.module('ui.walle.select', ['ui.bootstrap'])
 			$compile(element)(scope);
 		}
 	};
-}]);
+});

@@ -2,12 +2,12 @@
 
 //walle-query-type
 angular.module('ui.walle.query', ['ui.bootstrap'])
-.directive('walleQueryType', ['$compile', '$parse', '$http', function($compile, $parse, $http) {
+.directive('walleQueryType', function($compile, $parse, $http) {
 	return {
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-		controller : ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+		controller : function($scope, $element, $attrs) {
 			var model = $parse($attrs.ngModel);
 			var query = function(pageNavigation) {
 				query.loading = true;
@@ -61,7 +61,7 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 			};
 			$parse($attrs.ngModel + '$query').assign($scope, query);
 			query();
-		}],
+		},
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-query-type');
 			//paging
@@ -91,4 +91,4 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 			$compile(element)(scope);
 		}
 	};
-}]);
+});
