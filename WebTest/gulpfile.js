@@ -12,20 +12,20 @@ gulp.task('default', function() {
 gulp.task('build', function () {
 	gulp.src(['src/main/resources/static/angular-walle/**/*.js'])
 	.pipe(plumber())
-	.pipe(sourcemaps.init())
+//	.pipe(sourcemaps.init())
 	.pipe(concat('ui-walle.js'))
-	.pipe(ngAnnotate())
-	.pipe(uglify())
-	.pipe(sourcemaps.write())
+//	.pipe(ngAnnotate())
+//	.pipe(uglify())
+//	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('target/classes/static'));
 	
 	gulp.src(['src/main/resources/static/views/**/*.js'])
 	.pipe(plumber())
-	.pipe(sourcemaps.init())
+//	.pipe(sourcemaps.init())
 	.pipe(concat('app.js'))
-	.pipe(ngAnnotate())
-	.pipe(uglify())
-	.pipe(sourcemaps.write())
+//	.pipe(ngAnnotate())
+//	.pipe(uglify())
+//	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('target/classes/static'));
 });
 
