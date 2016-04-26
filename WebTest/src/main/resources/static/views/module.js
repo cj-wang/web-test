@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('ngApp', ['ngRoute', 'ui.walle']).
-config(function($routeProvider, $locationProvider) {
+angular.module('ngApp', ['ngRoute', 'ui.walle'])
+.config(function($routeProvider, $locationProvider) {
 	$routeProvider.otherwise({redirectTo: function(parameters, path, search) {
 		if (path.indexOf('.') >= 0) {
 			location.reload();
