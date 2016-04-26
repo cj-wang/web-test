@@ -26,10 +26,11 @@
 	<script src="bower_components/angular-route/angular-route.js"></script>
 	
 	<script src="ui-walle.js"></script>
+	<script src="index.js"></script>
 	<script src="app.js"></script>
 </head>
 
-<body>
+<body ng-controller="indexCtrl">
 	<noscript>This site requires JavaScript to be enabled</noscript>
 	<!--[if lt IE 7]>
 		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -37,7 +38,7 @@
 	
 	<div class="wrapper">
 	    <!--=== Header ===-->    
-	    <div class="header">
+	    <div class="header" ng-hide="params.contentOnly">
 	        <div class="container">
 	            <!-- Logo -->
 	            <a class="logo" href="index.html">
@@ -176,7 +177,7 @@
 	    <!-- End Content Part -->
 	
 	    <!--=== Footer Version 1 ===-->
-	    <div class="footer-v1 sticky-footer">
+	    <div class="footer-v1 sticky-footer" ng-hide="params.contentOnly">
 	        <div class="copyright">
 	            <div class="container">
 	                <div class="row">
