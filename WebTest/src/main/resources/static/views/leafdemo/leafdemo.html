@@ -10,7 +10,7 @@
 
 <body ng-controller="indexCtrl">
 
-	<div ui-view="header" ng-hide="params.contentOnly"></div>
+	<div ui-view="header"></div>
     
     <div class="container">
 		<div ui-view="content"></div>
@@ -44,7 +44,7 @@
 	
     </div>
 	
-	<div ui-view="footer" ng-hide="params.contentOnly"></div>
+	<div ui-view="footer"></div>
 	
 </body>
 </html>

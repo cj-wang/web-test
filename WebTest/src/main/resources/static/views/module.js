@@ -1,20 +1,28 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('ngApp', ['ui.router', 'ngAnimate', 'ui.walle', 'angularBootstrapNavTree'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	
 	$stateProvider
 	.state('app', {
-		url : '/',
+		url : '/?contentOnly',
 		views: {
 			header : {
-				templateUrl : '/views/index/header.html'
+				templateUrl : function(params) {
+					if (! params.contentOnly) {
+						return '/views/index/header.html';
+					}
+				}
 			},
 			content : {
 				templateUrl : '/views/index/welcome.html'	
 			},
 			footer : {
-				templateUrl : '/views/index/footer.html'
+				templateUrl : function(params) {
+					if (! params.contentOnly) {
+						return '/views/index/footer.html';
+					}
+				}
 			}
 		}
 	});
