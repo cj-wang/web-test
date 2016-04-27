@@ -1,10 +1,16 @@
 'use strict';
 
 angular.module('ngApp')
-.config(function($routeProvider) {
-	$routeProvider.when('/walleDemo/tableDemo', {
-		templateUrl: 'views/walleDemo/tableDemo.html',
-		controller: 'tableDemoCtrl'
+.config(function($stateProvider) {
+	$stateProvider
+	.state('app.tableDemo', {
+		url : 'walleDemo/tableDemo',
+		views : {
+			'content@' : {
+				templateUrl : 'views/walleDemo/tableDemo.html',
+				controller : 'tableDemoCtrl'
+			}
+		}
 	});
 })
 

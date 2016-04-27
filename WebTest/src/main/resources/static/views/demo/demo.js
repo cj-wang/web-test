@@ -1,10 +1,16 @@
 'use strict';
 
 angular.module('ngApp')
-.config(function($routeProvider) {
-	$routeProvider.when('/ellipsable-table-demo', {
-		templateUrl: 'views/demo/ellipsable-table-demo.html',
-		controller: 'ellipsableTableDemoCtrl'
+.config(function($stateProvider) {
+	$stateProvider
+	.state('app.ellipsable-table-demo', {
+		url : 'ellipsable-table-demo',
+		views : {
+			'content@' : {
+				templateUrl : 'views/demo/ellipsable-table-demo.html',
+				controller : 'ellipsableTableDemoCtrl'
+			}
+		}
 	});
 })
 

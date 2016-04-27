@@ -1,10 +1,16 @@
 'use strict';
 
 angular.module('ngApp')
-.config(function($routeProvider) {
-	$routeProvider.when('/tabframe', {
-		templateUrl: 'views/tabframe/tabframe.html',
-		controller: 'tabframeCtrl'
+.config(function($stateProvider) {
+	$stateProvider
+	.state('app.tabframe', {
+		url : 'tabframe',
+		views : {
+			'content@' : {
+				templateUrl : 'views/tabframe/tabframe.html',
+				controller : 'tabframeCtrl'
+			}
+		}
 	});
 })
 

@@ -1,10 +1,16 @@
 'use strict';
 
 angular.module('ngApp')
-.config(function($routeProvider) {
-	$routeProvider.when('/view2', {
-		templateUrl: 'views/view2/view2.html',
-		controller: 'view2Ctrl'
+.config(function($stateProvider) {
+	$stateProvider
+	.state('app.view2', {
+		url : 'view2',
+		views : {
+			'content@' : {
+				templateUrl : 'views/view2/view2.html',
+				controller : 'view2Ctrl'
+			}
+		}
 	});
 })
 

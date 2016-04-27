@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" ng-app="ngApp">
 <head>
 	<title>Thymeleaf Demo - Walle Web Test</title>
 	<!-- Include all the headers from index.html -->
@@ -7,13 +7,14 @@
 	<!-- Add more css and js here -->
 	
 </head>
-<body>
 
-	<!-- Header -->
-	<div th:replace="index :: .header"></div>
-	
-	<!-- Page content -->
-    <div class="container content-sm">
+<body ng-controller="indexCtrl">
+
+	<div ui-view="header" ng-hide="params.contentOnly"></div>
+    
+    <div class="container">
+		<div ui-view="content"></div>
+		
 		<table id="table_sla_missed_tickets" class="table table-striped">
 			<thead>
 				<tr>
@@ -40,12 +41,10 @@
 		</table>
 	
 		<p>Total: <span th:text="${total}"></span></p>
-		
-    </div><!--/container-->
 	
+    </div>
 	
-	<!-- Footer -->
-	<div th:replace="index :: .footer-v1"></div>
+	<div ui-view="footer" ng-hide="params.contentOnly"></div>
 	
 </body>
 </html>
