@@ -28,11 +28,7 @@ angular.module('ngApp', ['ui.router', 'ngAnimate', 'ui.walle', 'angularBootstrap
 	});
 	
 	$urlRouterProvider.otherwise(function($injector, $location) {
-		if ($location.url().indexOf('.') >= 0) {
-			location.reload();
-		} else {
-			return '/';
-		}
+		return '/';
 	});
 	
 	// use the HTML5 History API
