@@ -11,10 +11,19 @@ angular.module('ngApp')
 				controller : 'view2Ctrl'
 			}
 		}
+	})
+	.state('app.view2.detail', {
+		url : '/:orgCode',
+		views : {
+			'detail@app.view2' : {
+				templateUrl : 'views/view2/orgDetail.html',
+				controller : 'orgDetailCtrl'
+			}
+		}
 	});
 })
 
-.controller('view2Ctrl', function($scope, $http) {
+.controller('view2Ctrl', function($scope, $state, $http) {
 	
 	$scope.orgTreeData = [];
 	$scope.orgTreeControl = {};
@@ -28,7 +37,7 @@ angular.module('ngApp')
 		var orgMap = {};
 		angular.forEach(response.data.dataList, function(org) {
 			orgMap[org.organizeId] = {
-					label : org.name,
+					label : org.orgCode,
 					data : org,
 					children : []
 			};
@@ -51,6 +60,14 @@ angular.module('ngApp')
 		$scope.doing_async = false;
 	});
 	
+	$scope.orgTreeSelect = function(branch) {
+		$state.go('app.view2.detail', {orgCode: branch.data.orgCode});
+	};
+	
+})
+
+.controller('orgDetailCtrl', function($scope, $stateParams) {
+	$scope.orgCode = $stateParams.orgCode;
 });
 
 
