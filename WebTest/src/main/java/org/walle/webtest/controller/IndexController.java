@@ -19,7 +19,7 @@ public class IndexController {
 	 */
 	@RequestMapping("/**/{viewname:^[^.]*$}")
 	public String views(@PathVariable String viewname) {
-		return "index";
+		return "forward:/";
 	}
 
 }
