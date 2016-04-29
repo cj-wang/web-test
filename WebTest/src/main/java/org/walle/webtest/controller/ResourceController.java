@@ -1,15 +1,23 @@
 package org.walle.webtest.controller;
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import cn.walle.framework.common.service.CommonQueryManager;
 import cn.walle.framework.common.service.CommonSaveManager;
@@ -33,25 +41,28 @@ public class ResourceController {
 	@Autowired
 	private CommonQueryManager commonQueryManager;
 	
+	@ExceptionHandler(ObjectRetrievalFailureException.class)
+	public void notFound(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.NOT_FOUND.value());
+	}
+	
+	@ExceptionHandler(DataRetrievalFailureException.class)
+	public void badRequest(HttpServletResponse response) throws IOException {
+		response.sendError(HttpStatus.BAD_REQUEST.value());
+	}
+	
 	/**
 	 * query
 	 * @param tableName
 	 * @return
 	 */
 	@RequestMapping(value="/api/walle/table/{tableName}", method=RequestMethod.GET)
-	public ResponseEntity<Object> query(@PathVariable String tableName, @RequestParam(required=false) String orderBy) {
-		Class<? extends BaseModel> modelClass = null;
-		try {
-			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
-		} catch (Exception e) {
-		}
-		if (modelClass == null) {
-			return new ResponseEntity<Object>("Table " + tableName + " does not exists", HttpStatus.BAD_REQUEST);
-		}
+	public List<? extends BaseModel> query(@PathVariable String tableName, @RequestParam(required=false) String orderBy) {
+		Class<? extends BaseModel> modelClass = getModelClass(tableName);
 		QueryInfo queryInfo = new QueryInfo(modelClass);
 		queryInfo.setOrderBy(orderBy);
 		QueryData queryData = commonQueryManager.query(queryInfo);
-		return new ResponseEntity<Object>(queryData.getDataList(modelClass), HttpStatus.OK);
+		return queryData.getDataList(modelClass);
 	}
 	
 	/**
@@ -61,21 +72,14 @@ public class ResourceController {
 	 * @return
 	 */
 	@RequestMapping(value="/api/walle/table/{tableName}/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Object> get(@PathVariable String tableName, @PathVariable String id) {
-		Class<? extends BaseModel> modelClass = null;
-		try {
-			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
-		} catch (Exception e) {
-		}
-		if (modelClass == null) {
-			return new ResponseEntity<Object>("Table " + tableName + " does not exists", HttpStatus.BAD_REQUEST);
-		}
+	public BaseModel get(@PathVariable String tableName, @PathVariable String id) {
+		Class<? extends BaseModel> modelClass = getModelClass(tableName);
 		QueryInfo queryInfo = new QueryInfo(modelClass, new QueryField(EntityUtils.getIdFieldName(modelClass), id));
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		if (queryData.getDataList().size() == 1) {
-			return new ResponseEntity<Object>(queryData.getDataList(modelClass).get(0), HttpStatus.OK);
+			return queryData.getDataList(modelClass).get(0);
 		} else {
-			return new ResponseEntity<Object>("Object not found", HttpStatus.NOT_FOUND);
+			throw new ObjectRetrievalFailureException(modelClass, id);
 		}
 	}
 	
@@ -86,23 +90,15 @@ public class ResourceController {
 	 * @return
 	 */
 	@RequestMapping(value="/api/walle/table/{tableName}", method={RequestMethod.POST, RequestMethod.PUT})
-	public ResponseEntity<Object> save(@PathVariable String tableName, @RequestBody DynamicModelClass dynamicModel) {
-		Class<? extends BaseModel> modelClass = null;
-		try {
-			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
-		} catch (Exception e) {
-		}
-		if (modelClass == null) {
-			return new ResponseEntity<Object>("Table " + tableName + " does not exists", HttpStatus.BAD_REQUEST);
-		}
+	public BaseModel save(@PathVariable String tableName, @RequestBody DynamicModelClass dynamicModel) {
+		Class<? extends BaseModel> modelClass = getModelClass(tableName);
 		try {
 			BaseModel model = modelClass.newInstance();
 			BeanUtils.populate(model, dynamicModel);
 			CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(tableName, false) + "Manager", CommonSaveManager.class);
-			model = commonSaveManager.save(model);
-			return new ResponseEntity<Object>(model, HttpStatus.OK);
+			return commonSaveManager.save(model);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -111,29 +107,35 @@ public class ResourceController {
 	 * @param tableName
 	 * @param id
 	 * @return
+	 * @throws NoSuchRequestHandlingMethodException 
 	 */
 	@RequestMapping(value="/api/walle/table/{tableName}/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Object> delete(@PathVariable String tableName, @PathVariable String id) {
-		Class<? extends BaseModel> modelClass = null;
-		try {
-			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
-		} catch (Exception e) {
-		}
-		if (modelClass == null) {
-			return new ResponseEntity<Object>("Table " + tableName + " does not exists", HttpStatus.BAD_REQUEST);
-		}
+	public void delete(@PathVariable String tableName, @PathVariable String id) {
+		Class<? extends BaseModel> modelClass = getModelClass(tableName);
 		QueryInfo queryInfo = new QueryInfo(modelClass, new QueryField(EntityUtils.getIdFieldName(modelClass), id));
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		if (queryData.getDataList().size() == 1) {
 			try {
 				CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(tableName, false) + "Manager", CommonSaveManager.class);
 				commonSaveManager.remove(queryData.getDataList(modelClass).get(0));
-				return new ResponseEntity<Object>(HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				throw new RuntimeException(e);
 			}
 		} else {
-			return new ResponseEntity<Object>("Object not found", HttpStatus.NOT_FOUND);
+			throw new ObjectRetrievalFailureException(modelClass, id);
+		}
+	}
+	
+	private Class<? extends BaseModel> getModelClass(String tableName) {
+		Class<? extends BaseModel> modelClass = null;
+		try {
+			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
+		} catch (Exception e) {
+		}
+		if (modelClass != null) {
+			return modelClass;
+		} else {
+			throw new DataRetrievalFailureException("Table " + tableName + " does not exists");
 		}
 	}
 	
