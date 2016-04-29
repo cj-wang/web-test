@@ -5,14 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,10 +24,11 @@ import cn.walle.framework.common.support.QueryData;
 import cn.walle.framework.common.support.QueryField;
 import cn.walle.framework.common.support.QueryInfo;
 import cn.walle.framework.core.model.BaseModel;
-import cn.walle.framework.core.model.DynamicModelClass;
 import cn.walle.framework.core.util.ContextUtils;
 import cn.walle.framework.core.util.EntityUtils;
 import cn.walle.framework.core.util.SqlUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * REST Controller for Resources
@@ -37,6 +37,9 @@ import cn.walle.framework.core.util.SqlUtils;
  */
 @RestController
 public class ResourceController {
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@Autowired
 	private CommonQueryManager commonQueryManager;
@@ -85,11 +88,10 @@ public class ResourceController {
 	 * @return
 	 */
 	@RequestMapping(value="/resource/{name}", method={RequestMethod.POST, RequestMethod.PUT})
-	public BaseModel save(@PathVariable String name, @RequestBody DynamicModelClass dynamicModel) {
+	public BaseModel save(@PathVariable String name, HttpEntity<String> httpEntity) {
 		Class<? extends BaseModel> modelClass = getModelClass(name);
 		try {
-			BaseModel model = modelClass.newInstance();
-			BeanUtils.populate(model, dynamicModel);
+			BaseModel model = objectMapper.readValue(httpEntity.getBody(), modelClass);
 			CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(name, false) + "Manager", CommonSaveManager.class);
 			return commonSaveManager.save(model);
 		} catch (Exception e) {
