@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.walle.framework.common.service.CommonQueryManager;
@@ -38,7 +39,7 @@ public class ResourceController {
 	 * @return
 	 */
 	@RequestMapping(value="/api/walle/table/{tableName}", method=RequestMethod.GET)
-	public ResponseEntity<Object> query(@PathVariable String tableName) {
+	public ResponseEntity<Object> query(@PathVariable String tableName, @RequestParam(required=false) String orderBy) {
 		Class<? extends BaseModel> modelClass = null;
 		try {
 			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
@@ -48,6 +49,7 @@ public class ResourceController {
 			return new ResponseEntity<Object>("Table " + tableName + " does not exists", HttpStatus.BAD_REQUEST);
 		}
 		QueryInfo queryInfo = new QueryInfo(modelClass);
+		queryInfo.setOrderBy(orderBy);
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		return new ResponseEntity<Object>(queryData.getDataList(modelClass), HttpStatus.OK);
 	}
