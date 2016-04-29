@@ -1,7 +1,9 @@
 package org.walle.webtest.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +26,7 @@ import cn.walle.framework.common.support.QueryData;
 import cn.walle.framework.common.support.QueryField;
 import cn.walle.framework.common.support.QueryInfo;
 import cn.walle.framework.core.model.BaseModel;
+import cn.walle.framework.core.support.PagingInfo;
 import cn.walle.framework.core.util.ContextUtils;
 import cn.walle.framework.core.util.EntityUtils;
 import cn.walle.framework.core.util.SqlUtils;
@@ -55,10 +58,22 @@ public class ResourceController {
 	 * @return
 	 */
 	@RequestMapping(value="/resource/{name}", method=RequestMethod.GET)
-	public List<? extends BaseModel> query(@PathVariable String name, @RequestParam(required=false) String orderBy) {
+	public List<? extends BaseModel> query(@PathVariable String name, @RequestParam Map<String, String> params) {
 		Class<? extends BaseModel> modelClass = getModelClass(name);
 		QueryInfo queryInfo = new QueryInfo(modelClass);
-		queryInfo.setOrderBy(orderBy);
+		queryInfo.setOrderBy(params.remove("orderBy"));
+		if (params.containsKey("pageSize")) {
+			PagingInfo pagingInfo = new PagingInfo();
+			pagingInfo.setPageSize(Integer.valueOf(params.remove("pageSize")));
+			if (params.containsKey("currentPage")) {
+				pagingInfo.setCurrentPage(Integer.valueOf(params.remove("currentPage")));
+			}
+			queryInfo.setPagingInfo(pagingInfo);
+		}
+		queryInfo.setQueryFields(new ArrayList<QueryField>());
+		for (String paramKey : params.keySet()) {
+			queryInfo.getQueryFields().add(new QueryField(paramKey, params.get(paramKey)));
+		}
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		return queryData.getDataList(modelClass);
 	}
