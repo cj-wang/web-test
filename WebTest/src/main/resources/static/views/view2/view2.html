@@ -3,7 +3,7 @@
 <div class="row">
 
 	<div class="col-md-4">
-		<span ng-show="doing_async" class="glyphicon glyphicon-refresh" aria-hidden="true" style="padding-left:10px"></span>
+		<span ng-show="loading" class="glyphicon glyphicon-refresh" aria-hidden="true" style="padding-left:10px"></span>
 		<span class="text-danger">{{errormsg}}</span>
 		<abn-tree tree-data="orgTreeData" tree-control="orgTreeControl"
 				on-select="orgTreeSelect(branch)" expand-level="2"></abn-tree>

@@ -52,7 +52,7 @@ angular.module('ngApp')
 		});
 		$scope.loading = false;
 	}, function(error) {
-		$scope.errormsg = error;
+		$scope.errormsg = 'Error';
 		$scope.loading = false;
 	});
 	
