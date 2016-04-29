@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp', ['ui.router', 'ngAnimate', 'ui.walle', 'angularBootstrapNavTree'])
+angular.module('ngApp', ['ngAnimate', 'ngResource', 'ui.router', 'ui.walle', 'angularBootstrapNavTree'])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 	
 	$stateProvider

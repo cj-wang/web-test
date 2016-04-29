@@ -13,7 +13,7 @@ angular.module('ngApp')
 		}
 	})
 	.state('app.view2.detail', {
-		url : '/:orgCode',
+		url : '/:organizeId',
 		views : {
 			'detail@app.view2' : {
 				templateUrl : 'views/view2/orgDetail.html',
@@ -23,19 +23,17 @@ angular.module('ngApp')
 	});
 })
 
-.controller('view2Ctrl', function($scope, $state, $http) {
+.controller('view2Ctrl', function($scope, $state, WlOrganize) {
 	
 	$scope.orgTreeData = [];
 	$scope.orgTreeControl = {};
-	$scope.doing_async = true;
+	$scope.loading = true;
 	
-	$http.post('/api/walle/commonQuery', {
-		queryType : 'WlOrganizeModel',
+	WlOrganize.query({
 		orderBy : 'orgCode'
-	})
-	.then(function(response) {
+	}, function(orgs) {
 		var orgMap = {};
-		angular.forEach(response.data.dataList, function(org) {
+		angular.forEach(orgs, function(org) {
 			orgMap[org.organizeId] = {
 					label : org.orgCode,
 					data : org,
@@ -52,22 +50,20 @@ angular.module('ngApp')
 		angular.forEach($scope.orgTreeData, function(root) {
 			$scope.orgTreeControl.expand_branch(root);
 		});
-	})
-	.catch(function(error) {
+		$scope.loading = false;
+	}, function(error) {
 		$scope.errormsg = error;
-	})
-	.finally(function() {
-		$scope.doing_async = false;
+		$scope.loading = false;
 	});
 	
 	$scope.orgTreeSelect = function(branch) {
-		$state.go('app.view2.detail', {orgCode: branch.data.orgCode});
+		$state.go('app.view2.detail', {organizeId: branch.data.organizeId});
 	};
 	
 })
 
-.controller('orgDetailCtrl', function($scope, $stateParams) {
-	$scope.orgCode = $stateParams.orgCode;
+.controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
+	$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
 });
 
 
