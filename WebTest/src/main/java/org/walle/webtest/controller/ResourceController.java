@@ -48,12 +48,12 @@ public class ResourceController {
 	
 	/**
 	 * query
-	 * @param tableName
+	 * @param name
 	 * @return
 	 */
-	@RequestMapping(value="/api/walle/table/{tableName}", method=RequestMethod.GET)
-	public List<? extends BaseModel> query(@PathVariable String tableName, @RequestParam(required=false) String orderBy) {
-		Class<? extends BaseModel> modelClass = getModelClass(tableName);
+	@RequestMapping(value="/resource/{name}", method=RequestMethod.GET)
+	public List<? extends BaseModel> query(@PathVariable String name, @RequestParam(required=false) String orderBy) {
+		Class<? extends BaseModel> modelClass = getModelClass(name);
 		QueryInfo queryInfo = new QueryInfo(modelClass);
 		queryInfo.setOrderBy(orderBy);
 		QueryData queryData = commonQueryManager.query(queryInfo);
@@ -62,13 +62,13 @@ public class ResourceController {
 	
 	/**
 	 * get
-	 * @param tableName
+	 * @param name
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value="/api/walle/table/{tableName}/{id}", method=RequestMethod.GET)
-	public BaseModel get(@PathVariable String tableName, @PathVariable String id) {
-		Class<? extends BaseModel> modelClass = getModelClass(tableName);
+	@RequestMapping(value="/resource/{name}/{id}", method=RequestMethod.GET)
+	public BaseModel get(@PathVariable String name, @PathVariable String id) {
+		Class<? extends BaseModel> modelClass = getModelClass(name);
 		QueryInfo queryInfo = new QueryInfo(modelClass, new QueryField(EntityUtils.getIdFieldName(modelClass), id));
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		if (queryData.getDataList().size() == 1) {
@@ -80,17 +80,17 @@ public class ResourceController {
 	
 	/**
 	 * save
-	 * @param tableName
+	 * @param name
 	 * @param dynamicModel
 	 * @return
 	 */
-	@RequestMapping(value="/api/walle/table/{tableName}", method={RequestMethod.POST, RequestMethod.PUT})
-	public BaseModel save(@PathVariable String tableName, @RequestBody DynamicModelClass dynamicModel) {
-		Class<? extends BaseModel> modelClass = getModelClass(tableName);
+	@RequestMapping(value="/resource/{name}", method={RequestMethod.POST, RequestMethod.PUT})
+	public BaseModel save(@PathVariable String name, @RequestBody DynamicModelClass dynamicModel) {
+		Class<? extends BaseModel> modelClass = getModelClass(name);
 		try {
 			BaseModel model = modelClass.newInstance();
 			BeanUtils.populate(model, dynamicModel);
-			CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(tableName, false) + "Manager", CommonSaveManager.class);
+			CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(name, false) + "Manager", CommonSaveManager.class);
 			return commonSaveManager.save(model);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -99,19 +99,19 @@ public class ResourceController {
 	
 	/**
 	 * delete
-	 * @param tableName
+	 * @param name
 	 * @param id
 	 * @return
 	 * @throws NoSuchRequestHandlingMethodException 
 	 */
-	@RequestMapping(value="/api/walle/table/{tableName}/{id}", method=RequestMethod.DELETE)
-	public void delete(@PathVariable String tableName, @PathVariable String id) {
-		Class<? extends BaseModel> modelClass = getModelClass(tableName);
+	@RequestMapping(value="/resource/{name}/{id}", method=RequestMethod.DELETE)
+	public void delete(@PathVariable String name, @PathVariable String id) {
+		Class<? extends BaseModel> modelClass = getModelClass(name);
 		QueryInfo queryInfo = new QueryInfo(modelClass, new QueryField(EntityUtils.getIdFieldName(modelClass), id));
 		QueryData queryData = commonQueryManager.query(queryInfo);
 		if (queryData.getDataList().size() == 1) {
 			try {
-				CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(tableName, false) + "Manager", CommonSaveManager.class);
+				CommonSaveManager<BaseModel> commonSaveManager = ContextUtils.getBean(SqlUtils.dbNameToJavaName(name, false) + "Manager", CommonSaveManager.class);
 				commonSaveManager.remove(queryData.getDataList(modelClass).get(0));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -121,16 +121,16 @@ public class ResourceController {
 		}
 	}
 	
-	private Class<? extends BaseModel> getModelClass(String tableName) {
+	private Class<? extends BaseModel> getModelClass(String name) {
 		Class<? extends BaseModel> modelClass = null;
 		try {
-			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(tableName, true));
+			modelClass = EntityUtils.getEntityClass(SqlUtils.dbNameToJavaName(name, true));
 		} catch (Exception e) {
 		}
 		if (modelClass != null) {
 			return modelClass;
 		} else {
-			throw new DataRetrievalFailureException("Table " + tableName + " not found");
+			throw new DataRetrievalFailureException("Resource type " + name + " not found");
 		}
 	}
 	
