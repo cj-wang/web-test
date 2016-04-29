@@ -64,6 +64,13 @@ angular.module('ngApp')
 
 .controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
 	$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
+	
+	$scope.save = function() {
+		$scope.org.$save(function() {
+			alert('ok');
+		});
+	};
+	
 });
 
 
