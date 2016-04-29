@@ -41,14 +41,9 @@ public class ResourceController {
 	@Autowired
 	private CommonQueryManager commonQueryManager;
 	
-	@ExceptionHandler(ObjectRetrievalFailureException.class)
+	@ExceptionHandler(DataRetrievalFailureException.class)
 	public void notFound(HttpServletResponse response) throws IOException {
 		response.sendError(HttpStatus.NOT_FOUND.value());
-	}
-	
-	@ExceptionHandler(DataRetrievalFailureException.class)
-	public void badRequest(HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
 	/**
@@ -135,7 +130,7 @@ public class ResourceController {
 		if (modelClass != null) {
 			return modelClass;
 		} else {
-			throw new DataRetrievalFailureException("Table " + tableName + " does not exists");
+			throw new DataRetrievalFailureException("Table " + tableName + " not found");
 		}
 	}
 	
