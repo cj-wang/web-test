@@ -17,61 +17,39 @@ angular.module('ngApp')
 		views : {
 			'detail@app.view2' : {
 				templateUrl : 'app/view2/orgDetail.html',
-				controller : 'orgDetailCtrl'
+				controller : 'view2DetailCtrl'
 			}
 		}
 	});
 })
 
 .controller('view2Ctrl', function($scope, $state, WlOrganize) {
-	
-	$scope.orgTreeData = [];
-	$scope.orgTreeControl = {};
-	$scope.loading = true;
-	
-	WlOrganize.query({
+	//query orgs
+	$scope.orgs = WlOrganize.query({
 		orderBy : 'orgCode'
-	}, function(orgs) {
-		var orgMap = {};
-		angular.forEach(orgs, function(org) {
-			orgMap[org.organizeId] = {
-					label : org.orgCode,
-					data : org,
-					children : []
-			};
-		});
-		angular.forEach(orgMap, function(org) {
-			if (orgMap[org.data.parentOrganizeId]) {
-				orgMap[org.data.parentOrganizeId].children.push(org);
-			} else {
-				$scope.orgTreeData.push(org);
-			}
-		});
-		angular.forEach($scope.orgTreeData, function(root) {
-			$scope.orgTreeControl.expand_branch(root);
-		});
-		$scope.loading = false;
-	}, function(error) {
-		$scope.errormsg = 'Error';
-		$scope.loading = false;
 	});
 	
+	//org selected
 	$scope.orgTreeSelect = function(branch) {
-		$state.go('app.view2.detail', {organizeId: branch.data.organizeId});
+		$state.go('app.view2.detail', {
+			organizeId : branch.data.organizeId
+		});
 	};
-	
 })
 
-.controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
+.controller('view2DetailCtrl', function($scope, $stateParams, WlOrganize) {
+	//get org
 	$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
+	//set tree selection
+	$scope.orgTreeControl.select($stateParams.organizeId);
 	
 	$scope.save = function() {
 		$scope.org.$save(function() {
-			alert('ok');
+			alert('保存成功');
 		});
 	};
-	
 });
+
 
 
 /*
