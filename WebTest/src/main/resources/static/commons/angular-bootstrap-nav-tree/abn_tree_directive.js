@@ -11,10 +11,15 @@
 				template: "<ul class=\"nav nav-list nav-pills nav-stacked abn-tree\">\n	<li ng-repeat=\"row in tree_rows | filter:{visible:true} track by row.branch.uid\" ng-animate=\"'abn-tree-animate'\" ng-class=\"'level-' + {{ row.level }} + (row.branch.selected ? ' active':'') + ' ' +row.classes.join(' ')\" class=\"abn-tree-row\"><a ng-click=\"user_clicks_branch(row.branch)\"><i ng-class=\"row.tree_icon\" ng-click=\"row.branch.expanded = !row.branch.expanded\" class=\"indented tree-icon\"> </i><span class=\"indented tree-label\">{{ row.label }} </span></a></li>\n</ul>",
 				replace: true,
 				scope: {
-					treeData: '=',
+					//cj: use rawData instead of treeData
+					//treeData: '=',
+					treeData: '=?',
+					rawData: '=',
 					onSelect: '&',
 					initialSelection: '@',
-					treeControl: '='
+					treeControl: '=',
+					//cj
+					treeControlName: '@treeControl'
 				},
 				link: function(scope, element, attrs) {
 					var error, expand_all_parents, expand_level, for_all_ancestors, for_each_branch, get_parent, n, on_treeData_change, select_branch, selected_branch, tree;
@@ -36,6 +41,30 @@
 						attrs.expandLevel = '3';
 					}
 					expand_level = parseInt(attrs.expandLevel, 10);
+					
+					//cj: support raw data
+					var setupTreeData = function() {
+						if (scope.rawData) {
+							scope.treeData = [];
+							scope.branchMap = {};
+							angular.forEach(scope.rawData, function(data) {
+								scope.branchMap[data[attrs.idField]] = {
+										label : data[attrs.labelField],
+										data : data,
+										children : []
+								};
+							});
+							angular.forEach(scope.branchMap, function(branch) {
+								if (scope.branchMap[branch.data[attrs.parentIdField]]) {
+									scope.branchMap[branch.data[attrs.parentIdField]].children.push(branch);
+								} else {
+									scope.treeData.push(branch);
+								}
+							});
+						}
+					};
+					setupTreeData();
+					
 					if (!scope.treeData) {
 						alert('no treeData defined for the tree!');
 						return;
@@ -228,9 +257,21 @@
 							root_branch = _ref[_i];
 							_results.push(add_branch_to_list(1, root_branch, true));
 						}
+						
+						//cj:
+						if (scope.idToBeSelected && scope.branchMap[scope.idToBeSelected]) {
+							expand_all_parents(scope.branchMap[scope.idToBeSelected]);
+							select_branch(scope.branchMap[scope.idToBeSelected]);
+							scope.idToBeSelected = null;
+						}
+						
 						return _results;
 					};
 					scope.$watch('treeData', on_treeData_change, true);
+					
+					//cj watch rawData as well to rebuild tree data
+					scope.$watch('rawData', setupTreeData, true);
+					
 					if (attrs.initialSelection != null) {
 						for_each_branch(function(b) {
 							if (b.label === attrs.initialSelection) {
@@ -246,6 +287,12 @@
 						b.level = level;
 						return b.expanded = b.level < expand_level;
 					});
+					
+					//cj: if treeControl not defined, make it
+					if (scope.treeControl == null) {
+						scope.$parent[scope.treeControlName] = scope.treeControl = {};
+					}
+					
 					if (scope.treeControl != null) {
 						if (angular.isObject(scope.treeControl)) {
 							tree = scope.treeControl;
@@ -467,6 +514,18 @@
 										parent = tree.get_parent_branch(b);
 										return parent;
 									}
+								}
+							};
+							//cj
+							tree.get_branch = function(id) {
+								return scope.branchMap[id];
+							};
+							tree.select = function(id) {
+								if (scope.branchMap[id]) {
+									expand_all_parents(scope.branchMap[id]);
+									tree.select_branch(scope.branchMap[id]);
+								} else {
+									scope.idToBeSelected = id;
 								}
 							};
 							return tree.select_prev_branch = function(b) {
