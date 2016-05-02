@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ngApp')
-.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) {
 	
 	$stateProvider
 	.state('app', {
@@ -30,6 +30,8 @@ angular.module('ngApp')
 	$urlRouterProvider.otherwise(function($injector, $location) {
 		return '/';
 	});
+	
+	$urlMatcherFactoryProvider.strictMode(false);
 	
 	// use the HTML5 History API
     $locationProvider.html5Mode(true);
