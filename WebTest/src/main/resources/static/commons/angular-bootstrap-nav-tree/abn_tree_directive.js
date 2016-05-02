@@ -56,20 +56,27 @@
 					scope.labelField = attrs.labelField;
 					var setupTreeData = function() {
 						if (scope.rawData) {
-							scope.treeData = [];
-							scope.branchMap = {};
+							if (! scope.branchMap) {
+								scope.treeData = [];
+								scope.branchMap = {};
+							}
 							angular.forEach(scope.rawData, function(data) {
-								scope.branchMap[data[attrs.idField]] = {
-										label : data[attrs.labelField],
-										data : data,
-										children : []
+								if (! scope.branchMap[data[attrs.idField]]) {
+									scope.branchMap[data[attrs.idField]] = {
+											label : data[attrs.labelField],
+											data : data,
+											children : []
+									}
 								};
 							});
 							angular.forEach(scope.branchMap, function(branch) {
-								if (scope.branchMap[branch.data[attrs.parentIdField]]) {
-									scope.branchMap[branch.data[attrs.parentIdField]].children.push(branch);
-								} else {
-									scope.treeData.push(branch);
+								if (! branch.handled) {
+									branch.handled = true;
+									if (scope.branchMap[branch.data[attrs.parentIdField]]) {
+										scope.branchMap[branch.data[attrs.parentIdField]].children.push(branch);
+									} else {
+										scope.treeData.push(branch);
+									}
 								}
 							});
 						}
