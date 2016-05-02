@@ -258,19 +258,21 @@
 							_results.push(add_branch_to_list(1, root_branch, true));
 						}
 						
+						//cj: apply selection level
+						if (! selected_branch) {
+							for_each_branch(function(b, level) {
+								b.level = level;
+								return b.expanded = b.level < expand_level;
+							});
+						}
+						
 						//cj: handle selection set before data loaded
 						if (scope.idToBeSelected && scope.branchMap[scope.idToBeSelected]) {
 							expand_all_parents(scope.branchMap[scope.idToBeSelected]);
 							select_branch(scope.branchMap[scope.idToBeSelected]);
 							scope.idToBeSelected = null;
 						}
-						
-						//cj: apply selection level
-						for_each_branch(function(b, level) {
-							b.level = level;
-							return b.expanded = b.level < expand_level;
-						});
-						
+
 						return _results;
 					};
 					scope.$watch('treeData', on_treeData_change, true);
