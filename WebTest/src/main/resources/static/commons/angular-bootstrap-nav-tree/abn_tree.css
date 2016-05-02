@@ -15,6 +15,7 @@ The first selector is for Angular 1.1.5
 The second selector is for Angular 1.2.0
 
 */
+/*
 .abn-tree-animate-enter,
 li.abn-tree-row.ng-enter {
 	transition: 200ms linear all;
@@ -44,21 +45,21 @@ li.abn-tree-row.ng-leave-active {
 	max-height:0px;
 	opacity: 0;
 }
-
+*/
 
 /* 
 ------------------------------------------
 Angular 1.2.0 Animation 
 */
 
-
+/*
 .abn-tree-animate.ng-enter{
 
 }
 .abn-tree-animate.ng-enter{
 
 }
-
+*/
 
 
 
