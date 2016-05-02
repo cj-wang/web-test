@@ -8,8 +8,8 @@
 			<button type="button" class="btn btn-danger" ng-click="new()">删除</button>
 		</div>
 		<abn-tree style="background:whitesmoke"
-				tree-data="orgTreeData" tree-control="orgTreeControl"
-				on-select="orgTreeSelect(branch)" expand-level="2"></abn-tree>
+				raw-data="orgs" id-field="organizeId" parent-id-field="parentOrganizeId" label-field="name"
+				tree-control="orgTreeControl" on-select="orgTreeSelect(branch)"></abn-tree>
 	</div>
 	
 	<div class="col-md-8" ui-view="detail"></div>
