@@ -14,6 +14,9 @@ angular.module('ngApp')
 	})
 	.state('app.org.detail', {
 		url : '/:organizeId',
+		params : {
+			org : null
+		},
 		views : {
 			'detail@app.org' : {
 				templateUrl : 'app/sys/org/orgDetail.html',
@@ -32,20 +35,25 @@ angular.module('ngApp')
 	//org selected
 	$scope.orgTreeSelect = function(branch) {
 		$state.go('app.org.detail', {
-			organizeId : branch.data.organizeId
+			organizeId : branch.data.organizeId,
+			org : branch.data
 		});
 	};
 })
 
 .controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
 	//get org
-	$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
-	//set tree selection
+	$scope.org = $stateParams.org;
+	//set tree selection when refresh
 	$scope.orgTreeControl.select($stateParams.organizeId);
-	
+
 	$scope.save = function() {
-		$scope.org.$save(function() {
+		$scope.org.$save(function(org) {
 			alert('保存成功');
 		});
+	};
+	
+	$scope.cancel = function() {
+		//$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
 	};
 });
