@@ -7,7 +7,7 @@ angular.module('ngApp')
 		url : 'tabframe',
 		views : {
 			'content@' : {
-				templateUrl : 'views/tabframe/tabframe.html',
+				templateUrl : 'app/tabframe/tabframe.html',
 				controller : 'tabframeCtrl'
 			}
 		}

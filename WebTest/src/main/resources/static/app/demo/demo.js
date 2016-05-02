@@ -7,7 +7,7 @@ angular.module('ngApp')
 		url : 'ellipsable-table-demo',
 		views : {
 			'content@' : {
-				templateUrl : 'views/demo/ellipsable-table-demo.html',
+				templateUrl : 'app/demo/ellipsable-table-demo.html',
 				controller : 'ellipsableTableDemoCtrl'
 			}
 		}

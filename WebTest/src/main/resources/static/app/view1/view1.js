@@ -7,7 +7,7 @@ angular.module('ngApp')
 		url : 'view1',
 		views : {
 			'content@' : {
-				templateUrl : 'views/view1/view1.html',
+				templateUrl : 'app/view1/view1.html',
 				controller : 'view1Ctrl'
 			}
 		}

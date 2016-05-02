@@ -10,17 +10,17 @@ angular.module('ngApp')
 			header : {
 				templateUrl : function(params) {
 					if (! params.contentOnly) {
-						return 'views/index/header.html';
+						return 'app/index/header.html';
 					}
 				}
 			},
 			content : {
-				templateUrl : 'views/index/welcome.html'	
+				templateUrl : 'app/index/welcome.html'	
 			},
 			footer : {
 				templateUrl : function(params) {
 					if (! params.contentOnly) {
-						return 'views/index/footer.html';
+						return 'app/index/footer.html';
 					}
 				}
 			}

@@ -1,0 +1,43 @@
+
+<nav class="navbar navbar-default">
+	<p class="navbar-text">编辑 [{{org.name}}]</p>
+	<form class="navbar-form navbar-right">
+		<button type="button" class="btn btn-success" ng-click="new()">保存</button>
+		<button type="button" class="btn btn-default" ng-click="new()">取消</button>
+	</form>
+</nav>
+
+<form>
+	<div class="form-group">
+		<label>组织代码</label>
+		<input class="form-control" ng-model="org.orgCode">
+	</div>
+	<div class="form-group">
+		<label>组织名称</label>
+		<input class="form-control" ng-model="org.name">
+	</div>
+	<div class="form-group">
+		<label>组织类型</label>
+		<input class="form-control" ng-model="org.organizeTypeId">
+	</div>
+	<div class="form-group">
+		<label>上级组织</label>
+		<input class="form-control" ng-model="org.parentOrganizeId">
+	</div>
+	<div class="form-group">
+		<label>负责人</label>
+		<input class="form-control" ng-model="org.manage">
+	</div>
+	<div class="form-group">
+		<label>联系人名称</label>
+		<input class="form-control" ng-model="org.contact">
+	</div>
+	<div class="form-group">
+		<label>/联系人电话</label>
+		<input class="form-control" ng-model="org.contactTel">
+	</div>
+	<div class="form-group">
+		<label>传真</label>
+		<input class="form-control" ng-model="org.fax">
+	</div>
+</form>

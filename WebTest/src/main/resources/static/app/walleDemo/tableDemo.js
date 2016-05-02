@@ -7,7 +7,7 @@ angular.module('ngApp')
 		url : 'walleDemo/tableDemo',
 		views : {
 			'content@' : {
-				templateUrl : 'views/walleDemo/tableDemo.html',
+				templateUrl : 'app/walleDemo/tableDemo.html',
 				controller : 'tableDemoCtrl'
 			}
 		}

@@ -19,7 +19,7 @@ gulp.task('build', function () {
 //	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('target/classes/static'));
 	
-	gulp.src(['src/main/resources/static/views/**/*.js'])
+	gulp.src(['src/main/resources/static/app/**/*.js'])
 	.pipe(plumber())
 //	.pipe(sourcemaps.init())
 	.pipe(concat('app.js'))

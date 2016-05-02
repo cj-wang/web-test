@@ -7,7 +7,7 @@ angular.module('ngApp')
 		url : 'view2',
 		views : {
 			'content@' : {
-				templateUrl : 'views/view2/view2.html',
+				templateUrl : 'app/view2/view2.html',
 				controller : 'view2Ctrl'
 			}
 		}
@@ -16,7 +16,7 @@ angular.module('ngApp')
 		url : '/:organizeId',
 		views : {
 			'detail@app.view2' : {
-				templateUrl : 'views/view2/orgDetail.html',
+				templateUrl : 'app/view2/orgDetail.html',
 				controller : 'orgDetailCtrl'
 			}
 		}
