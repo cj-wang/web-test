@@ -27,39 +27,44 @@ angular.module('ngApp')
 })
 
 .controller('orgCtrl', function($scope, $state, WlOrganize) {
-	//query orgs
 	$scope.orgs = WlOrganize.query({
 		orderBy : 'orgCode'
 	});
 	
-	//select
-	$scope.select = function(organizeId) {
-		$scope.orgTreeControl.select(organizeId);
-	};
-	
-	//org selected
 	$scope.orgTreeSelect = function(branch) {
 		$state.go('app.org.detail', {
 			organizeId : branch.data.organizeId,
 			org : branch.data
 		});
 	};
+	
+	$scope.add = function() {
+		$state.go('app.org.detail', {
+			organizeId : 'new',
+			org : {
+				parentOrganizeId : $scope.orgTreeControl.get_selected_id()
+			}
+		});
+	};
 })
 
 .controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
-	//get org
 	$scope.org = angular.copy($stateParams.org);
-	//set tree selection when refresh
-	$scope.select($stateParams.organizeId);
+	$scope.orgTreeControl.select($stateParams.organizeId);
 
 	$scope.save = function() {
-		$scope.org.$save(function(org) {
-			angular.copy(org, $stateParams.org);
+		WlOrganize.save($scope.org, function(org) {
+			if ($stateParams.organizeId == 'new') {
+				$scope.orgs.push(org);
+				$scope.orgTreeControl.select(org.organizeId);
+			} else {
+				angular.copy(org, $stateParams.org);
+			}
 			alert('保存成功');
 		});
 	};
 	
 	$scope.cancel = function() {
-		//$scope.org = WlOrganize.get({organizeId: $stateParams.organizeId});
+		$scope.org = angular.copy($stateParams.org);
 	};
 });
