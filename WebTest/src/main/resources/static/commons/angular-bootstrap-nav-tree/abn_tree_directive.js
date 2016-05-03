@@ -554,6 +554,9 @@
 									scope.idToBeSelected = id;
 								}
 							};
+							tree.get_selected_id = function() {
+								return tree.get_selected_branch().data[attrs.idField];
+							}
 							return tree.select_prev_branch = function(b) {
 								var prev;
 								if (b == null) {
