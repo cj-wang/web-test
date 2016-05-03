@@ -15,7 +15,7 @@ angular.module('ngApp')
 	.state('app.org.detail', {
 		url : '/:organizeId',
 		params : {
-			org : null
+			org : undefined
 		},
 		views : {
 			'detail@app.org' : {
@@ -48,12 +48,13 @@ angular.module('ngApp')
 
 .controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
 	//get org
-	$scope.org = $stateParams.org;
+	$scope.org = angular.copy($stateParams.org);
 	//set tree selection when refresh
 	$scope.select($stateParams.organizeId);
 
 	$scope.save = function() {
 		$scope.org.$save(function(org) {
+			angular.copy(org, $stateParams.org);
 			alert('保存成功');
 		});
 	};
