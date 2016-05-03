@@ -32,6 +32,11 @@ angular.module('ngApp')
 		orderBy : 'orgCode'
 	});
 	
+	//select
+	$scope.select = function(organizeId) {
+		$scope.orgTreeControl.select(organizeId);
+	};
+	
 	//org selected
 	$scope.orgTreeSelect = function(branch) {
 		$state.go('app.org.detail', {
@@ -45,7 +50,7 @@ angular.module('ngApp')
 	//get org
 	$scope.org = $stateParams.org;
 	//set tree selection when refresh
-	$scope.orgTreeControl.select($stateParams.organizeId);
+	$scope.select($stateParams.organizeId);
 
 	$scope.save = function() {
 		$scope.org.$save(function(org) {
