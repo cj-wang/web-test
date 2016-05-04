@@ -2,6 +2,7 @@
 
 angular.module('ngApp', 
 		['ngAnimate', 
+		 'ngMessages', 
 		 'ngResource', 
 		 'ui.router', 
 		 'ui.walle', 
