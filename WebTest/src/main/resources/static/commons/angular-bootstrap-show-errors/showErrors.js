@@ -1,6 +1,19 @@
 //Thanks to Ivan Tanev 
 //https://ivantanev.com/blog/2014/12/10/angularjs-dos-and-donts/
 angular.module('ui.bootstrap.showErrors', [])
+.directive('ngValidate', function($compile) {
+    return {
+        restrict: 'A',
+        require:  'form',
+        link: function (scope, element, attrs) {
+			element.removeAttr('ng-validate');
+        	element.attr('novalidate', '');
+        	element.find('.form-group').attr('show-errors', '');
+			$compile(element)(scope);
+        }
+    };
+})
+
 .directive('showErrors', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
