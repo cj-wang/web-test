@@ -1,14 +1,22 @@
 //Thanks to Ivan Tanev 
 //https://ivantanev.com/blog/2014/12/10/angularjs-dos-and-donts/
 angular.module('ui.bootstrap.showErrors', [])
-.directive('ngValidate', function($compile) {
+.directive('ngValidate', function($compile, ngMessagesInclude) {
     return {
         restrict: 'A',
         require:  'form',
         link: function (scope, element, attrs) {
 			element.removeAttr('ng-validate');
         	element.attr('novalidate', '');
-        	element.find('.form-group').attr('show-errors', '');
+        	element.find('.form-group').each(function(index, formGroup) {
+        		formGroup = jQuery(formGroup);
+        		if (formGroup.find('input[name]').size() > 0) {
+        			formGroup.attr('show-errors', '')
+        			.append('<div ng-messages="' + attrs.name + '.' + formGroup.find('input[name]').attr('name') + '.$error">' +
+        					'	<div ng-messages-include="' + ngMessagesInclude + '"></div>' +
+        					'</div>');
+        		}
+        	});
 			$compile(element)(scope);
         }
     };
