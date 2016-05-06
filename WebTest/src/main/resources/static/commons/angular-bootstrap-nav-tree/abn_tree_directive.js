@@ -555,7 +555,10 @@
 								}
 							};
 							tree.get_selected_id = function() {
-								return tree.get_selected_branch().data[attrs.idField];
+								var selected_branch = tree.get_selected_branch();
+								if (selected_branch) {
+									return selected_branch.data[attrs.idField];
+								}
 							}
 							return tree.select_prev_branch = function(b) {
 								var prev;
