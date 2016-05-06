@@ -547,11 +547,15 @@
 								return scope.branchMap[id];
 							};
 							tree.select = function(id) {
-								if (scope.branchMap[id]) {
-									expand_all_parents(scope.branchMap[id]);
-									tree.select_branch(scope.branchMap[id]);
+								if (id) {
+									if (scope.branchMap[id]) {
+										expand_all_parents(scope.branchMap[id]);
+										tree.select_branch(scope.branchMap[id]);
+									} else {
+										scope.idToBeSelected = id;
+									}
 								} else {
-									scope.idToBeSelected = id;
+									tree.select_branch(null);
 								}
 							};
 							tree.get_selected_id = function() {
