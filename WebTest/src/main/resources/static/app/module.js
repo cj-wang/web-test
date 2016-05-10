@@ -5,6 +5,8 @@ angular.module('ngApp',
 		 'ngMessages', 
 		 'ngResource', 
 		 'ui.router', 
+		 'ui.bootstrap', 
+		 'treeControl', 
 		 'angularWalle', 
 		 'ui.bootstrap.showErrors', 
 		 'angularBootstrapNavTree']);
