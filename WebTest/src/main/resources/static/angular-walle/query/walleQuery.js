@@ -1,8 +1,8 @@
 'use strict';
 
 //walle-query-type
-angular.module('ui.walle.query', ['ui.bootstrap'])
-.directive('walleQueryType', function($compile, $parse, $http) {
+angular.module('walle')
+.directive('walleQueryType', function($compile, $parse, walleCommonQuery) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -38,7 +38,7 @@ angular.module('ui.walle.query', ['ui.bootstrap'])
 					});
 				}
 				var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
-				$http.post('/api/walle/commonQuery', {
+				walleCommonQuery.query({
 					queryType : $attrs.walleQueryType,
 					orderBy : $attrs.orderBy,
 					pagingInfo : query.pagingInfo,

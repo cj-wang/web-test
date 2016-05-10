@@ -1,8 +1,8 @@
 'use strict';
 
 //walle-select-code
-angular.module('ui.walle.select', ['ui.bootstrap'])
-.directive('walleSelectCode', function($compile, $parse, $http) {
+angular.module('walle')
+.directive('walleSelectCode', function($compile, $parse, walleSelectCode) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -13,7 +13,7 @@ angular.module('ui.walle.select', ['ui.bootstrap'])
 			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
 				$scope.selectCodes[$attrs.walleSelectCode] = {};
 				$scope.selectCodes[$attrs.walleSelectCode].loading = true;
-				$http.get('/api/walle/selectCode/' + $attrs.walleSelectCode)
+				walleSelectCode.get($attrs.walleSelectCode)
 				.then(function(response) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
 					$scope.selectCodes[$attrs.walleSelectCode].data = response.data.dataList.map(function(item) {
