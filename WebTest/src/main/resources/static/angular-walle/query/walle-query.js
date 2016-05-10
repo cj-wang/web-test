@@ -1,7 +1,7 @@
 'use strict';
 
 //walle-query-type
-angular.module('ui.walle.query', ['ui.bootstrap'])
+angular.module('walle')
 .directive('walleQueryType', function($compile, $parse, $http) {
 	return {
 		restrict : 'A',
