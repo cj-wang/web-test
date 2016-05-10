@@ -11,27 +11,15 @@ angular.module('ngApp')
 				controller : 'orgCtrl'
 			}
 		}
-	})
-	.state('app.org.detail', {
-		url : '/:organizeId',
-		params : {
-			org : undefined
-		},
-		views : {
-			'detail@app.org' : {
-				templateUrl : 'app/sys/org/orgDetail.html',
-				controller : 'orgDetailCtrl'
-			}
-		}
 	});
 })
 
-.controller('orgCtrl', function($scope, $state, WlOrganize) {
-	$scope.orgs = WlOrganize.query({
-		orderBy : 'orgCode'
+.controller('orgCtrl', function($scope, WlOrganize) {
+	WlOrganize.query({}, function(orgs) {
+		$scope.orgs = orgs;
 	});
 	
-	$scope.orgTreeSelect = function(branch) {
+	$scope.orgSelect = function(branch) {
 		$state.go('app.org.detail', {
 			organizeId : branch.data.organizeId,
 			org : branch.data
@@ -39,12 +27,12 @@ angular.module('ngApp')
 	};
 	
 	$scope.add = function() {
-		$state.go('app.org.detail', {
-			organizeId : 'new',
-			org : {
-				parentOrganizeId : $scope.orgTreeControl.get_selected_id()
-			}
-		});
+//		$state.go('app.org.detail', {
+//			organizeId : 'new',
+//			org : {
+//				parentOrganizeId : $scope.orgTreeControl.get_selected_id()
+//			}
+//		});
 	};
 })
 
