@@ -2,7 +2,7 @@
 
 //walle-select-code
 angular.module('walle')
-.directive('walleSelectCode', function($compile, $parse, $http) {
+.directive('walleSelectCode', function($compile, $parse, walleSelectCode) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -13,7 +13,7 @@ angular.module('walle')
 			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
 				$scope.selectCodes[$attrs.walleSelectCode] = {};
 				$scope.selectCodes[$attrs.walleSelectCode].loading = true;
-				$http.get('/api/walle/selectCode/' + $attrs.walleSelectCode)
+				walleSelectCode.get($attrs.walleSelectCode)
 				.then(function(response) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
 					$scope.selectCodes[$attrs.walleSelectCode].data = response.data.dataList.map(function(item) {

@@ -2,7 +2,7 @@
 
 //walle-typeahead-code
 angular.module('walle')
-.directive('walleTypeaheadCode', function($compile, $parse, $http) {
+.directive('walleTypeaheadCode', function($compile, $parse, walleSelectCode) {
 	var seq = 0;
 	return {
 		restrict : 'A',
@@ -14,7 +14,7 @@ angular.module('walle')
 			$scope.selectCodes[$attrs.walleTypeaheadCode].mapping = $scope.selectCodes[$attrs.walleTypeaheadCode].mapping || {};
 			//query selectCodes data
 			$scope.walleSelectCodeQuery = function(codeType, q) {
-				return $http.get('/api/walle/selectCode/' + codeType + '?q=' + q + '&limit=' + ($attrs.typeaheadLoading || 10))
+				return walleSelectCode.query(codeType, q, $attrs.typeaheadLimit)
 				.then(function(response) {
 					return response.data.dataList.map(function(item) {
 						$scope.selectCodes[codeType].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
@@ -35,7 +35,7 @@ angular.module('walle')
 					return $scope.selectCodes[codetype].mapping[key + ''];
 				} else {
 					$scope['walleTypeaheadLoading' + seq] = true; 
-					$http.get('/api/walle/selectCode/' + codetype + '?q=' + key)
+					walleSelectCode.query(codetype, key)
 					.then(function(response) {
 						$scope['walleTypeaheadLoading' + seq] = false;
 						if (response.data.dataList && response.data.dataList.length) {
