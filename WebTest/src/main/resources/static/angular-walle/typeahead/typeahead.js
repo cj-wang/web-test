@@ -1,7 +1,7 @@
 'use strict';
 
 //walle-typeahead-code
-angular.module('walle')
+angular.module('angularWalle')
 .directive('walleTypeaheadCode', function($compile, $parse, walleSelectCode) {
 	var seq = 0;
 	return {

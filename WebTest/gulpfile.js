@@ -13,7 +13,7 @@ gulp.task('build', function () {
 	gulp.src(['src/main/resources/static/angular-walle/**/*.js'])
 	.pipe(plumber())
 //	.pipe(sourcemaps.init())
-	.pipe(concat('walle.js'))
+	.pipe(concat('angular-walle.js'))
 //	.pipe(ngAnnotate())
 //	.pipe(uglify())
 //	.pipe(sourcemaps.write())

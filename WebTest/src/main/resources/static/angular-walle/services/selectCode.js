@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('walle')
+angular.module('angularWalle')
 .factory('walleSelectCode', function($http) {
 	return {
 		get : function(codeType) {

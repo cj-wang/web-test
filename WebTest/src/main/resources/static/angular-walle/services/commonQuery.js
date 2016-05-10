@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('walle')
+angular.module('angularWalle')
 .factory('walleCommonQuery', function($http) {
 	return {
 		query : function(queryInfo) {

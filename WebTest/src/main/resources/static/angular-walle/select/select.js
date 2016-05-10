@@ -1,7 +1,7 @@
 'use strict';
 
 //walle-select-code
-angular.module('walle')
+angular.module('angularWalle')
 .directive('walleSelectCode', function($compile, $parse, walleSelectCode) {
 	return {
 		restrict : 'A',
