@@ -1,44 +1,42 @@
 
-<nav class="navbar navbar-default">
-	<p class="navbar-text" ng-hide="org.organizeId">新增</p>
-	<p class="navbar-text" ng-show="org.organizeId">编辑 [{{org.name}}]</p>
-	<form class="navbar-form navbar-right">
-		<button type="button" class="btn btn-success" ng-click="save()">保存</button>
-		<button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
-	</form>
-</nav>
+<h3 ng-hide="org.organizeId">新增</h3>
+<h3 ng-show="org.organizeId">编辑 [{{org.name}}]</h3>
 
-<form>
+<form name="orgForm" ng-validate>
 	<div class="form-group">
-		<label>组织代码</label>
-		<input class="form-control" ng-model="org.orgCode">
+		<button type="submit" class="btn btn-success" ng-click="orgForm.$valid && save()">保存</button>
+		<button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
 	</div>
 	<div class="form-group">
-		<label>组织名称</label>
-		<input class="form-control" ng-model="org.name">
+		<label class="control-label">组织代码</label>
+		<input class="form-control" name="orgCode" ng-model="org.orgCode" ng-required="true">
 	</div>
 	<div class="form-group">
-		<label>组织类型</label>
-		<input class="form-control" ng-model="org.organizeTypeId">
+		<label class="control-label">组织名称</label>
+		<input class="form-control" name="name" ng-model="org.name" ng-required="true">
 	</div>
 	<div class="form-group">
-		<label>上级组织</label>
-		<input class="form-control" ng-model="org.parentOrganizeId">
+		<label class="control-label">组织类型</label>
+		<input class="form-control" name="organizeTypeId" ng-model="org.organizeTypeId">
 	</div>
 	<div class="form-group">
-		<label>负责人</label>
-		<input class="form-control" ng-model="org.manage">
+		<label class="control-label">上级组织</label>
+		<input class="form-control" name="parentOrganizeId" ng-model="org.parentOrganizeId">
 	</div>
 	<div class="form-group">
-		<label>联系人名称</label>
-		<input class="form-control" ng-model="org.contact">
+		<label class="control-label">负责人</label>
+		<input class="form-control" name="manage" ng-model="org.manage">
 	</div>
 	<div class="form-group">
-		<label>/联系人电话</label>
-		<input class="form-control" ng-model="org.contactTel">
+		<label class="control-label">联系人名称</label>
+		<input class="form-control" name="contact" ng-model="org.contact">
 	</div>
 	<div class="form-group">
-		<label>传真</label>
-		<input class="form-control" ng-model="org.fax">
+		<label class="control-label">联系人电话</label>
+		<input class="form-control" name="contactTel" ng-model="org.contactTel">
+	</div>
+	<div class="form-group">
+		<label class="control-label">传真</label>
+		<input class="form-control" name="fax" ng-model="org.fax">
 	</div>
 </form>

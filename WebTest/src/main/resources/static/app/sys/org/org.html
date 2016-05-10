@@ -3,10 +3,11 @@
 
 	<div class="col-md-4">
 		<h3>组织机构管理</h3>
-		<div class="text-right">
+		<div>
 			<button type="button" class="btn btn-primary" ng-click="add()">新增</button>
 			<button type="button" class="btn btn-danger" ng-click="delete()">删除</button>
 		</div>
+		<p/>
 		<abn-tree style="background:whitesmoke"
 				raw-data="orgs" id-field="organizeId" parent-id-field="parentOrganizeId" label-field="name"
 				tree-control="orgTreeControl" on-select="orgTreeSelect(branch)"></abn-tree>

@@ -50,21 +50,30 @@ angular.module('ngApp')
 
 .controller('orgDetailCtrl', function($scope, $stateParams, WlOrganize) {
 	$scope.org = angular.copy($stateParams.org);
-	$scope.orgTreeControl.select($stateParams.organizeId);
+	if ($stateParams.organizeId == 'new') {
+		$scope.orgTreeControl.select(null);
+	} else {
+		$scope.orgTreeControl.select($stateParams.organizeId);
+	}
 
 	$scope.save = function() {
-		WlOrganize.save($scope.org, function(org) {
-			if ($stateParams.organizeId == 'new') {
-				$scope.orgs.push(org);
-				$scope.orgTreeControl.select(org.organizeId);
-			} else {
-				angular.copy(org, $stateParams.org);
-			}
-			alert('保存成功');
-		});
+		alert('保存成功');
+//		WlOrganize.save($scope.org, function(org) {
+//			if ($stateParams.organizeId == 'new') {
+//				$scope.orgs.push(org);
+//				$scope.orgTreeControl.select(org.organizeId);
+//			} else {
+//				angular.copy(org, $stateParams.org);
+//			}
+//			alert('保存成功');
+//		});
 	};
 	
 	$scope.cancel = function() {
-		$scope.org = angular.copy($stateParams.org);
+		if ($stateParams.organizeId == 'new') {
+			$scope.orgTreeControl.select($stateParams.org.parentOrganizeId);
+		} else {
+			$scope.org = angular.copy($stateParams.org);
+		}
 	};
 });
