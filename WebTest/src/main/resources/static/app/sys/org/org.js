@@ -57,8 +57,6 @@ angular.module('ngApp')
 	};
 	
 	$scope.remove = function() {
-		alert('remove');
-		return;
 		//remove org via REST
 		$scope.org.$remove(function() {
 			//remove org from orgs, tree gets updated automatically
@@ -69,8 +67,6 @@ angular.module('ngApp')
 	};
 	
 	$scope.save = function() {
-		alert('save');
-		return;
 		//save org via REST
 		$scope.org.$save(function(org) {
 			//do nothing here, as org gets updated by itself and tree gets updated automatically
