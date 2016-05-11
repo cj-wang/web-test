@@ -3,10 +3,11 @@
 
 	<div class="col-md-4">
 		<h3>组织机构管理</h3>
-		<div class="well well-sm">
-			<treecontrol class="tree-classic" tree-model="orgs | treeData:'organizeId':'parentOrganizeId'"
+		<div class="well well-sm" ng-init="orderby='orgCode'" >
+			<treecontrol class="tree-classic" tree-model="nodes"
+					order-by="orderby" reverse-order="false"
 					on-selection="orgSelection(node)">
-				{{node.data.orgCode}} - {{node.data.name}}
+				{{node.orgCode}} - {{node.name}}
 			</treecontrol>
 		</div>
 	</div>
@@ -16,7 +17,7 @@
 		<form name="orgForm" ng-validate>
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-click="add()">新增</button>
-				<button type="button" class="btn btn-danger" ng-click="delete()">删除</button>
+				<button type="button" class="btn btn-danger" ng-click="remove()">删除</button>
 				<button type="submit" class="btn btn-success" ng-click="orgForm.$valid && save()">保存</button>
 				<button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
 			</div>
