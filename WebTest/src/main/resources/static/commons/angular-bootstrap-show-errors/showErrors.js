@@ -4,7 +4,8 @@ angular.module('ui.bootstrap.showErrors', [])
 .directive('ngValidate', function($compile, ngMessagesInclude) {
     return {
         restrict: 'A',
-        require:  'form',
+		terminal : true,
+		priority : 1000,
         link: function (scope, element, attrs) {
 			element.removeAttr('ng-validate');
         	element.attr('novalidate', '');
