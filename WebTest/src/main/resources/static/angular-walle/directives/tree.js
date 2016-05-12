@@ -19,7 +19,7 @@ angular.module('angularWalle')
 			$parse($attrs.ngModel + '$treeNodesMap').assign($scope, nodesMap);
 			$parse($attrs.ngModel + '$treeNodes').assign($scope, nodes);
 			$parse($attrs.ngModel + '$treeExpandedNodes').assign($scope, expandedNodes);
-			$scope.$watchCollection($attrs.ngModel, function(data) {
+			$scope.$watch($attrs.ngModel, function(data) {
 				angular.forEach(data, function(item) {
 					if (! nodesMap[item[$attrs.keyField]]) {
 						var node = angular.copy(item);
@@ -39,7 +39,7 @@ angular.module('angularWalle')
 				if (expandedNodes.length == 0 && nodes.length > 0) {
 					expandedNodes.push(nodes[0]);
 				}
-			});
+			}, true);
 		},
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-tree');
