@@ -11,6 +11,19 @@
 	</div>
 	
 	<div class="col-md-8">
+		<h3/>
+		<form name="orgForm" ng-validate>
+			<div class="form-group">
+				<button type="button" class="btn btn-primary" ng-click="add()">add</button>
+				<button type="button" class="btn btn-danger" ng-click="remove()">remove</button>
+				<button type="submit" class="btn btn-success" ng-click="orgForm.$valid && save()">save</button>
+				<button type="button" class="btn btn-default" ng-click="cancel()">cancel</button>
+			</div>
+			<div class="form-group">
+				<label class="control-label">orgCode</label>
+				<input class="form-control" name="orgCode" ng-model="org.orgCode" ng-required="true">
+			</div>
+		</form>
 
 	</div>
 </div>
