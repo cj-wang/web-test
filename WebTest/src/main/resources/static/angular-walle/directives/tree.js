@@ -27,10 +27,12 @@ angular.module('angularWalle')
 						angular.copy(item, node);
 						node.data = item;
 						node.children = [];
+						node.parent = undefined;
 					} else {
 						var node = angular.copy(item);
 						node.data = item;
 						node.children = [];
+						node.parent = undefined;
 						tree.nodesMap[item[$attrs.keyField]] = node;
 					};
 				});
@@ -46,6 +48,7 @@ angular.module('angularWalle')
 				angular.forEach(tree.nodesMap, function(node) {
 					if (tree.nodesMap[node.data[$attrs.parentField]]) {
 						tree.nodesMap[node.data[$attrs.parentField]].children.push(node);
+						node.parent = tree.nodesMap[node.data[$attrs.parentField]];
 					} else {
 						tree.nodes.push(node);
 					}
@@ -55,31 +58,25 @@ angular.module('angularWalle')
 					tree.expandedNodes.push(tree.nodes[0]);
 				}
 			}, true);
-			//watch selected node
+			//watch selected node to change selected data
 			$scope.$watch($attrs.ngModel + 'Tree.selectedNode', function(selectedNode) {
-				if (selectedNode) {
-					tree.selectedData = selectedNode.data;
-					tree.selectedKey = selectedNode.data[$attrs.keyField];
-				} else {
-					tree.selectedData = undefined;
-					tree.selectedKey = undefined;
+				tree.selectedData = selectedNode ? selectedNode.data : undefined;
+				//expand all parent nodes
+				var node = selectedNode;
+				while(node && node.parent) {
+					if (tree.expandedNodes.indexOf(node.parent) == -1) {
+						tree.expandedNodes.push(node.parent);
+					}
+					node = node.parent;
 				}
 			});
-			//watch selected data
+			//watch selected data to change selected key
 			$scope.$watch($attrs.ngModel + 'Tree.selectedData', function(selectedData) {
-				if (selectedData) {
-					tree.selectedNode = tree.nodesMap[selectedData[$attrs.keyField]];
-				} else {
-					tree.selectedNode = undefined;
-				}
+				tree.selectedKey = selectedData ? selectedData[$attrs.keyField] : undefined;
 			});
-			//watch selected key
+			//watch selected key to change selected node
 			$scope.$watch($attrs.ngModel + 'Tree.selectedKey', function(selectedKey) {
-				if (selectedKey) {
-					tree.selectedNode = tree.nodesMap[selectedKey];
-				} else {
-					tree.selectedNode = undefined;
-				}
+				tree.selectedNode = selectedKey ? tree.nodesMap[selectedKey] : undefined;
 			});
 		},
 		link : function(scope, element, attrs) {
