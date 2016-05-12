@@ -37,6 +37,9 @@ angular.module('angularWalle')
 				angular.forEach(tree.nodesMap, function(node, key) {
 					if (data.indexOf(node.data) == -1) {
 						delete tree.nodesMap[key];
+						if (key == tree.selectedKey) {
+							tree.selectedKey = node.data[$attrs.parentField];
+						}
 					}
 				});
 				tree.nodes.length = 0;
