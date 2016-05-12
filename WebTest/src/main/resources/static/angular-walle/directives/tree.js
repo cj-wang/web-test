@@ -34,6 +34,11 @@ angular.module('angularWalle')
 						tree.nodesMap[item[$attrs.keyField]] = node;
 					};
 				});
+				angular.forEach(tree.nodesMap, function(node, key) {
+					if (data.indexOf(node.data) == -1) {
+						delete tree.nodesMap[key];
+					}
+				});
 				tree.nodes.length = 0;
 				angular.forEach(tree.nodesMap, function(node) {
 					if (tree.nodesMap[node.data[$attrs.parentField]]) {
