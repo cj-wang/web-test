@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('angularWalle', ['ui.bootstrap']);
+angular.module('angularWalle', ['ui.bootstrap', 'treeControl']);
