@@ -4,11 +4,10 @@
 	<div class="col-md-4">
 		<h3>组织机构管理</h3>
 		<div class="well well-sm" ng-init="orderby='orgCode'" >
-			<treecontrol class="tree-classic" tree-model="nodes"
-					order-by="orderby" reverse-order="false"
-					on-selection="orgSelection(node)">
+			<div walle-tree ng-model="orgs" key-field="organizeId" parent-field="parentOrganizeId"
+					order-by="orgCode" on-selection="orgSelection(node)">
 				{{node.orgCode}} - {{node.name}}
-			</treecontrol>
+			</div>
 		</div>
 	</div>
 	
