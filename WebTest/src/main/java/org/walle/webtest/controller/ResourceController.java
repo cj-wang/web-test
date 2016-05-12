@@ -99,7 +99,7 @@ public class ResourceController {
 	/**
 	 * save
 	 * @param name
-	 * @param dynamicModel
+	 * @param httpEntity
 	 * @return
 	 */
 	@RequestMapping(value="/resource/{name}", method={RequestMethod.POST, RequestMethod.PUT})
@@ -112,6 +112,18 @@ public class ResourceController {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * save with id
+	 * @param name
+	 * @param id
+	 * @param httpEntity
+	 * @return
+	 */
+	@RequestMapping(value="/resource/{name}/{id}", method={RequestMethod.POST, RequestMethod.PUT})
+	public BaseModel save(@PathVariable String name, @PathVariable String id, HttpEntity<String> httpEntity) {
+		return save(name, httpEntity);
 	}
 	
 	/**
