@@ -3,8 +3,8 @@
 
 	<div class="col-md-4">
 		<div class="well well-sm">
-			<div walle-tree ng-model="orgs" key-field="organizeId" parent-field="parentOrganizeId"
-					order-by="orgCode" on-selection="orgSelection(node)">
+			<div walle-tree ng-model="orgs" order-by="orgCode"
+					key-field="organizeId" parent-field="parentOrganizeId">
 				{{node.orgCode}} - {{node.organizeId}}
 			</div>
 		</div>

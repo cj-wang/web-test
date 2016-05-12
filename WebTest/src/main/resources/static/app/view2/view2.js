@@ -20,13 +20,13 @@ angular.module('ngApp')
 	//current org
 	var org;
 	
-	//on selection
-	$scope.orgSelection = function(node) {
+	//on selection change
+	$scope.$watch('orgsTree.selectedData', function(selectedOrg) {
 		//keep current org
-		org = node.data
+		org = selectedOrg
 		//clone to $scope.org for editing
-		$scope.org = angular.copy(node.data);
-	};
+		$scope.org = angular.copy(selectedOrg);
+	});
 	
 	$scope.add = function() {
 		//new $scope.org for adding
@@ -35,29 +35,31 @@ angular.module('ngApp')
 	};
 	
 	$scope.remove = function() {
-		//remove org via REST
-		org.$remove(function() {
-			//remove org from orgs, tree gets updated automatically
-			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
-			alert('Deleted!')
-		}, function(error) {
-			alert(error.data.message);
-		});
+		if (confirm('Delete?')) {
+			//remove org via REST
+			org.$remove(function() {
+				//remove org from orgs, tree gets updated automatically
+				$scope.orgs.splice($scope.orgs.indexOf(org), 1);
+				alert('Deleted!')
+			}, function(error) {
+				alert(error.data.message);
+			});
+		}
 	};
 	
 	$scope.save = function() {
 		//save org via REST
-		$scope.org.$save(function(orgSaved) {
-			if (org && (org.organizeId == orgSaved.organizeId)) {
+		$scope.org.$save(function(savedOrg) {
+			if (org && (org.organizeId == savedOrg.organizeId)) {
+				//update
 				//copy returned org into current org, tree gets updated automatically
-				angular.copy(orgSaved, org);
+				angular.copy(savedOrg, org);
 			} else {
-				org = angular.copy(orgSaved);
+				//new
 				//add returned org into orgs, tree gets updated automatically
-				$scope.orgs.push(org);
-				//expand current node and select the new one
-				$scope.orgsTree.expandedNodes.push($scope.orgsTree.selectedNode);
-				$scope.orgsTree.selectedData = org;
+				$scope.orgs.push(savedOrg);
+				//select the new org
+				$scope.orgsTree.selectedData = savedOrg;
 			}
 			alert('Saved!')
 		}, function(error) {
