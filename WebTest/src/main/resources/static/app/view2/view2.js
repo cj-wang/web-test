@@ -14,15 +14,15 @@ angular.module('ngApp')
 	});
 })
 
-.controller('view2Ctrl', function($scope, WlOrganize, treeData) {
+.controller('view2Ctrl', function($scope, WlOrganize) {
+	//query orgs via REST
 	$scope.orgs = WlOrganize.query();
 	
-	$scope.$watchCollection('orgs', function(orgs) {
-		$scope.orgNodes = treeData.get(orgs, 'organizeId', 'parentOrganizeId');
-	});
-	
-	
-	$scope.orgSelect = function(branch) {
+	//on selection
+	$scope.orgSelection = function(node) {
+		//clone an org from node.data
+		$scope.org = angular.copy(node.data);
+		$scope.clone = angular.copy($scope.org);
 	};
-	
+		
 });
