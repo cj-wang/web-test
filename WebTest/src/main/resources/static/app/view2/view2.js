@@ -48,17 +48,17 @@ angular.module('ngApp')
 	$scope.save = function() {
 		//save org via REST
 		$scope.org.$save(function(orgSaved) {
-			if (orgSaved.organizeId == org.organizeId) {
+			if (org && (org.organizeId == orgSaved.organizeId)) {
 				//copy returned org into current org, tree gets updated automatically
 				angular.copy(orgSaved, org);
 			} else {
+				org = angular.copy(orgSaved);
 				//add returned org into orgs, tree gets updated automatically
-				$scope.orgs.push(orgSaved);
+				$scope.orgs.push(org);
 				//expand current node and select the new one
 				$scope.orgsTree.expandedNodes.push($scope.orgsTree.selectedNode);
-				$scope.orgsTree.selectedData = orgSaved;
+				$scope.orgsTree.selectedData = org;
 			}
-			$scope.org = orgSaved;
 			alert('Saved!')
 		}, function(error) {
 			alert(error.data.message);
