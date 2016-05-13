@@ -7,5 +7,6 @@ angular.module('ngApp',
 		 'ui.router', 
 		 'ui.bootstrap', 
 		 'treeControl',
+		 'ngFlash',
 		 'angular-confirm',
 		 'angularWalle']);
