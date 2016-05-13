@@ -1,6 +1,8 @@
 'use strict';
 
 //walle-tree
+//Thanks to wix/angular-tree-control
+//https://github.com/wix/angular-tree-control
 angular.module('angularWalle')
 .directive('walleTree', function($compile, $parse) {
 	return {
