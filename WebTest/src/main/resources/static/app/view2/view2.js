@@ -35,16 +35,14 @@ angular.module('ngApp')
 	};
 	
 	$scope.remove = function() {
-		if (confirm('Delete?')) {
-			//remove org via REST
-			org.$remove(function() {
-				//remove org from orgs, tree gets updated automatically
-				$scope.orgs.splice($scope.orgs.indexOf(org), 1);
-				alert('Deleted!')
-			}, function(error) {
-				alert(error.data.message);
-			});
-		}
+		//remove org via REST
+		org.$remove(function() {
+			//remove org from orgs, tree gets updated automatically
+			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
+			alert('Deleted!')
+		}, function(error) {
+			alert(error.data.message);
+		});
 	};
 	
 	$scope.save = function() {

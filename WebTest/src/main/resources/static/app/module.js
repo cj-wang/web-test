@@ -6,5 +6,6 @@ angular.module('ngApp',
 		 'ngResource', 
 		 'ui.router', 
 		 'ui.bootstrap', 
-		 'treeControl', 
+		 'treeControl',
+		 'angular-confirm',
 		 'angularWalle']);
