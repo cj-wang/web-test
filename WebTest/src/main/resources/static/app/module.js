@@ -8,5 +8,4 @@ angular.module('ngApp',
 		 'ui.bootstrap', 
 		 'treeControl', 
 		 'angularWalle', 
-		 'ui.bootstrap.showErrors', 
-		 'angularBootstrapNavTree']);
+		 'ui.bootstrap.showErrors']);
