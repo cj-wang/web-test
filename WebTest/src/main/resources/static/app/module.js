@@ -7,5 +7,4 @@ angular.module('ngApp',
 		 'ui.router', 
 		 'ui.bootstrap', 
 		 'treeControl', 
-		 'angularWalle', 
-		 'ui.bootstrap.showErrors']);
+		 'angularWalle']);
