@@ -9,9 +9,35 @@ div.flash {
 
 flash-message {
 	width:500px;
-    background-color: white;
-    opacity: 0.9;
+	background-color: white;
+	opacity: 0.9;
 	display: block;
-    margin-right: auto;
-    margin-left: auto;
+	margin-right: auto;
+	margin-left: auto;
 }
+
+.alert {
+	margin-bottom: 10px;
+}
+
+flash-message > div.ng-animate {
+	position: relative;
+	transition: 0.22s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
+}
+flash-message > div.ng-enter {
+	top: -50px;
+	opacity: 0;
+}
+flash-message > div.ng-enter.ng-enter-active {
+	top: 0;
+	opacity: 1;
+}
+flash-message > div.ng-leave {
+	top: 0;
+	opacity: 1;
+}
+flash-message > div.ng-leave.ng-leave-active {
+	top: -50px;
+	opacity: 0;
+}
+
