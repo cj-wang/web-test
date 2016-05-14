@@ -1,6 +1,8 @@
 'use strict';
 
 //walle-tree
+//Thanks to wix/angular-tree-control
+//https://github.com/wix/angular-tree-control
 angular.module('angularWalle')
 .directive('walleTree', function($compile, $parse) {
 	return {
@@ -11,7 +13,13 @@ angular.module('angularWalle')
 			var tree = {
 					options : {
 						allowDeselect : false,
-						multiSelection : angular.isDefined($attrs.multiSelection)
+						multiSelection : angular.isDefined($attrs.multiSelection),
+						injectClasses : {
+							liSelected : 'tree-selected',
+							iExpanded : 'glyphicon glyphicon-minus fa fa-minus',
+							iCollapsed : 'glyphicon glyphicon-plus fa fa-plus',
+							iLeaf : 'glyphicon glyphicon-file fa fa-file'
+						}
 					},
 					nodesMap : {},
 					nodes : [],

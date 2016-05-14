@@ -14,7 +14,7 @@ angular.module('ngApp')
 	});
 })
 
-.controller('view2Ctrl', function($scope, WlOrganize) {
+.controller('view2Ctrl', function($scope, Flash, WlOrganize) {
 	//query orgs via REST
 	$scope.orgs = WlOrganize.query();
 	//current org
@@ -35,16 +35,14 @@ angular.module('ngApp')
 	};
 	
 	$scope.remove = function() {
-		if (confirm('Delete?')) {
-			//remove org via REST
-			org.$remove(function() {
-				//remove org from orgs, tree gets updated automatically
-				$scope.orgs.splice($scope.orgs.indexOf(org), 1);
-				alert('Deleted!')
-			}, function(error) {
-				alert(error.data.message);
-			});
-		}
+		//remove org via REST
+		org.$remove(function() {
+			//remove org from orgs, tree gets updated automatically
+			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
+			Flash.create('success', 'Deleted!');
+		}, function(error) {
+			alert(error.data.message);
+		});
 	};
 	
 	$scope.save = function() {
@@ -61,7 +59,7 @@ angular.module('ngApp')
 				//select the new org
 				$scope.orgsTree.selectedData = savedOrg;
 			}
-			alert('Saved!')
+			Flash.create('success', 'Saved!');
 		}, function(error) {
 			alert(error.data.message);
 		});

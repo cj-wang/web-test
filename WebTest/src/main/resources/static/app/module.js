@@ -6,7 +6,7 @@ angular.module('ngApp',
 		 'ngResource', 
 		 'ui.router', 
 		 'ui.bootstrap', 
-		 'treeControl', 
-		 'angularWalle', 
-		 'ui.bootstrap.showErrors', 
-		 'angularBootstrapNavTree']);
+		 'treeControl',
+		 'ngFlash',
+		 'angular-confirm',
+		 'angularWalle']);

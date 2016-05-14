@@ -1,0 +1,42 @@
+
+
+[treecontrol] {
+    color: #428bca;
+}
+
+[treecontrol] > ul > li {
+    padding: 0;
+}
+
+[treecontrol] li > .tree-label {
+    display: block;
+	padding: 3px 0;
+    border-radius: 4px;
+}
+
+[treecontrol] li > i {
+    float: left;
+    margin: 5px 0 0 5px;
+    background-image: none !important;
+}
+
+[treecontrol].tree-classic li .tree-selected {
+    font-weight: normal;
+}
+
+[treecontrol].tree-classic li.tree-selected > i {
+	color: #fff;
+}
+
+[treecontrol].tree-classic li div.tree-selected {
+	color: #fff;
+    background-color: #428bca !important;
+}
+
+[treecontrol].tree-classic li.tree-selected {
+    background-color: inherit;
+}
+
+[treecontrol].tree-classic li div:hover {
+	background-color: #eee;
+}
