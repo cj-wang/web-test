@@ -1,1 +1,17 @@
 /* Add here all your css styles (customizations) */
+
+div.flash {
+	position: fixed;
+	top: 10px;
+	width: 100%;
+	z-index: 10000;
+}
+
+flash-message {
+	width:500px;
+    background-color: white;
+    opacity: 0.9;
+	display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
