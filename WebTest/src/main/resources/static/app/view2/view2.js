@@ -40,8 +40,6 @@ angular.module('ngApp')
 			//remove org from orgs, tree gets updated automatically
 			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
 			Flash.create('success', 'Deleted!');
-		}, function(error) {
-			alert(error.data.message);
 		});
 	};
 	
@@ -60,8 +58,6 @@ angular.module('ngApp')
 				$scope.orgsTree.selectedData = savedOrg;
 			}
 			Flash.create('success', 'Saved!');
-		}, function(error) {
-			alert(error.data.message);
 		});
 	};
 	
