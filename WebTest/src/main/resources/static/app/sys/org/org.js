@@ -14,10 +14,10 @@ angular.module('ngApp')
 	});
 })
 
-.controller('orgCtrl', function($scope, WlOrganize) {
+.controller('orgCtrl', function($scope, Flash, WlOrganize) {
 	//query orgs via REST
 	$scope.orgs = WlOrganize.query();
-	//current org
+	//current org, different than $scope.org, which is bound to the form
 	var org;
 	
 	//on selection change
@@ -35,16 +35,12 @@ angular.module('ngApp')
 	};
 	
 	$scope.remove = function() {
-		if (confirm('Delete?')) {
-			//remove org via REST
-			org.$remove(function() {
-				//remove org from orgs, tree gets updated automatically
-				$scope.orgs.splice($scope.orgs.indexOf(org), 1);
-				alert('Deleted!')
-			}, function(error) {
-				alert(error.data.message);
-			});
-		}
+		//remove org via REST
+		org.$remove(function() {
+			//remove org from orgs, tree gets updated automatically
+			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
+			Flash.create('success', '删除成功！');
+		});
 	};
 	
 	$scope.save = function() {
@@ -61,9 +57,7 @@ angular.module('ngApp')
 				//select the new org
 				$scope.orgsTree.selectedData = savedOrg;
 			}
-			alert('Saved!')
-		}, function(error) {
-			alert(error.data.message);
+			Flash.create('success', '保存成功！');
 		});
 	};
 	

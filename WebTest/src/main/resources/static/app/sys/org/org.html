@@ -16,7 +16,7 @@
 		<form name="orgForm" walle-validate>
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-click="add()">新增</button>
-				<button type="button" class="btn btn-danger" ng-click="remove()">删除</button>
+				<button type="button" class="btn btn-danger" ng-click="remove()" confirm="确认删除 {{org.name}}？">删除</button>
 				<button type="submit" class="btn btn-success" ng-click="orgForm.$valid && save()">保存</button>
 				<button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
 			</div>
