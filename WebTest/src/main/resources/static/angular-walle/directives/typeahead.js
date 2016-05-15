@@ -35,24 +35,24 @@ angular.module('angularWalle')
 					return $scope.selectCodes[codetype].mapping[key + ''];
 				} else {
 					$scope['walleTypeaheadLoading' + seq] = true; 
-					walleSelectCode.query(codetype, key)
+					walleSelectCode.get(codetype, key)
 					.then(function(response) {
 						$scope['walleTypeaheadLoading' + seq] = false;
 						if (response.data.dataList && response.data.dataList.length) {
 							response.data.dataList.map(function(item) {
 								$scope.selectCodes[codetype].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
 							});
-							//force re-rendering
-							setTimeout(function() {
-								var model = $parse(ngModel);
-								model.assign($scope, null);
-								$scope.$apply();
-								model.assign($scope, key);
-								$scope.$apply();
-							});
 						} else {
-							$scope['walleTypeaheadNoResults' + seq] = true;
+							$scope.selectCodes[codetype].mapping[key + ''] = key + '';
 						}
+						//force re-rendering
+						setTimeout(function() {
+							var model = $parse(ngModel);
+							model.assign($scope, null);
+							$scope.$apply();
+							model.assign($scope, key);
+							$scope.$apply();
+						});
 					})
 					.catch(function(error) {
 						$scope['walleTypeaheadLoading' + seq] = false;

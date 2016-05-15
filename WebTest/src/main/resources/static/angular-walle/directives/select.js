@@ -13,7 +13,7 @@ angular.module('angularWalle')
 			if (! $scope.selectCodes[$attrs.walleSelectCode]) {
 				$scope.selectCodes[$attrs.walleSelectCode] = {};
 				$scope.selectCodes[$attrs.walleSelectCode].loading = true;
-				walleSelectCode.get($attrs.walleSelectCode)
+				walleSelectCode.getAll($attrs.walleSelectCode)
 				.then(function(response) {
 					$scope.selectCodes[$attrs.walleSelectCode].loading = false;
 					$scope.selectCodes[$attrs.walleSelectCode].data = response.data.dataList.map(function(item) {
