@@ -1,0 +1,5 @@
+[uib-typeahead-popup].dropdown-menu {
+	width: calc(100% - 30px);
+	max-height: 272px;
+	overflow: auto;
+}

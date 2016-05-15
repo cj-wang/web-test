@@ -18,6 +18,11 @@ gulp.task('build', function () {
 //	.pipe(uglify())
 //	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('target/classes/static'));
+
+	gulp.src(['src/main/resources/static/angular-walle/**/*.css'])
+	.pipe(plumber())
+	.pipe(concat('angular-walle.css'))
+	.pipe(gulp.dest('target/classes/static'));
 	
 	gulp.src(['src/main/resources/static/app/**/*.js'])
 	.pipe(plumber())
@@ -27,8 +32,13 @@ gulp.task('build', function () {
 //	.pipe(uglify())
 //	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('target/classes/static'));
+	
+	gulp.src(['src/main/resources/static/css/**/*.css'])
+	.pipe(plumber())
+	.pipe(concat('app.css'))
+	.pipe(gulp.dest('target/classes/static'));
 });
 
 gulp.task('watch', ['build'], function () {
-	gulp.watch('src/main/resources/static/**/*.js', ['build']);
+	gulp.watch(['src/main/resources/static/**/*.js', 'src/main/resources/static/**/*.css'], ['build']);
 });
