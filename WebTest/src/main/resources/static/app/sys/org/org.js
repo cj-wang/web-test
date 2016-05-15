@@ -20,6 +20,8 @@ angular.module('ngApp')
 	//current org, different than $scope.org, which is bound to the form
 	var org;
 	
+	$scope.state = 'view';
+	
 	//on selection change
 	$scope.$watch('orgsTree.selectedData', function(selectedOrg) {
 		//keep current org
@@ -32,6 +34,11 @@ angular.module('ngApp')
 		//new $scope.org for adding
 		$scope.org = new WlOrganize();
 		$scope.org.parentOrganizeId = org ? org.organizeId : undefined;
+		$scope.state = 'new';
+	};
+	
+	$scope.edit = function() {
+		$scope.state = 'edit';
 	};
 	
 	$scope.remove = function() {
@@ -58,11 +65,13 @@ angular.module('ngApp')
 				$scope.orgsTree.selectedData = savedOrg;
 			}
 			Flash.create('success', '保存成功！');
+			$scope.state = 'view';
 		});
 	};
 	
 	$scope.cancel = function() {
-		angular.copy(org, $scope.org);
+		$scope.org = angular.copy(org);
+		$scope.state = 'view';
 	};
 	
 });
