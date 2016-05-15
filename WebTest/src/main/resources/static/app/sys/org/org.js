@@ -20,14 +20,13 @@ angular.module('ngApp')
 	//current org, different than $scope.org, which is bound to the form
 	var org;
 	
-	$scope.state = 'view';
-	
 	//on selection change
 	$scope.$watch('orgsTree.selectedData', function(selectedOrg) {
 		//keep current org
 		org = selectedOrg
 		//clone to $scope.org for editing
 		$scope.org = angular.copy(selectedOrg);
+		$scope.state = 'view';
 	});
 	
 	$scope.add = function() {
