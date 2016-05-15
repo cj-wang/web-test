@@ -47,7 +47,7 @@ public class WalleController {
 	}
 	
 	/**
-	 * query for select code values 
+	 * get select code values 
 	 * @param codeType
 	 * @return
 	 */
@@ -58,6 +58,22 @@ public class WalleController {
 		return selectCodeManager.getSelectCodeData(queryInfo);
 	}
 	
+	/**
+	 * get select value
+	 * @param codeType
+	 * @param key
+	 * @return
+	 */
+	@RequestMapping("/api/walle/selectCode/{codeType}/{key}")
+	public SelectCodeData selectCode(@PathVariable String codeType, @PathVariable String key) {
+		SelectCodeDefinition selectCodeDefinition = selectCodeManager.getSelectCodeDefinition(codeType);
+		QueryInfo queryInfo = new QueryInfo();
+		queryInfo.setQueryType(codeType);
+		queryInfo.setQueryFields(Arrays.asList(
+				new QueryField(selectCodeDefinition.getKeyFieldName(), key)));
+		return selectCodeManager.getSelectCodeData(queryInfo);
+	}
+
 	/**
 	 * query for select code values
 	 * @param codeType
