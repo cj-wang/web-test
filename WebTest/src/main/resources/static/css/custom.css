@@ -1,5 +1,11 @@
 /* Add here all your css styles (customizations) */
 
+[uib-typeahead-popup].dropdown-menu {
+	width: calc(100% - 30px);
+	max-height: 272px;
+	overflow: auto;
+}
+
 div.flash {
 	position: fixed;
 	top: 10px;
