@@ -19,6 +19,7 @@ angular.module('angularWalle')
         		if (! input.attr('ng-disabled')) {
         			input.attr('ng-disabled', attrs.ngDisabled);
         		}
+        		input.attr('autocomplete', 'off');
         		if (input.attr('name')) {
         			formGroup.attr('show-errors', '')
         			.append('<div ng-messages="' + attrs.name + '.' + input.attr('name') + '.$error">' +
