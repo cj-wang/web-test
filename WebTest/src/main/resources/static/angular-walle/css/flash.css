@@ -1,15 +1,9 @@
-div.flash {
-	position: fixed;
-	top: 10px;
-	width: 100%;
-	z-index: 10000;
-}
-
 flash-message {
 	width:500px;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
+	position: fixed;
+	top: 10px;
+	left: calc(50% - 250px);
+	z-index: 10000;
 }
 
 flash-message .alert {
