@@ -1,22 +1,27 @@
 'use strict';
 
-//walle-validate
-//Thanks to Ivan Tanev 
-//https://ivantanev.com/blog/2014/12/10/angularjs-dos-and-donts/
+//walle-form
 angular.module('angularWalle')
-.directive('walleValidate', function($compile, ngMessagesInclude) {
+.directive('walleForm', function($compile, ngMessagesInclude) {
     return {
         restrict: 'A',
 		terminal : true,
 		priority : 1000,
         link: function (scope, element, attrs) {
-			element.removeAttr('walle-validate');
+			element.removeAttr('walle-form');
         	element.attr('novalidate', '');
         	element.find('.form-group').each(function(index, formGroup) {
         		formGroup = jQuery(formGroup);
-        		if (formGroup.find('input[name]').size() > 0) {
+        		var input = formGroup.find('input, select, textarea');
+        		if (! input.attr('ng-readonly')) {
+        			input.attr('ng-readonly', attrs.ngReadonly);
+        		}
+        		if (! input.attr('ng-disabled')) {
+        			input.attr('ng-disabled', attrs.ngDisabled);
+        		}
+        		if (input.attr('name')) {
         			formGroup.attr('show-errors', '')
-        			.append('<div ng-messages="' + attrs.name + '.' + formGroup.find('input[name]').attr('name') + '.$error">' +
+        			.append('<div ng-messages="' + attrs.name + '.' + input.attr('name') + '.$error">' +
         					'	<div ng-messages-include="' + ngMessagesInclude + '"></div>' +
         					'</div>');
         		}
@@ -26,6 +31,8 @@ angular.module('angularWalle')
     };
 })
 
+//Thanks to Ivan Tanev 
+//https://ivantanev.com/blog/2014/12/10/angularjs-dos-and-donts/
 .directive('showErrors', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
