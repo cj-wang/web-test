@@ -2,6 +2,8 @@
 
 [treecontrol] {
     color: #428bca;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 [treecontrol] > ul > li {
@@ -16,7 +18,7 @@
 
 [treecontrol] li > i {
     float: left;
-    margin: 5px 0 0 5px;
+    margin: 4px 0 0 4px;
     background-image: none !important;
 }
 
