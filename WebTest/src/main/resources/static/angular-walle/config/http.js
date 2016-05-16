@@ -6,7 +6,7 @@ angular.module('angularWalle')
 	$httpProvider.interceptors.push(function($q, Flash) {
 		return {
 			'responseError': function(rejection) {
-				Flash.create('danger', rejection.data.message, 5000);
+				Flash.create('danger', rejection.data.message, 0);
 				return $q.reject(rejection);
 			}
 		};
