@@ -17,7 +17,7 @@ flash-message > div {
 	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
 	        box-shadow: 0 2px 6px rgba(0,0,0,.5);
 }
- 
+
 flash-message > div.ng-animate {
 	position: relative;
 	-webkit-transition: 0.22s cubic-bezier(0.250, 0.460, 0.450, 0.940) all;
