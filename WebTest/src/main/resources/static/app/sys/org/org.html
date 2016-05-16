@@ -21,7 +21,7 @@
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">编辑</button>
 				<button type="button" class="btn btn-danger" ng-show="state=='view' && org" ng-click="remove()" confirm="确认删除 {{org.name}}？">删除</button>
 				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="orgForm.$valid && save()">保存</button>
-				<button type="button" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
+				<button type="reset" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
 			</div>
 			<div ng-show="org">
 				<div class="form-group">
