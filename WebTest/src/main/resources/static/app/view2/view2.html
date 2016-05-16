@@ -11,7 +11,7 @@
 	</div>
 	
 	<div class="col-md-8">
-		<form name="orgForm" walle-form ng-readonly="state=='view'">
+		<form walle-form ng-readonly="state=='view'">
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-show="state=='view'" ng-click="add()">Add</button>
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">Edit</button>
@@ -22,11 +22,11 @@
 			<div ng-show="org">
 				<div class="form-group">
 					<label class="control-label">orgCode</label>
-					<input class="form-control" name="orgCode" ng-model="org.orgCode" ng-required="true">
+					<input class="form-control" ng-model="org.orgCode" ng-required="true">
 				</div>
 				<div class="form-group">
 					<label class="control-label">name</label>
-					<input class="form-control" name="name" ng-model="org.name" ng-required="true">
+					<input class="form-control" ng-model="org.name" ng-required="true">
 				</div>
 			</div>
 		</form>
