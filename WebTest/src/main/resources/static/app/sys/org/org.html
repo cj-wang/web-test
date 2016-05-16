@@ -15,51 +15,51 @@
 		<h3 ng-show="state=='view'"></h3>
 		<h3 ng-show="state=='new'">新增</h3>
 		<h3 ng-show="state=='edit'">编辑 {{org.name}}</h3>
-		<form name="orgForm" walle-form ng-readonly="state=='view'">
+		<form walle-form ng-readonly="state=='view'">
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-show="state=='view'" ng-click="add()">新增</button>
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">编辑</button>
 				<button type="button" class="btn btn-danger" ng-show="state=='view' && org" ng-click="remove()" confirm="确认删除 {{org.name}}？">删除</button>
-				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="orgForm.$valid && save()">保存</button>
-				<button type="button" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
+				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="save()">保存</button>
+				<button type="reset" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
 			</div>
 			<div ng-show="org">
 				<div class="form-group">
 					<label class="control-label">组织代码</label>
-					<input class="form-control" name="orgCode" ng-model="org.orgCode" ng-required="true">
+					<input class="form-control" ng-model="org.orgCode" ng-required="true">
 				</div>
 				<div class="form-group">
 					<label class="control-label">组织名称</label>
-					<input class="form-control" name="name" ng-model="org.name" ng-required="true">
+					<input class="form-control" ng-model="org.name" ng-required="true">
 				</div>
 				<div class="form-group">
 					<label class="control-label">组织类型</label>
-					<input class="form-control" name="organizeTypeId" ng-model="org.organizeTypeId">
+					<input class="form-control" ng-model="org.organizeTypeId">
 				</div>
 				<div class="form-group">
 					<label class="control-label">上级组织</label>
-					<input class="form-control" name="parentOrganizeId" ng-model="org.parentOrganizeId" walle-typeahead-code="ALL_ORGS">
+					<input class="form-control" ng-model="org.parentOrganizeId" walle-typeahead-code="ALL_ORGS">
 				</div>
 				<div class="form-group">
 					<label class="control-label">负责人</label>
-					<input class="form-control" name="manage" ng-model="org.manage">
+					<input class="form-control" ng-model="org.manage">
 				</div>
 				<div class="form-group">
 					<label class="control-label">联系人名称</label>
-					<input class="form-control" name="contact" ng-model="org.contact">
+					<input class="form-control" ng-model="org.contact">
 				</div>
 				<div class="form-group">
 					<label class="control-label">联系人电话</label>
-					<input class="form-control" name="contactTel" ng-model="org.contactTel">
+					<input class="form-control" ng-model="org.contactTel">
 				</div>
 				<div class="form-group">
 					<label class="control-label">传真</label>
-					<input class="form-control" name="fax" ng-model="org.fax">
+					<input class="form-control" ng-model="org.fax">
 				</div>
 			</div>
 			<div class="form-group">
-				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="orgForm.$valid && save()">保存</button>
-				<button type="button" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
+				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="save()">保存</button>
+				<button type="reset" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">取消</button>
 			</div>
 		</form>
 
