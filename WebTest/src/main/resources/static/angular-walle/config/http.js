@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ngApp')
+angular.module('angularWalle')
 .config(function($httpProvider) {
 
 	$httpProvider.interceptors.push(function($q, Flash) {
