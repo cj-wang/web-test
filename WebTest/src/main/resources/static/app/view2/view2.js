@@ -45,7 +45,7 @@ angular.module('ngApp')
 		org.$remove(function() {
 			//remove org from orgs, tree gets updated automatically
 			$scope.orgs.splice($scope.orgs.indexOf(org), 1);
-			Flash.create('success', '删除成功！');
+			Flash.create('success', 'Deleted!');
 		});
 	};
 	
@@ -62,7 +62,7 @@ angular.module('ngApp')
 				//copy returned org into current org, tree gets updated automatically
 				angular.copy(savedOrg, org);
 			}
-			Flash.create('success', '保存成功！');
+			Flash.create('success', 'Saved!');
 			$scope.state = 'view';
 		});
 	};
