@@ -21,11 +21,23 @@ angular.module('angularWalle')
         		}
         		input.attr('autocomplete', 'off');
         		if (input.attr('name')) {
+        			//show-errors
         			formGroup.attr('show-errors', '')
         			.append('<div ng-messages="' + attrs.name + '.' + input.attr('name') + '.$error">' +
         					'	<div ng-messages-include="' + ngMessagesInclude + '"></div>' +
         					'</div>');
         		}
+        	});
+        	//submit button to check validation state
+        	element.find('button[type=submit]').each(function(index, button) {
+        		button = jQuery(button);
+        		button.attr('ng-click', attrs.name + '.$valid && ' + button.attr('ng-click'));
+        	});
+        	//reset button to clear validation state
+        	element.find('button[type=reset]').each(function(index, button) {
+        		button = jQuery(button);
+        		button.attr('type', 'button');
+        		button.attr('ng-click', attrs.name + '.$setPristine(); ' + attrs.name + '.$setUntouched(); ' + button.attr('ng-click'));
         	});
 			$compile(element)(scope);
         }
