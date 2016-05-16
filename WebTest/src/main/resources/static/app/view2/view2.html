@@ -17,7 +17,7 @@
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">Edit</button>
 				<button type="button" class="btn btn-danger" ng-show="state=='view' && org" ng-click="remove()" confirm="Delete?">Delete</button>
 				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="orgForm.$valid && save()">Save</button>
-				<button type="reset" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">Cancel</button>
+				<button type="button" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">Cancel</button>
 			</div>
 			<div ng-show="org">
 				<div class="form-group">
