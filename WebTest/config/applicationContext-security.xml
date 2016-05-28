@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security.xsd">
+	
+	<http auto-config="true" use-expressions="true">
+			<!-- access-decision-manager-ref="accessDecisionManager" -->
+			<!-- stateless session -->
+			<!-- 
+			create-session="stateless"
+			security-context-repository-ref="statelessSecurityContextRepository"
+			 -->
+		<intercept-url pattern="/login.html*" access="permitAll"/>
+		<intercept-url pattern="/**/*.css" access="permitAll"/>
+		<intercept-url pattern="/**/*.js" access="permitAll"/>
+		<intercept-url pattern="/pub/**" access="permitAll"/>
+		<intercept-url pattern="/img/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="isAuthenticated()"/>
+		<!-- <custom-filter ref="validationCodeFilter" before="FORM_LOGIN_FILTER"/> -->
+		<form-login /> <!-- login-page="/login.html" -->
+        <remember-me user-service-ref="userDetailsService" key="WALLE_"/>
+        <logout logout-url="/logout" delete-cookies="SESSION"/>
+	</http>
+	
+<!-- 	<beans:bean id="validationCodeFilter" class="cn.walle.framework.core.support.springsecurity.ValidationCodeFilterBean"> -->
+<!-- 		<beans:property name="filterProcessesUrl" value="/login.action"/> -->
+<!-- 		<beans:property name="defaultFailureUrl" value="/login.jsp?error=true"/> -->
+<!-- 	</beans:bean> -->
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+<!-- 			<password-encoder ref="passwordEncoder"> -->
+<!-- 				<salt-source ref="saltSource"/> -->
+<!-- 			</password-encoder> -->
+		</authentication-provider>
+	</authentication-manager>
+	
+<!-- 	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.PlaintextPasswordEncoder"/> -->
+<!-- 	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"/> -->
+	<beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>
+	
+	
+<!-- 	<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.SystemWideSaltSource" -->
+<!--		 p:systemWideSalt="systemWideSalt"/> -->
+	<beans:bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource"
+		p:userPropertyToUse="username"/>
+	
+<!--	 <global-method-security> -->
+<!--		 <protect-pointcut expression="execution(* *..service.UserManager.getUsers(..))" access="ROLE_ADMIN"/> -->
+<!--		 <protect-pointcut expression="execution(* *..service.UserManager.removeUser(..))" access="ROLE_ADMIN"/> -->
+<!--	 </global-method-security> -->
+	
+	<beans:bean id="userDetailsService" class="cn.walle.framework.core.support.springsecurity.AcegiDefaultUserDetailsService"/>
+	
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<beans:property name="allowIfAllAbstainDecisions" value="false"/>
+		<beans:property name="decisionVoters">
+			<beans:list>
+				<beans:bean class="cn.walle.framework.core.support.springsecurity.AcegiAccessDecisionVoter">
+					<beans:property name="enabled" value="false"/>
+				</beans:bean>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	
+	<!-- stateless session -->
+	<!-- security-context-repository-ref -->
+	<!-- 
+	<beans:bean id="statelessSecurityContextRepository" class="cn.walle.framework.core.support.springsecurity.StatelessSecurityContextRepository">
+		<beans:property name="cookieName" value="SESSION"/>
+		<beans:property name="key" value="WALLE_"/>
+	</beans:bean>
+	 -->
+	
+</beans:beans>

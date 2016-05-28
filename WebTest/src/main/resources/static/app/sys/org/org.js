@@ -52,16 +52,15 @@ angular.module('ngApp')
 	$scope.save = function() {
 		//save org via REST
 		$scope.org.$save(function(savedOrg) {
-			if (org && (org.organizeId == savedOrg.organizeId)) {
-				//update
-				//copy returned org into current org, tree gets updated automatically
-				angular.copy(savedOrg, org);
-			} else {
-				//new
+			if ($scope.state == 'new') {
 				//add returned org into orgs, tree gets updated automatically
 				$scope.orgs.push(savedOrg);
 				//select the new org
 				$scope.orgsTree.selectedData = savedOrg;
+			} else {
+				//edit
+				//copy returned org into current org, tree gets updated automatically
+				angular.copy(savedOrg, org);
 			}
 			Flash.create('success', '保存成功！');
 			$scope.state = 'view';

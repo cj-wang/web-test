@@ -1,3 +1,7 @@
 'use strict';
 
-angular.module('angularWalle', ['ui.bootstrap', 'treeControl']);
+angular.module('angularWalle', 
+		['ui.bootstrap', 
+		 'treeControl',
+		 'ngFlash',
+		 'angular-confirm']);

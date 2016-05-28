@@ -17,7 +17,7 @@ angular.module('ngApp')
 .controller('view2Ctrl', function($scope, Flash, WlOrganize) {
 	//query orgs via REST
 	$scope.orgs = WlOrganize.query();
-	//current org
+	//current org, different than $scope.org, which is bound to the form
 	var org;
 	
 	//on selection change
@@ -26,12 +26,18 @@ angular.module('ngApp')
 		org = selectedOrg
 		//clone to $scope.org for editing
 		$scope.org = angular.copy(selectedOrg);
+		$scope.state = 'view';
 	});
 	
 	$scope.add = function() {
 		//new $scope.org for adding
 		$scope.org = new WlOrganize();
 		$scope.org.parentOrganizeId = org ? org.organizeId : undefined;
+		$scope.state = 'new';
+	};
+	
+	$scope.edit = function() {
+		$scope.state = 'edit';
 	};
 	
 	$scope.remove = function() {
@@ -46,23 +52,24 @@ angular.module('ngApp')
 	$scope.save = function() {
 		//save org via REST
 		$scope.org.$save(function(savedOrg) {
-			if (org && (org.organizeId == savedOrg.organizeId)) {
-				//update
-				//copy returned org into current org, tree gets updated automatically
-				angular.copy(savedOrg, org);
-			} else {
-				//new
+			if ($scope.state == 'new') {
 				//add returned org into orgs, tree gets updated automatically
 				$scope.orgs.push(savedOrg);
 				//select the new org
 				$scope.orgsTree.selectedData = savedOrg;
+			} else {
+				//edit
+				//copy returned org into current org, tree gets updated automatically
+				angular.copy(savedOrg, org);
 			}
 			Flash.create('success', 'Saved!');
+			$scope.state = 'view';
 		});
 	};
 	
 	$scope.cancel = function() {
-		angular.copy(org, $scope.org);
+		$scope.org = angular.copy(org);
+		$scope.state = 'view';
 	};
 	
 });

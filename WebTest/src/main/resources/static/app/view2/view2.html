@@ -11,17 +11,23 @@
 	</div>
 	
 	<div class="col-md-8">
-		<h3/>
-		<form name="orgForm" walle-validate>
+		<form walle-form ng-readonly="state=='view'">
 			<div class="form-group">
-				<button type="button" class="btn btn-primary" ng-click="add()">add</button>
-				<button type="button" class="btn btn-danger" ng-click="remove()" confirm="Delete {{org.orgCode}}?">remove</button>
-				<button type="submit" class="btn btn-success" ng-click="orgForm.$valid && save()">save</button>
-				<button type="button" class="btn btn-default" ng-click="cancel()">cancel</button>
+				<button type="button" class="btn btn-primary" ng-show="state=='view'" ng-click="add()">Add</button>
+				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">Edit</button>
+				<button type="button" class="btn btn-danger" ng-show="state=='view' && org" ng-click="remove()" confirm="Delete?">Delete</button>
+				<button type="submit" class="btn btn-success" ng-show="state=='new' || state=='edit'" ng-click="save()">Save</button>
+				<button type="reset" class="btn btn-default" ng-show="state=='new' || state=='edit'" ng-click="cancel()">Cancel</button>
 			</div>
-			<div class="form-group">
-				<label class="control-label">orgCode</label>
-				<input class="form-control" name="orgCode" ng-model="org.orgCode" ng-required="true">
+			<div ng-show="org">
+				<div class="form-group">
+					<label class="control-label">orgCode</label>
+					<input class="form-control" ng-model="org.orgCode" ng-required="true">
+				</div>
+				<div class="form-group">
+					<label class="control-label">name</label>
+					<input class="form-control" ng-model="org.name" ng-required="true">
+				</div>
 			</div>
 		</form>
 

@@ -40,7 +40,7 @@ angular.module('angularWalle')
 						$scope['walleTypeaheadLoading' + seq] = false;
 						if (response.data.dataList && response.data.dataList.length) {
 							response.data.dataList.map(function(item) {
-								$scope.selectCodes[codetype].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName];
+								$scope.selectCodes[codetype].mapping[item[response.data.keyFieldName] + ''] = item[response.data.labelFieldName] || (key + '');
 							});
 						} else {
 							$scope.selectCodes[codetype].mapping[key + ''] = key + '';

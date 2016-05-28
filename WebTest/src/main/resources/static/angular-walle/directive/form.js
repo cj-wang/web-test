@@ -3,6 +3,7 @@
 //walle-form
 angular.module('angularWalle')
 .directive('walleForm', function($compile, ngMessagesInclude) {
+	var seq = 0;
     return {
         restrict: 'A',
 		terminal : true,
@@ -10,22 +11,41 @@ angular.module('angularWalle')
         link: function (scope, element, attrs) {
 			element.removeAttr('walle-form');
         	element.attr('novalidate', '');
+        	if (! attrs.name) {
+        		attrs.name = 'form' + seq++;
+        		element.attr('name', attrs.name);
+        	}
         	element.find('.form-group').each(function(index, formGroup) {
         		formGroup = jQuery(formGroup);
         		var input = formGroup.find('input, select, textarea');
-        		if (! input.attr('ng-readonly')) {
-        			input.attr('ng-readonly', attrs.ngReadonly);
-        		}
-        		if (! input.attr('ng-disabled')) {
-        			input.attr('ng-disabled', attrs.ngDisabled);
-        		}
-        		input.attr('autocomplete', 'off');
-        		if (input.attr('name')) {
+        		if (input.size() > 0) {
+        			input.attr('autocomplete', 'off');
+        			if (! input.attr('ng-readonly')) {
+        				input.attr('ng-readonly', attrs.ngReadonly);
+        			}
+        			if (! input.attr('ng-disabled')) {
+        				input.attr('ng-disabled', attrs.ngDisabled);
+        			}
+        			if (! input.attr('name')) {
+        				input.attr('name', 'input' + seq++);
+        			}
+        			//show-errors
         			formGroup.attr('show-errors', '')
         			.append('<div ng-messages="' + attrs.name + '.' + input.attr('name') + '.$error">' +
         					'	<div ng-messages-include="' + ngMessagesInclude + '"></div>' +
         					'</div>');
         		}
+        	});
+        	//submit button to check validation state
+        	element.find('button[type=submit]').each(function(index, button) {
+        		button = jQuery(button);
+        		button.attr('ng-click', attrs.name + '.$valid && ' + button.attr('ng-click'));
+        	});
+        	//reset button to clear validation state
+        	element.find('button[type=reset]').each(function(index, button) {
+        		button = jQuery(button);
+        		button.attr('type', 'button');
+        		button.attr('ng-click', attrs.name + '.$setPristine(); ' + attrs.name + '.$setUntouched(); ' + button.attr('ng-click'));
         	});
 			$compile(element)(scope);
         }
