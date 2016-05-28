@@ -1,42 +1,52 @@
-[treecontrol] {
-    color: #428bca;
-    font-family: inherit;
-    font-size: inherit;
+[treecontrol].tree-boot {
+	color: #428bca;
+	font-family: inherit;
+	font-size: inherit;
 }
 
-[treecontrol] > ul > li {
-    padding: 0;
+[treecontrol].tree-boot > ul > li {
+	padding: 0;
 }
 
-[treecontrol] li > .tree-label {
-    display: block;
+[treecontrol].tree-boot li > .tree-label {
+	display: block;
 	padding: 3px 0;
-    border-radius: 4px;
+	border-radius: 4px;
 }
 
-[treecontrol] li > i {
-    float: left;
-    margin: 4px 0 0 4px;
-    background-image: none !important;
+[treecontrol].tree-boot li > i.tree-branch-head,
+[treecontrol].tree-boot li > i.tree-leaf-head {
+	float: left;
+	margin: 6px;
+	background-image: none !important;
+	font: normal normal normal 14px/1 FontAwesome;
 }
 
-[treecontrol].tree-classic li .tree-selected {
-    font-weight: normal;
+[treecontrol].tree-boot li.tree-expanded > i.tree-branch-head:before {
+	content: "\f068";
 }
 
-[treecontrol].tree-classic li.tree-selected > i {
+[treecontrol].tree-boot li.tree-collapsed > i.tree-branch-head:before {
+	content: "\f067";
+}
+
+[treecontrol].tree-boot li.tree-leaf > i.tree-leaf-head:before {
+	content: "\f15b";
+}
+
+[treecontrol].tree-boot li.tree-selected > i {
 	color: #fff;
 }
 
-[treecontrol].tree-classic li div.tree-selected {
+[treecontrol].tree-boot li > .tree-label.tree-selected {
 	color: #fff;
-    background-color: #428bca !important;
+	background-color: #428bca !important;
 }
 
-[treecontrol].tree-classic li.tree-selected {
-    background-color: inherit;
-}
-
-[treecontrol].tree-classic li div:hover {
+[treecontrol].tree-boot li > .tree-label:hover {
 	background-color: #eee;
+}
+
+[treecontrol] li.tree-selected {
+	background-color: inherit !important;
 }

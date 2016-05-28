@@ -15,10 +15,7 @@ angular.module('angularWalle')
 						allowDeselect : false,
 						multiSelection : angular.isDefined($attrs.multiSelection),
 						injectClasses : {
-							liSelected : 'tree-selected',
-							iExpanded : 'glyphicon glyphicon-minus fa fa-minus',
-							iCollapsed : 'glyphicon glyphicon-plus fa fa-plus',
-							iLeaf : 'glyphicon glyphicon-file fa fa-file'
+							liSelected : 'tree-selected'
 						}
 					},
 					nodesMap : {},
