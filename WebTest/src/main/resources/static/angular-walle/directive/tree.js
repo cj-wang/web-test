@@ -24,7 +24,7 @@ angular.module('angularWalle')
 					nodesMap : {},
 					nodes : [],
 					expandedNodes : [],
-					orderBy : $attrs.orderBy
+					orderByField : $attrs.orderByField
 			}
 			$parse($attrs.ngModel + 'Tree').assign($scope, tree);
 			//watch model data changes
@@ -97,7 +97,7 @@ angular.module('angularWalle')
 			element.attr('selected-node', attrs.selectedNode || attrs.ngModel + 'Tree.selectedNode');
 			element.attr('selected-nodes', attrs.selectedNodes || attrs.ngModel + 'Tree.selectedNodes');
 			element.attr('expanded-nodes', attrs.expandedNodes || attrs.ngModel + 'Tree.expandedNodes');
-			element.attr('order-by', attrs.ngModel + 'Tree.orderBy');
+			element.attr('order-by', attrs.orderBy || attrs.ngModel + 'Tree.orderByField');
 			element.attr('reverse-order', attrs.reverseOrder || 'false');
 			
 			//compile
