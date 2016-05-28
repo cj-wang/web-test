@@ -8,11 +8,11 @@
 
  ![](eclipse-github-maven.files/git-repo-clone-button.png)
 
-- Input URI: https://github.com/wcj3570/web-test.git , and your user/pass
+- Input URI: https://github.com/wcj3570/web-test.git , and your user/pass, Next then Finish
 
  ![](eclipse-github-maven.files/git-clone.png)
 
-- Import project
+- Import Maven Project
 
  ![](eclipse-github-maven.files/import-menu.png)
 
@@ -20,17 +20,18 @@
 
  ![](eclipse-github-maven.files/import-maven-project.png)
 
-- Install walle jars, goto [UserFolder]/git/web-test/dependencies, run
+- Install walle dependencies
  ```bat
+ cd [UserFolder]/git/web-test/dependencies
  install.bat
  ```
-- Build project. Run as -> Maven build, Goals: `clean package -DskipTests`
+- Build project. Right click on project, Run as -> Maven build, Goals: `clean package -DskipTests`
 
  ![](eclipse-github-maven.files/maven-build-menu.png)
 
  ![](eclipse-github-maven.files/maven-build.png)
 
-- Run gulp watch when developing. Run as -> Maven build, Goals: `com.github.eirslett:frontend-maven-plugin:gulp`, with a Parameter `frontend.gulp.arguments = watch`
+- Run gulp watch when developing. Run as -> Maven build, Goals: `com.github.eirslett:frontend-maven-plugin:gulp`, with Parameter `frontend.gulp.arguments = watch`
 
  ![](eclipse-github-maven.files/gulp-watch.png)
 
