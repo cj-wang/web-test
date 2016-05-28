@@ -34,19 +34,12 @@
 	content: "\f15b";
 }
 
-[treecontrol].tree-boot li.tree-selected > i {
-	color: #fff;
-}
-
-[treecontrol].tree-boot li > .tree-label.tree-selected {
+[treecontrol].tree-boot li.tree-node-selected > i,
+[treecontrol].tree-boot li.tree-node-selected > .tree-label {
 	color: #fff;
 	background-color: #428bca !important;
 }
 
 [treecontrol].tree-boot li > .tree-label:hover {
 	background-color: #eee;
-}
-
-[treecontrol] li.tree-selected {
-	background-color: inherit !important;
 }

@@ -15,7 +15,7 @@ angular.module('angularWalle')
 						allowDeselect : false,
 						multiSelection : angular.isDefined($attrs.multiSelection),
 						injectClasses : {
-							liSelected : 'tree-selected'
+							liSelected : 'tree-node-selected'
 						}
 					},
 					nodesMap : {},
