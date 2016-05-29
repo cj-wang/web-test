@@ -1,8 +1,8 @@
 
 <div class="row">
 	<table class="table" walle-table ng-model="users"
-			query-type="WlUserModel" order-by-field="loginName" page-size="10"
-			code-types="{'organizeId':'ALL_ORGS'}">
+			query-type="WlUserModel" order-by="loginName" page-size="10"
+			code-types='{"organizeId":"ALL_ORGS"}'>
 		<caption>
 			Users
 			&nbsp;&nbsp;
@@ -14,18 +14,18 @@
 					<div class="form-group">
 						<label for="queryLogin" class="col-sm-2 control-label">Login</label>
 						<div class="col-sm-3">
-							<input class="form-control" id="queryLogin" placeholder="Login" ng-model="users$query.queryFields.loginName"/>
+							<input class="form-control" id="queryLogin" placeholder="Login" ng-model="usersQuery.queryInfo.queryFields.loginName"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="queryName" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-3">
-							<input class="form-control" id="queryName" placeholder="Name" ng-model="users$query.queryFields.name.ilikeAnywhere"/>
+							<input class="form-control" id="queryName" placeholder="Name" ng-model="usersQuery.queryInfo.queryFields.name.ilikeAnywhere"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-3">
-							<button type="submit" class="btn btn-primary" ng-click="showQueryForm=false; users$query();">Search</button>
+							<button type="submit" class="btn btn-primary" ng-click="showQueryForm=false; usersQuery.query();">Search</button>
 						</div>
 					</div>
 				</form>

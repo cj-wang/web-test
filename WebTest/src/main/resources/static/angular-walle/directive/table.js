@@ -8,61 +8,42 @@ angular.module('angularWalle')
 		terminal : true,
 		priority : 1000,
 		controller : function($scope, $element, $attrs) {
-			var model = $parse($attrs.ngModel);
-			var query = function(pageNavigation) {
-				query.loading = true;
-				query.errormsg = null;
-				//model.assign($scope, []);
-				if (! pageNavigation && $attrs.pageSize) {
-					query.pagingInfo = {
-							pageSize : Number($attrs.pageSize)
-					};
-				}
-				var queryFields = [];
-				if (query.queryFields) {
-					angular.forEach(query.queryFields, function(value, field) {
-						if (typeof value == 'string' || typeof value == 'number' || value.getMonth) {
-							queryFields.push({
-								fieldName : field,
-								fieldStringValue : value
+			var query = {
+					queryInfo : {
+						queryType : $attrs.queryType,
+						orderBy : $attrs.orderBy,
+						pagingInfo : $attrs.pageSize ? {pageSize : Number($attrs.pageSize)} : undefined,
+						fieldCodeTypes : $attrs.codeTypes ? angular.fromJson($attrs.codeTypes) : undefined
+					},
+					load : function() {
+						query.loading = true;
+						query.errormsg = null;
+						walleCommonQuery.query(query.queryInfo)
+						.then(function(response) {
+							$parse($attrs.ngModel).assign($scope, response.data.dataList);
+							query.loading = false;
+							query.queryInfo.pagingInfo = response.data.pagingInfo;
+							angular.forEach(response.data.dataList, function(item, index) {
+								item.$index = index + 1 + (response.data.pagingInfo ? response.data.pagingInfo.currentRow : 0);
+								if (query.queryInfo.fieldCodeTypes) {
+									angular.forEach(query.queryInfo.fieldCodeTypes, function(codeType, field) {
+										item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
+									});
+								}
 							});
-						} else {
-							angular.forEach(value, function(subvalue, operator) {
-								queryFields.push({
-									fieldName : field,
-									fieldStringValue : subvalue,
-									operator : operator
-								});
-							});
-						}
-					});
-				}
-				var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
-				walleCommonQuery.query({
-					queryType : $attrs.queryType,
-					orderBy : $attrs.orderByField,
-					pagingInfo : query.pagingInfo,
-					fieldCodeTypes : codeTypes,
-					queryFields : queryFields
-				})
-				.then(function(response) {
-					model.assign($scope, response.data.dataList);
-					query.loading = false;
-					query.pagingInfo = response.data.pagingInfo;
-					angular.forEach(response.data.dataList, function(item, index) {
-						item.$index = index + 1 + (response.data.pagingInfo ? response.data.pagingInfo.currentRow : 0);
-						angular.forEach(codeTypes, function(codeType, field) {
-							item[field + '$label'] = response.data.selectCodeValues[codeType][item[field]];
+						})
+						.catch(function(error) {
+							query.loading = false;
+							query.errormsg = 'Error loading data';
 						});
-					});
-				})
-				.catch(function(error) {
-					query.loading = false;
-					query.errormsg = 'Error loading data';
-				});
+					},
+					query : function() {
+						query.queryInfo.pagingInfo = $attrs.pageSize ? {pageSize : Number($attrs.pageSize)} : undefined;
+						query.load();
+					}
 			};
-			$parse($attrs.ngModel + '$query').assign($scope, query);
-			query();
+			$parse($attrs.ngModel + 'Query').assign($scope, query);
+			query.query();
 		},
 		link : function(scope, element, attrs) {
 			element.removeAttr('walle-table');
@@ -73,22 +54,22 @@ angular.module('angularWalle')
 				}
 				scope.Math || (scope.Math = Math);
 				element.find('> caption').prepend(
-						'<uib-pagination class="pagination-sm pull-right" ng-model="'+ attrs.ngModel +'$query.pagingInfo.currentPage"' +
-						'		items-per-page="'+ attrs.ngModel +'$query.pagingInfo.pageSize" total-items="'+ attrs.ngModel +'$query.pagingInfo.totalRows"' +
+						'<uib-pagination class="pagination-sm pull-right" ng-model="'+ attrs.ngModel +'Query.queryInfo.pagingInfo.currentPage"' +
+						'		items-per-page="'+ attrs.ngModel +'Query.queryInfo.pagingInfo.pageSize" total-items="'+ attrs.ngModel +'Query.queryInfo.pagingInfo.totalRows"' +
 						'		max-size="5" boundary-link-numbers="true"' +
-						'		ng-change="'+ attrs.ngModel +'$query(true)"' +
+						'		ng-change="'+ attrs.ngModel +'Query.load()"' +
 						'		style="margin:0">' +
 						'</uib-pagination>' +
 						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
-						'	{{Math.min('+ attrs.ngModel +'$query.pagingInfo.pageSize * (('+ attrs.ngModel +'$query.pagingInfo.currentPage || 1) - 1) + 1, '+ attrs.ngModel +'$query.pagingInfo.totalRows || 0)}}' +
+						'	{{Math.min('+ attrs.ngModel +'Query.queryInfo.pagingInfo.pageSize * (('+ attrs.ngModel +'Query.queryInfo.pagingInfo.currentPage || 1) - 1) + 1, '+ attrs.ngModel +'Query.queryInfo.pagingInfo.totalRows || 0)}}' +
 						'	 - ' +
-						'	{{Math.min('+ attrs.ngModel +'$query.pagingInfo.pageSize * (('+ attrs.ngModel +'$query.pagingInfo.currentPage || 1) - 1) + ('+ attrs.ngModel +'$query.loading ? '+ attrs.ngModel +'$query.pagingInfo.pageSize : '+ attrs.ngModel +'.length), '+ attrs.ngModel +'$query.pagingInfo.totalRows || 0)}}' +
+						'	{{Math.min('+ attrs.ngModel +'Query.queryInfo.pagingInfo.pageSize * (('+ attrs.ngModel +'Query.queryInfo.pagingInfo.currentPage || 1) - 1) + ('+ attrs.ngModel +'Query.loading ? '+ attrs.ngModel +'Query.queryInfo.pagingInfo.pageSize : '+ attrs.ngModel +'.length), '+ attrs.ngModel +'Query.queryInfo.pagingInfo.totalRows || 0)}}' +
 						'	 / ' +
-						'	{{'+ attrs.ngModel +'$query.pagingInfo.totalRows || 0}}' +
+						'	{{'+ attrs.ngModel +'Query.queryInfo.pagingInfo.totalRows || 0}}' +
 						'</div>' +
 						'<div class="pull-right" style="margin-top:5px;margin-right:10px">' +
-						'	<span ng-show="'+ attrs.ngModel +'$query.loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span>' +
-						'	<span class="text-danger">{{'+ attrs.ngModel +'$query.errormsg}}</span>' +
+						'	<span ng-show="'+ attrs.ngModel +'Query.loading" class="glyphicon glyphicon-refresh" aria-hidden="true"></span>' +
+						'	<span class="text-danger">{{'+ attrs.ngModel +'Query.errormsg}}</span>' +
 						'</div>');
 			}
 			//compile
