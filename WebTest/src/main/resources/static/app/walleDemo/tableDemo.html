@@ -1,6 +1,7 @@
 
 <div class="row">
-	<table class="table" ng-model="users" walle-query-type="WlUserModel" order-by="loginName" page-size="10"
+	<table class="table" walle-table ng-model="users"
+			query-type="WlUserModel" order-by-field="loginName" page-size="10"
 			code-types="{'organizeId':'ALL_ORGS'}">
 		<caption>
 			Users

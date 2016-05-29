@@ -1,8 +1,8 @@
 'use strict';
 
-//walle-query-type
+//walle-table
 angular.module('angularWalle')
-.directive('walleQueryType', function($compile, $parse, walleCommonQuery) {
+.directive('walleTable', function($compile, $parse, walleCommonQuery) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -39,8 +39,8 @@ angular.module('angularWalle')
 				}
 				var codeTypes = $attrs.codeTypes ? angular.fromJson($attrs.codeTypes.replace(/'/g, '"')) : {};
 				walleCommonQuery.query({
-					queryType : $attrs.walleQueryType,
-					orderBy : $attrs.orderBy,
+					queryType : $attrs.queryType,
+					orderBy : $attrs.orderByField,
 					pagingInfo : query.pagingInfo,
 					fieldCodeTypes : codeTypes,
 					queryFields : queryFields
@@ -65,7 +65,7 @@ angular.module('angularWalle')
 			query();
 		},
 		link : function(scope, element, attrs) {
-			element.removeAttr('walle-query-type');
+			element.removeAttr('walle-table');
 			//paging
 			if (attrs.pageSize) {
 				if (! element.find('> caption').length) {
