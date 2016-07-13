@@ -89,7 +89,7 @@ angular.module('angularWalle')
 			element.attr('treecontrol', '');
 			element.attr('class', attrs.class || 'tree-classic');
 
-			element.attr('options', attrs.treeModel || attrs.ngModel + 'Tree.options');
+			element.attr('options', attrs.options || attrs.ngModel + 'Tree.options');
 			element.attr('tree-model', attrs.treeModel || attrs.ngModel + 'Tree.nodes');
 			element.attr('selected-node', attrs.selectedNode || attrs.ngModel + 'Tree.selectedNode');
 			element.attr('selected-nodes', attrs.selectedNodes || attrs.ngModel + 'Tree.selectedNodes');
