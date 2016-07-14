@@ -1,0 +1,7 @@
+/* Add here all your css styles (customizations) */
+
+input:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    -webkit-text-fill-color: rgb(150, 149, 149);
+}

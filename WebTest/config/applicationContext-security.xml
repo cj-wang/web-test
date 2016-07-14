@@ -15,14 +15,16 @@
 			create-session="stateless"
 			security-context-repository-ref="statelessSecurityContextRepository"
 			 -->
-		<intercept-url pattern="/login.html*" access="permitAll"/>
-		<intercept-url pattern="/**/*.css" access="permitAll"/>
-		<intercept-url pattern="/**/*.js" access="permitAll"/>
+		<intercept-url pattern="/bower_components/**" access="permitAll"/>
 		<intercept-url pattern="/pub/**" access="permitAll"/>
 		<intercept-url pattern="/img/**" access="permitAll"/>
+		<intercept-url pattern="/**/*.css" access="permitAll"/>
+		<intercept-url pattern="/**/*.js" access="permitAll"/>
+		<intercept-url pattern="/login.html*" access="permitAll"/>
+		<intercept-url pattern="/login/**" access="permitAll"/>
 		<intercept-url pattern="/**" access="isAuthenticated()"/>
 		<!-- <custom-filter ref="validationCodeFilter" before="FORM_LOGIN_FILTER"/> -->
-		<form-login /> <!-- login-page="/login.html" -->
+		<form-login login-page="/login.html"/>
         <remember-me user-service-ref="userDetailsService" key="WALLE_"/>
         <logout logout-url="/logout" delete-cookies="SESSION"/>
 	</http>

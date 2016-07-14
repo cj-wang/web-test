@@ -14,7 +14,8 @@
 		"angular-tree-control": "~0.2.x",
 		"angular-flash-alert": "~2.3.x",
 		"angular-confirm-modal": "~1.2.x",
-		"font-awesome": "~4.6.x"
+		"font-awesome": "~4.6.x",
+		"simple-line-icons": "~2.3.x"
 	},
 	"resolutions": {
     	"angular": "~1.5.x"
