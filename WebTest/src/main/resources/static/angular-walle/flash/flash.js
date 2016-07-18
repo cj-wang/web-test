@@ -7,7 +7,7 @@ angular.module('angularWalle')
 		terminal : true,
 		priority : 1000,
         link: function (scope, element, attrs) {
-        	scope.pauseFlash = function($compile) {
+        	scope.pauseFlash = function() {
         		for(var i = 0; i < scope.$root.flashes.length; i++) {
         			Flash.pause(i);
         		}
