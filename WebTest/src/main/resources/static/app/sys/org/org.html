@@ -4,7 +4,7 @@
 	<div class="col-md-4">
 		<h3>组织机构管理</h3>
 		<div class="well well-sm">
-			<div walle-tree class="tree-boot"
+			<div wl-tree class="tree-boot"
 					ng-model="orgs" order-by-field="orgCode"
 					key-field="organizeId" parent-field="parentOrganizeId">
 				{{node.orgCode}} - {{node.name}}
@@ -16,7 +16,7 @@
 		<h3 ng-show="state=='view'"></h3>
 		<h3 ng-show="state=='new'">新增</h3>
 		<h3 ng-show="state=='edit'">编辑 {{org.name}}</h3>
-		<form walle-form ng-readonly="state=='view'">
+		<form wl-form ng-readonly="state=='view'">
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-show="state=='view'" ng-click="add()">新增</button>
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">编辑</button>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">上级组织</label>
-					<input class="form-control" ng-model="org.parentOrganizeId" walle-typeahead-code="ALL_ORGS">
+					<input class="form-control" ng-model="org.parentOrganizeId" wl-typeahead-code="ALL_ORGS">
 				</div>
 				<div class="form-group">
 					<label class="control-label">负责人</label>

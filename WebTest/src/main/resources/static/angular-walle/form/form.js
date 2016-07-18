@@ -1,15 +1,15 @@
 'use strict';
 
-//walle-form
+//wl-form
 angular.module('angularWalle')
-.directive('walleForm', function($compile, ngMessagesInclude) {
+.directive('wlForm', function($compile, ngMessagesInclude) {
 	var seq = 0;
     return {
         restrict: 'A',
 		terminal : true,
 		priority : 1000,
         link: function (scope, element, attrs) {
-			element.removeAttr('walle-form');
+			element.removeAttr('wl-form');
         	element.attr('novalidate', '');
         	if (! attrs.name) {
         		attrs.name = 'form' + seq++;

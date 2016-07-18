@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('angularWalle')
-.factory('walleCommonQuery', function($http) {
+.factory('wlCommonQuery', function($http) {
 	return {
 		query : function(queryInfo) {
 			if (queryInfo.queryFields && ! angular.isArray(queryInfo.queryFields)) {

@@ -1,8 +1,8 @@
 'use strict';
 
-//walle-table
+//wl-table
 angular.module('angularWalle')
-.directive('walleTable', function($compile, $parse, walleCommonQuery) {
+.directive('wlTable', function($compile, $parse, wlCommonQuery) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -18,7 +18,7 @@ angular.module('angularWalle')
 					load : function() {
 						query.loading = true;
 						query.errormsg = null;
-						walleCommonQuery.query(query.queryInfo)
+						wlCommonQuery.query(query.queryInfo)
 						.then(function(response) {
 							$parse($attrs.ngModel).assign($scope, response.data.dataList);
 							query.loading = false;
@@ -46,7 +46,7 @@ angular.module('angularWalle')
 			query.query();
 		},
 		link : function(scope, element, attrs) {
-			element.removeAttr('walle-table');
+			element.removeAttr('wl-table');
 			//paging
 			if (attrs.pageSize) {
 				if (! element.find('> caption').length) {

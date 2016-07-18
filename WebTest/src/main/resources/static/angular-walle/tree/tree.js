@@ -1,10 +1,10 @@
 'use strict';
 
-//walle-tree
+//wl-tree
 //Thanks to wix/angular-tree-control
 //https://github.com/wix/angular-tree-control
 angular.module('angularWalle')
-.directive('walleTree', function($compile, $parse) {
+.directive('wlTree', function($compile, $parse) {
 	return {
 		restrict : 'A',
 		terminal : true,
@@ -85,7 +85,7 @@ angular.module('angularWalle')
 			});
 		},
 		link : function(scope, element, attrs) {
-			element.removeAttr('walle-tree');
+			element.removeAttr('wl-tree');
 			element.attr('treecontrol', '');
 			element.attr('class', attrs.class || 'tree-classic');
 

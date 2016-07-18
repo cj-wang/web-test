@@ -5,30 +5,30 @@
 			<div class="form-group">
 				<label for="yesno1">Yes/No: {{yesno1}}</label>
 				<!-- default value set by ng-init -->
-				<select id="yesno1" ng-model="yesno1" class="form-control" walle-select-code="YESNO" ng-init="yesno1='0'"></select>
+				<select id="yesno1" ng-model="yesno1" class="form-control" wl-select-code="YESNO" ng-init="yesno1='0'"></select>
 			</div>
 			<div class="form-group">
 				<label for="yesno2">Yes/No: {{yesno2}}</label>
 				<!-- default value set by value attr -->
-				<select id="yesno2" ng-model="yesno2" class="form-control" walle-select-code="YESNO" value="1"></select>
+				<select id="yesno2" ng-model="yesno2" class="form-control" wl-select-code="YESNO" value="1"></select>
 				<button ng-click="yesno2=null">Set to NULL</button>
 				<button ng-click="yesno2='1'">Set to YES</button>
 				<button ng-click="yesno2='0'">Set to NO</button>
 			</div>
 			<div class="form-group">
 				<label for="ampm1">AM/PM: {{ampm1}}</label>
-				<select id="ampm1" ng-model="ampm1" class="form-control" walle-select-code="AMPM"></select>
+				<select id="ampm1" ng-model="ampm1" class="form-control" wl-select-code="AMPM"></select>
 				<button ng-click="ampm1=null">Set to NULL</button>
 				<button ng-click="ampm1='AM'">Set to AM</button>
 				<button ng-click="ampm1='PM'">Set to PM</button>
 			</div>
 			<div class="form-group">
 				<label for="ampm2">AM/PM required: {{ampm2}}</label>
-				<select id="ampm2" ng-model="ampm2" class="form-control" walle-select-code="AMPM" required="required"></select>
+				<select id="ampm2" ng-model="ampm2" class="form-control" wl-select-code="AMPM" required="required"></select>
 			</div>
 			<div class="form-group">
 				<label for="org">Org:</label>
-				<select id="org" ng-model="org" class="form-control" walle-select-code="ALL_ORGS"></select>
+				<select id="org" ng-model="org" class="form-control" wl-select-code="ALL_ORGS"></select>
 			</div>
 		</form>
 	</div>
@@ -38,12 +38,12 @@
 			<div class="form-group">
 				<label for="user1">User: {{user1}}</label>
 				<!-- default value set by ng-init -->
-				<input id="user1" ng-model="user1" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" ng-init="user1='Admin'"/>
+				<input id="user1" ng-model="user1" class="form-control" wl-typeahead-code="ALL_USERS" placeholder="Select user" ng-init="user1='Admin'"/>
 			</div>
 			<div class="form-group">
 				<label for="user2">User: {{user2}}</label>
 				<!-- default value set by value attr -->
-				<input id="user2" ng-model="user2" class="form-control" walle-typeahead-code="ALL_USERS" placeholder="Select user" value="18601062323"/>
+				<input id="user2" ng-model="user2" class="form-control" wl-typeahead-code="ALL_USERS" placeholder="Select user" value="18601062323"/>
 				<button ng-click="user2=null">Set to NULL</button>
 				<button ng-click="user2='Admin'">Set to Admin</button>
 				<button ng-click="user2='18601062323'">Set to cj</button>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="form-group">
 				<label for="yesno11">User: {{yesno11}}</label>
-				<input id="yesno11" ng-model="yesno11" class="form-control" walle-typeahead-code="YESNO" placeholder="Yes/No"/>
+				<input id="yesno11" ng-model="yesno11" class="form-control" wl-typeahead-code="YESNO" placeholder="Yes/No"/>
 			</div>
 		</form>
 	</div>

@@ -3,7 +3,7 @@
 
 	<div class="col-md-4">
 		<div class="well well-sm">
-			<div walle-tree class="tree-boot"
+			<div wl-tree class="tree-boot"
 					ng-model="orgs" order-by-field="orgCode"
 					key-field="organizeId" parent-field="parentOrganizeId">
 				{{node.orgCode}} - {{node.organizeId}}
@@ -12,7 +12,7 @@
 	</div>
 	
 	<div class="col-md-8">
-		<form walle-form ng-readonly="state=='view'">
+		<form wl-form ng-readonly="state=='view'">
 			<div class="form-group">
 				<button type="button" class="btn btn-primary" ng-show="state=='view'" ng-click="add()">Add</button>
 				<button type="button" class="btn btn-info" ng-show="state=='view' && org" ng-click="edit()">Edit</button>
