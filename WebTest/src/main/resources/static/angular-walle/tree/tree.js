@@ -9,23 +9,25 @@ angular.module('angularWalle')
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-		controller : function($scope, $element, $attrs) {
+		link : function(scope, element, attrs) {
+			//Tree object
 			var tree = {
 					options : {
 						allowDeselect : false,
-						multiSelection : angular.isDefined($attrs.multiSelection)
+						multiSelection : angular.isDefined(attrs.multiSelection)
 					},
 					nodesMap : {},
 					nodes : [],
 					expandedNodes : [],
-					orderByField : $attrs.orderByField
+					orderByField : attrs.orderByField
 			}
-			$parse($attrs.ngModel + 'Tree').assign($scope, tree);
+			$parse(attrs.ngModel + 'Tree').assign(scope, tree);
+			
 			//watch model data changes
-			$scope.$watch($attrs.ngModel, function(data) {
+			scope.$watch(attrs.ngModel, function(data) {
 				angular.forEach(data, function(item) {
-					if (tree.nodesMap[item[$attrs.keyField]]) {
-						var node = tree.nodesMap[item[$attrs.keyField]];
+					if (tree.nodesMap[item[attrs.keyField]]) {
+						var node = tree.nodesMap[item[attrs.keyField]];
 						angular.copy(item, node);
 						node.data = item;
 						node.children = [];
@@ -35,22 +37,22 @@ angular.module('angularWalle')
 						node.data = item;
 						node.children = [];
 						node.parent = undefined;
-						tree.nodesMap[item[$attrs.keyField]] = node;
+						tree.nodesMap[item[attrs.keyField]] = node;
 					};
 				});
 				angular.forEach(tree.nodesMap, function(node, key) {
 					if (data.indexOf(node.data) == -1) {
 						delete tree.nodesMap[key];
 						if (key == tree.selectedKey) {
-							tree.selectedKey = node.data[$attrs.parentField];
+							tree.selectedKey = node.data[attrs.parentField];
 						}
 					}
 				});
 				tree.nodes.length = 0;
 				angular.forEach(tree.nodesMap, function(node) {
-					if (tree.nodesMap[node.data[$attrs.parentField]]) {
-						tree.nodesMap[node.data[$attrs.parentField]].children.push(node);
-						node.parent = tree.nodesMap[node.data[$attrs.parentField]];
+					if (tree.nodesMap[node.data[attrs.parentField]]) {
+						tree.nodesMap[node.data[attrs.parentField]].children.push(node);
+						node.parent = tree.nodesMap[node.data[attrs.parentField]];
 					} else {
 						tree.nodes.push(node);
 					}
@@ -60,8 +62,9 @@ angular.module('angularWalle')
 					tree.expandedNodes.push(tree.nodes[0]);
 				}
 			}, true);
+			
 			//watch selected node to change selected data
-			$scope.$watch($attrs.ngModel + 'Tree.selectedNode', function(selectedNode) {
+			scope.$watch(attrs.ngModel + 'Tree.selectedNode', function(selectedNode) {
 				tree.selectedData = selectedNode ? selectedNode.data : undefined;
 				//expand all parent nodes
 				var node = selectedNode;
@@ -72,17 +75,20 @@ angular.module('angularWalle')
 					node = node.parent;
 				}
 			});
+			
 			//watch selected data to change selected key
-			$scope.$watch($attrs.ngModel + 'Tree.selectedData', function(selectedData) {
-				tree.selectedKey = selectedData ? selectedData[$attrs.keyField] : undefined;
+			scope.$watch(attrs.ngModel + 'Tree.selectedData', function(selectedData) {
+				tree.selectedKey = selectedData ? selectedData[attrs.keyField] : undefined;
 			});
+			
 			//watch selected key to change selected node
-			$scope.$watch($attrs.ngModel + 'Tree.selectedKey', function(selectedKey) {
+			scope.$watch(attrs.ngModel + 'Tree.selectedKey', function(selectedKey) {
 				tree.selectedNode = selectedKey ? tree.nodesMap[selectedKey] : undefined;
 			});
-		},
-		link : function(scope, element, attrs) {
+			
+			//handle element
 			element.removeAttr('wl-tree');
+			element.removeAttr('data-wl-tree');
 			element.attr('treecontrol', '');
 			element.attr('class', attrs.class || 'tree-boot');
 
