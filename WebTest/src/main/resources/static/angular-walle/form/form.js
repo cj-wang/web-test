@@ -10,6 +10,7 @@ angular.module('angularWalle')
 		priority : 1000,
         link: function (scope, element, attrs) {
 			element.removeAttr('wl-form');
+			element.removeAttr('data-wl-form');
         	element.attr('novalidate', '');
         	if (! attrs.name) {
         		attrs.name = 'form' + seq++;
