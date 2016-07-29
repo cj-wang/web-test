@@ -7,20 +7,22 @@ angular.module('angularWalle')
 		restrict : 'A',
 		terminal : true,
 		priority : 1000,
-		controller : function($scope, $element, $attrs) {
+		link : function(scope, element, attrs) {
+			//Query object
 			var query = {
 					queryInfo : {
-						queryType : $attrs.queryType,
-						orderBy : $attrs.orderBy,
-						pagingInfo : $attrs.pageSize ? {pageSize : Number($attrs.pageSize)} : undefined,
-						fieldCodeTypes : $attrs.codeTypes ? angular.fromJson($attrs.codeTypes) : undefined
+						queryType : attrs.queryType,
+						orderBy : attrs.orderBy,
+						pagingInfo : attrs.pageSize ? {pageSize : Number(attrs.pageSize)} : undefined,
+						fieldCodeTypes : attrs.codeTypes ? angular.fromJson(attrs.codeTypes) : undefined
 					},
+					//load current page
 					load : function() {
 						query.loading = true;
 						query.errormsg = null;
 						wlCommonQuery.query(query.queryInfo)
 						.then(function(response) {
-							$parse($attrs.ngModel).assign($scope, response.data.dataList);
+							$parse(attrs.ngModel).assign(scope, response.data.dataList);
 							query.loading = false;
 							query.queryInfo.pagingInfo = response.data.pagingInfo;
 							angular.forEach(response.data.dataList, function(item, index) {
@@ -37,16 +39,19 @@ angular.module('angularWalle')
 							query.errormsg = 'Error loading data';
 						});
 					},
+					//load first page
 					query : function() {
-						query.queryInfo.pagingInfo = $attrs.pageSize ? {pageSize : Number($attrs.pageSize)} : undefined;
+						query.queryInfo.pagingInfo = attrs.pageSize ? {pageSize : Number(attrs.pageSize)} : undefined;
 						query.load();
 					}
 			};
-			$parse($attrs.ngModel + 'Query').assign($scope, query);
+			$parse(attrs.ngModel + 'Query').assign(scope, query);
 			query.query();
-		},
-		link : function(scope, element, attrs) {
+			
+			//handle element
 			element.removeAttr('wl-table');
+			element.removeAttr('data-wl-table');
+			
 			//paging
 			if (attrs.pageSize) {
 				if (! element.find('> caption').length) {
@@ -72,6 +77,7 @@ angular.module('angularWalle')
 						'	<span class="text-danger">{{'+ attrs.ngModel +'Query.errormsg}}</span>' +
 						'</div>');
 			}
+			
 			//compile
 			$compile(element)(scope);
 		}
