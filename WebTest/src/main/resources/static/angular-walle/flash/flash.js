@@ -4,6 +4,7 @@ angular.module('angularWalle')
 .directive('clickToPause', function($compile, Flash) {
     return {
         restrict: 'A',
+        scope: true,
 		terminal : true,
 		priority : 1000,
         link: function (scope, element, attrs) {
