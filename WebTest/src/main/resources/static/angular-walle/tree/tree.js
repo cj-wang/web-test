@@ -13,10 +13,7 @@ angular.module('angularWalle')
 			var tree = {
 					options : {
 						allowDeselect : false,
-						multiSelection : angular.isDefined($attrs.multiSelection),
-						injectClasses : {
-							liSelected : 'tree-node-selected'
-						}
+						multiSelection : angular.isDefined($attrs.multiSelection)
 					},
 					nodesMap : {},
 					nodes : [],
@@ -87,7 +84,7 @@ angular.module('angularWalle')
 		link : function(scope, element, attrs) {
 			element.removeAttr('wl-tree');
 			element.attr('treecontrol', '');
-			element.attr('class', attrs.class || 'tree-classic');
+			element.attr('class', attrs.class || 'tree-boot');
 
 			element.attr('options', attrs.options || attrs.ngModel + 'Tree.options');
 			element.attr('tree-model', attrs.treeModel || attrs.ngModel + 'Tree.nodes');

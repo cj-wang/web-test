@@ -4,8 +4,7 @@
 	<div class="col-md-4">
 		<h3>组织机构管理</h3>
 		<div class="well well-sm">
-			<div wl-tree class="tree-boot"
-					ng-model="orgs" order-by-field="orgCode"
+			<div wl-tree ng-model="orgs" order-by-field="orgCode"
 					key-field="organizeId" parent-field="parentOrganizeId">
 				{{node.orgCode}} - {{node.name}}
 			</div>
