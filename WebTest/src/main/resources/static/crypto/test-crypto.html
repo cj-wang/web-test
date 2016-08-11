@@ -1,0 +1,35 @@
+<html>
+	
+<head>
+	<script src="CryptoJS v3.1.2/rollups/aes.js"></script>
+	<script src="CryptoJS v3.1.2/rollups/pbkdf2.js"></script>
+	<script src="crypto.js"></script>
+	
+	<script type="text/javascript">
+		function encrypt() {
+			var plain = document.getElementById('plain').value;
+			var passphrase = document.getElementById('passphrase').value;
+			var encrypted = crypto_encrypt(plain, passphrase);
+			document.getElementById('encrypted').value = encrypted;
+		}
+	</script>
+	
+</head>
+
+<body>
+	Plain text: 
+	<input id="plain" style="width:500px" value="abcdefg"/>
+	<p/>
+	
+	Passphrase: 
+	<input id="passphrase" style="width:500px" value="hijklmn"/>
+	
+	<button onclick="encrypt()">Encrypt</button>
+	<p/>
+	
+	Result:
+	<input id="encrypted" style="width:500px" readonly/>
+	
+</body>
+
+</html>
