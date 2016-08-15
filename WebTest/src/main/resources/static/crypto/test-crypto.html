@@ -6,12 +6,18 @@
 	<script src="crypto.js"></script>
 	
 	<script type="text/javascript">
-		function encrypt() {
-			var plain = document.getElementById('plain').value;
-			var passphrase = document.getElementById('passphrase').value;
-			var encrypted = crypto_encrypt(plain, passphrase);
-			document.getElementById('encrypted').value = encrypted;
-		}
+	function encrypt() {
+		var plain = document.getElementById('plain').value;
+		var passphrase = document.getElementById('passphrase').value;
+		var encrypted = crypto_encrypt(plain, passphrase);
+		document.getElementById('encrypted').value = encrypted;
+	}
+	function decrypt() {
+		var encrypted = document.getElementById('encrypted').value;
+		var passphrase = document.getElementById('passphrase').value;
+		var decrypted = crypto_decrypt(encrypted, passphrase);
+		document.getElementById('decrypted').value = decrypted;
+	}
 	</script>
 	
 </head>
@@ -23,12 +29,25 @@
 	
 	Passphrase: 
 	<input id="passphrase" style="width:500px" value="hijklmn"/>
+	<p/>
+	
+	
 	
 	<button onclick="encrypt()">Encrypt</button>
 	<p/>
 	
-	Result:
+	encrypt Result:
 	<input id="encrypted" style="width:500px" readonly/>
+	<p/>
+	
+	
+	
+	<button onclick="decrypt()">Decrypt</button>
+	<p/>
+	
+	decryptResult:
+	<input id="decrypted" style="width:500px" readonly/>
+	<p/>
 	
 </body>
 
