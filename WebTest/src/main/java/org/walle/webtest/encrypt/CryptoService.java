@@ -30,7 +30,7 @@ public class CryptoService {
 	 * @return 
 	 */
 	public String encrpt(byte[] plain, String passphrase) throws Exception {
-		SecretKeySpec secretKeySpec = (SecretKeySpec) generateKeyFromPassphrase(passphrase, DatatypeConverter.parseHexBinary(salt));
+		SecretKeySpec secretKeySpec = generateKeyFromPassphrase(passphrase, DatatypeConverter.parseHexBinary(salt));
 		IvParameterSpec ivParameterSpec = new IvParameterSpec(DatatypeConverter.parseHexBinary(iv));
 		Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		c.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
@@ -42,7 +42,7 @@ public class CryptoService {
 	 * @return 
 	 */
 	public byte[] decrpt(String encrypted, String passphrase) throws Exception {
-		SecretKeySpec secretKeySpec = (SecretKeySpec) generateKeyFromPassphrase(passphrase, DatatypeConverter.parseHexBinary(salt));
+		SecretKeySpec secretKeySpec = generateKeyFromPassphrase(passphrase, DatatypeConverter.parseHexBinary(salt));
 		IvParameterSpec ivParameterSpec = new IvParameterSpec(DatatypeConverter.parseHexBinary(iv));
 		Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		c.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
@@ -50,7 +50,7 @@ public class CryptoService {
 	}
 
 	
-	private SecretKey generateKeyFromPassphrase(String passphrase, byte[] saltBytes)
+	private SecretKeySpec generateKeyFromPassphrase(String passphrase, byte[] saltBytes)
 			throws GeneralSecurityException {
 		KeySpec keySpec = new PBEKeySpec(passphrase.toCharArray(), saltBytes, 100, 128);
 		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
